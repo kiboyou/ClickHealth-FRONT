@@ -1,11 +1,18 @@
-// import { configureStore } from '@reduxjs/toolkit';
-// import productReducer from './features/productSlice'; // Importation du slice
+import { configureStore } from '@reduxjs/toolkit';
+import authMiddleware from './middleware/authMiddleware';
 
-// // Configuration du store Redux
-// const store = configureStore({
-//   reducer: {
-//     products: productReducer, // Ajout du slice dans le store
-//   },
-// });
 
-// export default store;
+import groupeReducer from './Api/features/groupe/groupeSlice';
+import userReducer from './Api/features/user/userSlice';
+import authReducer from './Api/features/userAuth/authSlice';
+
+const store = configureStore({
+  reducer: {
+    auth: authReducer,
+    user: userReducer,
+    groupe: groupeReducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(authMiddleware),
+});
+
+export default store;

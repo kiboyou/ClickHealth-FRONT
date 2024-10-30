@@ -16,8 +16,8 @@ import {
 } from '@windmill/react-ui'
 import PageTitle from '../../components/Typography/PageTitle'
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons'
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
 
-import { Link, NavLink } from 'react-router-dom/cjs/react-router-dom.min'
 import response from '../../utils/demo/tableData'
 // make a copy of the data, for the second table
 const response2 = response.concat([])

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import routes from '../../routes/sidebar'
 import {  Route } from 'react-router-dom'
 import * as Icons from '../../icons'
@@ -7,6 +7,10 @@ import { Button } from '@windmill/react-ui'
 
 import logoCH from "../../assets/img/LOGO - PD.png";
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
+import { useDispatch, useSelector } from 'react-redux'
+import { logoutUser } from '../../Api/features/userAuth/authThunks'
+import { useHistory } from 'react-router-dom';
+
 
 function Icon({ icon, ...props }) {
   const Icon = Icons[icon]
@@ -14,6 +18,22 @@ function Icon({ icon, ...props }) {
 }
 
 function SidebarContent() {
+  
+  const  navigate = useHistory().push;
+  const dispatch = useDispatch();
+  
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  const handleLogout = () => {
+    dispatch(logoutUser()); // Déconnexion
+  };
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+    }
+  }, [isAuthenticated, navigate]);
+  
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
       
@@ -54,14 +74,23 @@ function SidebarContent() {
           )
         )}
       </ul>
-      <div className="px-6 my-6">
-        {/* <Button>
-          Create account
-          <span className="ml-2" aria-hidden="true">
-            +
-          </span>
-        </Button> */}
-      </div>
+
+      { 
+        
+        user ? (
+        <>
+        <div className="px-4 my-6">
+          <button className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg sm:text-xl btnprise font-montserrat"
+          onClick={handleLogout}>
+            Deconnexion
+          </button>
+        </div>
+        </>
+      ) : (
+        <h2>Veuillez vous connecter.</h2>
+      )}
+      
+     
     </div>
   )
 }

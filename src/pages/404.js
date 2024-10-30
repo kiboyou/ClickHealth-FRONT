@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ForbiddenIcon } from '../icons'
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
+import { NavLink } from 'react-router-dom'
 
 function Page404() {
   return (

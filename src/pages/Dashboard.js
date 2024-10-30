@@ -18,11 +18,19 @@ import {
   lineLegends,
   lineOptions,
 } from '../utils/demo/chartsData'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchCurrentUser } from '../Api/features/userAuth/authThunks'
+
+
 
 
 function Dashboard() {
+  const dispatch = useDispatch();
+  const state = useSelector ((state) => state)
+  
   const [page, setPage] = useState(1)
   const [data, setData] = useState([])
+  const { isAuthenticated, user, error } = useSelector((state) => state.auth);
 
   // pagination setup
   const resultsPerPage = 10
@@ -33,6 +41,15 @@ function Dashboard() {
     setPage(p)
   }
 
+
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      dispatch(fetchCurrentUser()); // Appel pour récupérer l'utilisateur connecté
+    }
+  }, [isAuthenticated, dispatch]);
+
+  
   // on page change, load new sliced data
   // here you would make another server request for new data
   useEffect(() => {
@@ -47,6 +64,8 @@ function Dashboard() {
 
       {/* <!-- Cards --> */}
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+      {console.log(state)}  
+
         <InfoCard title="TOTAL GENERAL" value="9389">
           <RoundIcon
             icon={ChartsIcon}

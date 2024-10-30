@@ -1,5 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
+
 // import Button from "./common/Button";
 // import arrowRight from "/assets/icons/arrow-right.svg";
 

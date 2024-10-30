@@ -1,11 +1,11 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import ImageLight from '../assets/img/create-account-office.jpeg'
 import ImageDark from '../assets/img/creatAccount.jpg'
 import { GithubIcon, TwitterIcon } from '../icons'
 import { Input, Label, Button } from '@windmill/react-ui'
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
+
 
 function Login() {
   return (
@@ -62,12 +62,12 @@ function Login() {
 
 
               <p className="mt-4">
-                <Link
+                <NavLink
                   className="text-sm font-medium text-white"
                   to="/login"
                 >
                   Already have an account? Login
-                </Link>
+                </NavLink>
               </p>
             </div>
           </main>

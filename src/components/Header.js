@@ -11,8 +11,13 @@ import {
   OutlineLogoutIcon,
 } from '../icons'
 import { Avatar, Badge, Input, Dropdown, DropdownItem, WindmillContext } from '@windmill/react-ui'
+import { useSelector } from 'react-redux';
+
 
 function Header() {
+
+  const state = useSelector((state) => state);
+  
   const { mode, toggleMode } = useContext(WindmillContext)
   const { toggleSidebar } = useContext(SidebarContext)
 
@@ -29,6 +34,7 @@ function Header() {
 
   return (
     <header className="z-40 py-4 bg-white shadow-bottom bg-cadre1">
+      {console.log(state)}
       <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
         {/* <!-- Mobile hamburger --> */}
         <button

@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
+
 
 import ImageLight from '../assets/img/forgot-password-office.jpeg'
 import ImageDark from '../assets/img/forgot-password-office-dark.jpeg'
@@ -35,7 +36,7 @@ function ForgotPassword() {
                 <Input className="mt-1" placeholder="Jane Doe" />
               </Label>
 
-              <Button tag={Link} to="/login" block className="mt-4">
+              <Button tag={NavLink} to="/login" block className="mt-4">
                 Recover password
               </Button>
             </div>
