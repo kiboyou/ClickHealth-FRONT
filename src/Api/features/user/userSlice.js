@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchUsers, fetchUserById, addUser, editUser, removeUser } from './userThunks';
 
 const userSlice = createSlice({
+  
   name: 'users',
   initialState: {
     users: [],

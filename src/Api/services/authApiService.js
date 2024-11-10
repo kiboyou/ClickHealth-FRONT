@@ -12,10 +12,14 @@ export const logout = async () => {
     });
     return response.data;
 };
+
+export const changePasseWord = async (infoPassword) => {
+    const response = await api.put('utilisateur/changer_mot_passe/', infoPassword);
+    return response.data;
+};
  
 
 export const getCurrentUser = async () => {
     const response = await api.get('utilisateur/connecter/');
     return response.data;
 };
-

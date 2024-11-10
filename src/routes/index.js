@@ -1,5 +1,7 @@
 import { lazy } from 'react'
 
+
+
 // use lazy for better code splitting, a.k.a. load faster
 const Dashboard = lazy(() => import('../pages/Dashboard'))
 const Forms = lazy(() => import('../pages/Forms'))
@@ -12,8 +14,12 @@ const Page404 = lazy(() => import('../pages/404'))
 const Blank = lazy(() => import('../pages/Blank'))
 
 
-const Vols = lazy(() => import('../pages/Vols'))
-const AjoutVols = lazy(() => import('../pages/formulaire/vols/AjoutVols'))
+const User = lazy(() => import('../pages/User'))
+const AjoutUser = lazy(() => import('../pages/formulaire/personnel/AjoutUser'))
+
+const Groupe = lazy(() => import('../pages/Groupe'))
+const AjoutGroupe = lazy(() => import('../pages/formulaire/groupe/AjoutGroupe'))
+
 
 const Patients = lazy(() => import('../pages/Patient'))
 const Facturations = lazy(() => import('../pages/reception/Facturation'))
@@ -41,15 +47,29 @@ const routes = [
   },
 
   {
-    path: '/vols', 
-    component: Vols, 
+    path: '/groupes', 
+    component: Groupe, 
 
   },
 
   {
-    path: '/vols/add', 
-    component: AjoutVols, 
+    path: '/groupes/add', 
+    component: AjoutGroupe, 
+
   },
+
+  {
+    path: '/user', 
+    component: User, 
+
+  },
+
+  {
+    path: '/user/add', 
+    component: AjoutUser, 
+
+  },
+
   {
     path: '/patients',
     component: Patients

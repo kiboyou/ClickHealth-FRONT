@@ -13,10 +13,17 @@ const routes = [
   },
 
   {
-    path: '/app/vols', // the url
-    icon: 'CalendarIcon', // the component being exported from icons/index.js
-    name: 'Prise de RDV', // name that appear in Sidebar
+    path: '/app/groupes', // the url
+    icon: 'TeamIcon', // the component being exported from icons/index.js
+    name: 'Groupes', // name that appear in Sidebar
   },
+
+  {
+    path: '/app/user', // the url
+    icon: 'TeamIcon', // the component being exported from icons/index.js
+    name: 'User', // name that appear in Sidebar
+  },
+
   {
     icon: 'ReceptionIcon',
     name: 'Reception',

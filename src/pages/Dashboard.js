@@ -56,15 +56,14 @@ function Dashboard() {
     setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage))
   }, [page])
 
+  
   return (
     <>
       <PageTitle>Dashboard</PageTitle>
 
   
-
       {/* <!-- Cards --> */}
       <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-      {console.log(state)}  
 
         <InfoCard title="TOTAL GENERAL" value="9389">
           <RoundIcon

@@ -5,25 +5,25 @@ import { getGroups, getGroupById, createGroup, updateGroup, deleteGroup } from '
 // Fetch all groups
 export const fetchGroups = createAsyncThunk('groups/fetchGroups', async () => {
   const response = await getGroups();
-  return response.data;
+  return response;
 });
 
 // Fetch group by ID
 export const fetchGroupById = createAsyncThunk('groups/fetchGroupById', async (id) => {
   const response = await getGroupById(id);
-  return response.data;
+  return response;
 });
 
 // Add group
 export const addGroup = createAsyncThunk('groups/addGroup', async (newGroup) => {
   const response = await createGroup(newGroup);
-  return response.data;
+  return response;
 });
 
 // Edit group
 export const editGroup = createAsyncThunk('groups/editGroup', async ({ id, group }) => {
   const response = await updateGroup(id, group);
-  return response.data;
+  return response;
 });
 
 // Remove group

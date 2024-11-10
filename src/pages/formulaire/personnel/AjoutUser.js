@@ -1,36 +1,54 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
-import ImageLight from '../assets/img/create-account-office.jpeg'
-import ImageDark from '../assets/img/creatAccount.jpg'
-import { GithubIcon, TwitterIcon } from '../icons'
 import { Input, Label, Select } from '@windmill/react-ui'
-import { NavLink, useHistory } from 'react-router-dom/cjs/react-router-dom.min'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginUser } from '../Api/features/userAuth/authThunks'
+import { useHistory } from 'react-router-dom'
 
+import { addUser } from '../../../Api/features/user/userThunks'
+import { fetchGroups } from '../../../Api/features/groupe/groupeThunks'
+import Loading from '../../../utils/Loading'
 
-function Login() {
+const  AjoutUser = () => {
+  
   const dispatch = useDispatch();
   const  navigate = useHistory().push;
-
+  
   const [email, setEmail] = useState('');
-  const [nom, setNom] = useState('');
-  const [prenoms, setPrenoms] = useState('');
-  const [group, setGroup] = useState([]);
+  const [first_name, setFirst_name] = useState('');
+  const [last_name, setLast_name] = useState('');
+  const [groupes, setGroups] = useState([]);
   
-      // Récupère le statut d'authentification, le groupe, et les erreurs depuis Redux
-  const { isAuthenticated, user, error } = useSelector((state) => state.auth);
+  const { success, error, loading } = useSelector((state) => state.user);
+  const { groups } = useSelector((state) => state.groupe)
+
   
-    const handleSubmit = (e) => {
-      e.preventDefault();
-      console.log(email, nom, prenoms, group);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(email, first_name, last_name, groupes);
+    dispatch(addUser({email, first_name, last_name, groups: groupes}));
+
   };
+
+  useEffect(() => {
+    dispatch(fetchGroups())
+  }, [groups])
+
+  
+  useEffect(() => {
+    if (success == 'User added successfully') {
+      navigate('/app/user');
+    }
+  }, [dispatch, navigate, success]);
       
   return (
-    <div className="flex items-center min-h-screen p-6 bg-cadre">
-      <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl bg-cadre1">
-        <div className="flex flex-col overflow-y-auto md:flex-row">
-          <div className="h-32 md:h-auto md:w-1/2">
+    
+    <div className="px-4 py-3 mt-10 mb-8 rounded-lg">
+      
+      { loading && <Loading/>}
+          
+      <div className="max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl flex- bg-cadre1">
+        <div className="">
+          {/* <div className="h-32 md:h-auto md:w-1/2">
             <img
               aria-hidden="true"
               className="object-cover w-full h-full dark:hidden"
@@ -43,8 +61,8 @@ function Login() {
               src={ImageDark}
               alt="Office"
             />
-          </div>
-          <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
+          </div> */}
+          <main className="flex items-center justify-center p-6 sm:p-12 ">
             <div className="w-full">
             <form onSubmit={handleSubmit}>
               <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
@@ -58,20 +76,23 @@ function Login() {
               
               <Label className="mt-4">
                 <span>Nom</span>
-                <Input className="px-4 py-3 mt-1" placeholder="OUATTARA" onChange={(e) => setNom(e.target.value)}/>
+                <Input className="px-4 py-3 mt-1" placeholder="OUATTARA" onChange={(e) => setFirst_name(e.target.value)}/>
               </Label>
 
               <Label className="mt-4">
                 <span>Prenoms</span>
-                <Input className="px-4 py-3 mt-1" placeholder="Kiboyou Mohamed" onChange={(e) => setPrenoms(e.target.value)}/>
+                <Input className="px-4 py-3 mt-1" placeholder="Kiboyou Mohamed" onChange={(e) => setLast_name(e.target.value)}/>
               </Label>
 
               <Label className="mt-4">
                 <span>Groupe</span>
-                <Select className="mt-1" onChange={(e) => setGroup([e.target.value])}>
-                  <option>Administrateur</option>
-                  <option>Medecin</option>
-                  <option>Doctor</option>
+                <Select className="mt-1" onChange={(e) => setGroups([e.target.value])}>
+                  <option></option>
+                  {
+                    groups.map((groupe, i) => (
+                      <option key={i}>{groupe.name}</option>
+                    ))
+                  }
                 
                 </Select>
               </Label>
@@ -85,8 +106,8 @@ function Login() {
                 <Input className="px-4 py-3 mt-1" placeholder="***************" type="password" />
               </Label> */}
 
-                <button type='submit' className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
-                  Envoyer
+                <button type='submit' className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat" onSubmit={handleSubmit}>
+                  Ajouter
                 </button>
 
               {/* <hr className="my-8" /> */}
@@ -109,4 +130,4 @@ function Login() {
   )
 }
 
-export default Login
+export default AjoutUser
