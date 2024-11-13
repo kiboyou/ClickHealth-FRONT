@@ -21,12 +21,12 @@ export const createGroup = async (newGroup) => {
 
 // Update a group by ID
 export const updateGroup = async (id, updatedGroup) => {
-  const response =  await api.put(`groupe/${id}`, updatedGroup);
+  const response =  await api.put(`groupe/${id}/`, updatedGroup);
   return response.data;
 };
 
 // Delete a group by ID
 export const deleteGroup = async (id) => {
-  const response =  await api.delete(`groupe/${id}`);
+  const response =  await api.delete(`groupe/${id}/`);
   return response.data;
 };

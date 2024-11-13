@@ -31,7 +31,7 @@ const  AjoutUser = () => {
 
   useEffect(() => {
     dispatch(fetchGroups())
-  }, [groups])
+  }, [groups.length, dispatch])
 
   
   useEffect(() => {
@@ -66,7 +66,7 @@ const  AjoutUser = () => {
             <div className="w-full">
             <form onSubmit={handleSubmit}>
               <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
-                Ajouter un utilisateur
+                Ajouter un patient
               </h1>
               
               <Label className="mt-4">
@@ -106,7 +106,7 @@ const  AjoutUser = () => {
                 <Input className="px-4 py-3 mt-1" placeholder="***************" type="password" />
               </Label> */}
 
-                <button type='submit' className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat" onSubmit={handleSubmit}>
+                <button type='submit' className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
                   Ajouter
                 </button>
 

@@ -1,7 +1,6 @@
 import { lazy } from 'react'
 
 
-
 // use lazy for better code splitting, a.k.a. load faster
 const Dashboard = lazy(() => import('../pages/Dashboard'))
 const Forms = lazy(() => import('../pages/Forms'))
@@ -14,19 +13,26 @@ const Page404 = lazy(() => import('../pages/404'))
 const Blank = lazy(() => import('../pages/Blank'))
 
 
-const User = lazy(() => import('../pages/User'))
+const User = lazy(() => import('../pages/configuration/User'))
 const AjoutUser = lazy(() => import('../pages/formulaire/personnel/AjoutUser'))
 
-const Groupe = lazy(() => import('../pages/Groupe'))
-const AjoutGroupe = lazy(() => import('../pages/formulaire/groupe/AjoutGroupe'))
 
+
+const RendezVous = lazy(() => import('../pages/RendezVous'))
+// const AjoutRendezVous = lazy(() => import('../pages/formulaire/rendez_vous/AjoutRendezVous'))
 
 const Patients = lazy(() => import('../pages/Patient'))
+const AjoutPatient = lazy(() => import('../pages/formulaire/patient/AjoutPatient'))
+
+
 const Facturations = lazy(() => import('../pages/reception/Facturation'))
 const Queues = lazy(() => import('../pages/reception/Queue'))
 const Ordonnances = lazy(() => import('../pages/consultation/Ordonance'))
 const Examens = lazy(() => import('../pages/consultation/Examen'))
-const Groupes = lazy(() => import('../pages/configuration/Groupe'))
+
+const Groupe = lazy(() => import('../pages/configuration/Groupe'))
+const AjoutGroupe = lazy(() => import('../pages/formulaire/groupe/AjoutGroupe'))
+
 const Specialites = lazy(() => import('../pages/personnel/Specialiste'))
 const Receptionnistes = lazy(() => import('../pages/personnel/Receptionniste'))
 
@@ -47,33 +53,32 @@ const routes = [
   },
 
   {
-    path: '/groupes', 
-    component: Groupe, 
-
-  },
-
-  {
-    path: '/groupes/add', 
-    component: AjoutGroupe, 
-
-  },
-
-  {
-    path: '/user', 
+    path: '/configuration/user', 
     component: User, 
 
   },
 
   {
-    path: '/user/add', 
+    path: '/configuration/user/add', 
     component: AjoutUser, 
 
+  },
+
+  {
+    path: '/rendez_vous', 
+    component: RendezVous, 
   },
 
   {
     path: '/patients',
     component: Patients
   },
+
+  {
+    path: '/patients/add',
+    component: AjoutPatient
+  },
+
   // start les reception
   {
     path: '/reception/factures',
@@ -98,8 +103,15 @@ const routes = [
   //start configuration
   {
     path: '/configuration/groupes',
-    component: Groupes
+    component: Groupe
   },
+
+  {
+    path: '/configuration/groupes/add', 
+    component: AjoutGroupe, 
+
+  },
+
   //end configuration
 
   //start personnel path
@@ -111,6 +123,9 @@ const routes = [
     path: '/personnel/receptionnistes',
     component: Receptionnistes
   },
+
+
+
   //end personnel path
 
   // {

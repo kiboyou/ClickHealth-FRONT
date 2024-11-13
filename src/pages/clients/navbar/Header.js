@@ -20,7 +20,7 @@ function Header() {
     Réservez votre consultation en quelques clics et donnez-vous l'opportunité d'améliorer votre bien-être. Que ce soit pour un bilan de santé, des conseils personnalisés ou un suivi, nous sommes à votre disposition pour répondre à vos besoins.
   </p>
   <div className='flex flex-col items-center gap-6 mt-10 sm:flex-row sm:gap-20 sm:mt-20'>
-        <NavLink to="/app/vols/add" className="flex justify-end mb-10">
+        <NavLink to="/rendez_vous" className="flex justify-end mb-10">
           <button className="px-6 py-3 text-lg font-bold bg-white rounded-lg sm:text-2xl btnprise font-montserrat">
             Prendre un rendez-vous
           </button>

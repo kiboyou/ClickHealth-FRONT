@@ -12,17 +12,6 @@ const routes = [
     name: 'Dashboard', // name that appear in Sidebar
   },
 
-  {
-    path: '/app/groupes', // the url
-    icon: 'TeamIcon', // the component being exported from icons/index.js
-    name: 'Groupes', // name that appear in Sidebar
-  },
-
-  {
-    path: '/app/user', // the url
-    icon: 'TeamIcon', // the component being exported from icons/index.js
-    name: 'User', // name that appear in Sidebar
-  },
 
   {
     icon: 'ReceptionIcon',
@@ -62,6 +51,12 @@ const routes = [
       {
         path: '/app/configuration/groupes',
         name: 'Groupes',
+      },
+
+      {
+        path: '/app/configuration/user', // the url
+        icon: 'TeamIcon', // the component being exported from icons/index.js
+        name: 'Utilisateur', // name that appear in Sidebar
       },
       
     ],

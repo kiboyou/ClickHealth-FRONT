@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { SidebarContext } from '../context/SidebarContext'
 import {
 
@@ -6,17 +6,26 @@ import {
 
 } from '../icons'
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCurrentUser } from '../Api/features/userAuth/authThunks';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 function Header() {
 
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useHistory().push;
+  
+  const { user } = useSelector((state) => state.auth);
   
   const { toggleSidebar } = useContext(SidebarContext)
 
 
-
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     dispatch(fetchCurrentUser());
+  //   }
+  // }, [isAuthenticated, navigate]);
 
   return (
     <header className="z-40 py-4 bg-white shadow-bottom bg-cadre1">

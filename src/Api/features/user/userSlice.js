@@ -63,6 +63,7 @@ const userSlice = createSlice({
       .addCase(addUser.fulfilled, (state, action) => {
         state.loading = false;
         state.users.push(action.payload);
+        state.selectedUser = action.payload;
         state.success = 'User added successfully';
       })
       .addCase(addUser.rejected, (state, action) => {

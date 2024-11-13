@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import {
-  Avatar,
   Badge,
   Button,
   Input,
@@ -12,14 +11,14 @@ import {
   TableFooter,
   TableHeader,
   TableRow
-} from '@windmill/react-ui'
-import { ArrowPathIcon } from '@heroicons/react/24/outline';
-import PageTitle from '../components/Typography/PageTitle'
-import { EditIcon, SearchIcon, TrashIcon } from '../icons'
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
-import { useDispatch, useSelector } from 'react-redux'
-import { fetchUsers } from '../Api/features/user/userThunks'
-import Loading from '../utils/Loading'
+} from '@windmill/react-ui';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUsers } from '../../Api/features/user/userThunks';
+import PageTitle from '../../components/Typography/PageTitle';
+import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
+import DropdownButton from '../../utils/DropdownButton';
+import Loading from '../../utils/Loading';
 
 
 const User = () => {
@@ -77,11 +76,13 @@ const User = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
-        <NavLink to="/app/user/add">
+        {/* <NavLink to="/app/user/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter un utilisateur
           </button>
-        </NavLink>
+        </NavLink> */}
+        
+        <DropdownButton />
       </div>
 
       <TableContainer className="mb-8">
@@ -110,7 +111,7 @@ const User = () => {
                   <span className="text-sm">{user.groups}</span>
                 </TableCell>
                 <TableCell>
-                  { user.is_active === true ? <Badge type='success'>actif</Badge> : <Badge type='danger'>Inactif</Badge> }
+                  { user.is_password_changed === true ? <Badge type='success'>actif</Badge> : <Badge type='danger'>Inactif</Badge> }
                 </TableCell>
                 
                 <TableCell>
