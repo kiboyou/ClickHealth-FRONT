@@ -1,22 +1,39 @@
-import React, { useState } from 'react'
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { Label, Input, Button } from '@windmill/react-ui';
+import ImageLight from '../assets/img/update.jpg';
+import ImageDark from '../assets/img/update.jpg';
 
-
-import ImageLight from '../assets/img/update.jpg'
-import ImageDark from '../assets/img/update.jpg'
-import { Label, Input, Button } from '@windmill/react-ui'
+import { fetchRendezVousByCode } from '../Api/features/rendezVous/rendezVousThunks';
+import Loading from '../utils/Loading';
 
 function VerifieRendezVous() {
-
   const [codeRDV, setCodeRDV] = useState('');
+  const dispatch = useDispatch();
+  const history = useHistory();
+  
+  const { success, loading, error } = useSelector((state) => state.rendezVous);
 
+
+  // Fonction de soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('CodeRDV: ', codeRDV);
-  }
+    // Appel de l'action pour vérifier le code de rendez-vous
+    dispatch(fetchRendezVousByCode(codeRDV));
+  };
   
+  useEffect(() => {
+    // Si le code est valide, rediriger vers la page de mise à jour
+    if (success === 'rdv fetched successfully') {
+      history.push(`/rendez_vous_update`);
+    }
+  }, [history, success]);
+
+      
   return (
     <div className="flex items-center min-h-screen p-6 bg-cadre">
+      {loading && <Loading />}
       <div className="flex-1 h-full max-w-4xl mx-auto overflow-hidden rounded-lg shadow-xl bg-cadre1">
         <div className="flex flex-col overflow-y-auto md:flex-row">
           <div className="h-32 md:h-auto md:w-1/2">
@@ -35,24 +52,39 @@ function VerifieRendezVous() {
           </div>
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
-            <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-2xl font-semibold text-center text-gray-700 dark:text-gray-200">Verification du rendez-vous</h1>
-                
+              <form onSubmit={handleSubmit}>
+                <h1 className="mb-10 text-2xl font-semibold text-center text-gray-700 dark:text-gray-200">
+                  Vérification du rendez-vous
+                </h1>
+
                 <Label>
                   <span>Entrer le code du rendez-vous</span>
-                  <Input className="px-4 py-3 mt-1 " type="text" placeholder="OUATT-12989" onChange={(e) => setCodeRDV(e.target.value)} />
+                  <Input
+                    className="px-4 py-3 mt-1"
+                    type="text"
+                    placeholder="OUATT-12989"
+                    onChange={(e) => setCodeRDV(e.target.value)}
+                    value={codeRDV}
+                  />
                 </Label>
-             
-                  <button type='submit' className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat" onSubmit={handleSubmit} >
-                    Envoyer
-                  </button>
-              </form> 
+
+                {error && (
+                  <div className="mt-4 text-center text-red-500">Le code n'exist pas ...</div>
+                )}
+
+                <button
+                  type="submit"
+                  className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
+                >
+                  Envoyer
+                </button>
+              </form>
             </div>
           </main>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default VerifieRendezVous
+export default VerifieRendezVous;

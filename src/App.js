@@ -1,9 +1,9 @@
-import React, { lazy, useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import React, { lazy, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { initializeAuth } from './Api/features/userAuth/authSlice';
 import { fetchCurrentUser } from './Api/features/userAuth/authThunks';
-import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer'
-import { useDispatch } from 'react-redux'
+import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer';
 
 
 const Acceuil = lazy(() => import('./pages/clients/Acceuil'))
@@ -13,6 +13,7 @@ const CreateAccount = lazy(() => import('./pages/CreateAccount'))
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 const UpdatePassword = lazy(() => import('./pages/UpdatePassword'))
 const AjoutRendezVous = lazy(() => import('./pages/formulaire/rendez_vous/AjoutRendezVous'))
+const UpdateRendezVous = lazy(() => import('./pages/formulaire/rendez_vous/UpdateRendezVous'))
 const VerifieRendezVous = lazy(() => import('./pages/VerifieRendezVous'))
 
 
@@ -43,6 +44,7 @@ function App() {
           <Route path="/forgot-password" component={ForgotPassword} />
 
           <Route path="/rendez_vous" component={AjoutRendezVous} />
+          <Route path="/rendez_vous_update" component={UpdateRendezVous} />
           <Route path="/verifie_rendez_vous" component={VerifieRendezVous} />
 
 

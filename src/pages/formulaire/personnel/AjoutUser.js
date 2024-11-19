@@ -36,7 +36,7 @@ const  AjoutUser = () => {
   
   useEffect(() => {
     if (success == 'User added successfully') {
-      navigate('/app/user');
+      navigate('/configuration/user');
     }
   }, [dispatch, navigate, success]);
       

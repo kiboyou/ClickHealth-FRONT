@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { Input, Label, Select } from '@windmill/react-ui'
+import { Input, Label } from '@windmill/react-ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
@@ -27,7 +27,7 @@ const  AjoutGroupe = () => {
 
   useEffect(() => {
     if (success == 'Group added successfully') {
-      navigate('/app/groupes');
+      navigate('/app/configuration/groupes');
     }
   }, [dispatch, navigate, success]);
       

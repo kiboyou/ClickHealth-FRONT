@@ -23,6 +23,7 @@ const AjoutPatient = () => {
   const [etat_civil, setEtatCivil] = useState('');
 
   // Sélecteurs pour obtenir l'état des actions Redux
+  const { currentRendezVous } = useSelector((state) => state.rendezVous);
   const { success, error, loading: patientLoading } = useSelector((state) => state.patient);
   const { selectedUser, loading: userLoading, success: userSuccess, error: userError } = useSelector((state) => state.user);
   
@@ -30,10 +31,11 @@ const AjoutPatient = () => {
   useEffect(() => {
     console.log('userSuccess:', userSuccess, 'selectedUser:', selectedUser);
     if (userSuccess && selectedUser) {
+      const formattedDate = birthdate.split('-').join('-');
       const patientData = {
         user: selectedUser.id,
         telephone,
-        date_naissance: birthdate,
+        date_naissance: formattedDate,
         sexe,
         adresse,
         ville,
@@ -45,10 +47,22 @@ const AjoutPatient = () => {
       dispatch(createPatient(patientData));
     }
   }, [userSuccess, selectedUser]);
+  
+
+  // Récupération du rendez-vous à mettre à jour
+  useEffect(() => {
+    if (currentRendezVous) {
+      console.log('Données du rendez-vous', currentRendezVous);
+      setEmail(currentRendezVous.email);
+      setFirst_name(currentRendezVous.prenom);
+      setLast_name(currentRendezVous.nom);
+      setTelephone(currentRendezVous.telephone)
+    }
+  }, [currentRendezVous]);
 
   // Effet pour surveiller le succès de la création du patient et rediriger
   useEffect(() => {
-    if (success) {
+    if (success == 'Patient created successfully') {
       navigate('/app/patients');
     }
   }, [success, navigate]);

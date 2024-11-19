@@ -7,6 +7,7 @@ const initialState = {
   currentPlanning: null,
   loading: false,
   error: null,
+  success: null
 };
 
 const planningSlice = createSlice({
@@ -23,10 +24,12 @@ const planningSlice = createSlice({
       .addCase(fetchPlannings.pending, (state) => {
         state.loading = true;
         state.error = null;
+
       })
       .addCase(fetchPlannings.fulfilled, (state, action) => {
         state.loading = false;
         state.plannings = action.payload;
+        state.success = 'Plannings fetched successfully';
       })
       .addCase(fetchPlannings.rejected, (state, action) => {
         state.loading = false;
@@ -41,6 +44,7 @@ const planningSlice = createSlice({
       .addCase(fetchPlanningById.fulfilled, (state, action) => {
         state.loading = false;
         state.currentPlanning = action.payload;
+        state.success = 'Plannig fetched successfully';
       })
       .addCase(fetchPlanningById.rejected, (state, action) => {
         state.loading = false;
@@ -55,6 +59,7 @@ const planningSlice = createSlice({
       .addCase(createPlanning.fulfilled, (state, action) => {
         state.loading = false;
         state.plannings.push(action.payload);
+        state.success = 'Planning created successfully';
       })
       .addCase(createPlanning.rejected, (state, action) => {
         state.loading = false;
@@ -71,7 +76,10 @@ const planningSlice = createSlice({
         const index = state.plannings.findIndex(p => p.id === action.payload.id);
         if (index !== -1) {
           state.plannings[index] = action.payload;
+          state.success = 'Planning updated successfully';
+
         }
+
       })
       .addCase(updatePlanning.rejected, (state, action) => {
         state.loading = false;
@@ -86,6 +94,8 @@ const planningSlice = createSlice({
       .addCase(deletePlanning.fulfilled, (state, action) => {
         state.loading = false;
         state.plannings = state.plannings.filter(p => p.id !== action.payload);
+        state.success = 'Palnning deleted successfully';
+
       })
       .addCase(deletePlanning.rejected, (state, action) => {
         state.loading = false;

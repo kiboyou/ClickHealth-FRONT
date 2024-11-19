@@ -77,8 +77,9 @@ const groupSlice = createSlice({
         const index = state.groups.findIndex((group) => group.id === action.payload.id);
         if (index !== -1) {
           state.groups[index] = action.payload;
+          state.success = 'Group updated successfully';
+
         }
-        state.success = 'Group updated successfully';
       })
       .addCase(editGroup.rejected, (state, action) => {
         state.loading = false;

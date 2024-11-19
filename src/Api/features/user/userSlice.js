@@ -82,8 +82,9 @@ const userSlice = createSlice({
         const index = state.users.findIndex((user) => user.id === action.payload.id);
         if (index !== -1) {
           state.users[index] = action.payload;
+          state.success = 'User updated successfully';
+
         }
-        state.success = 'User updated successfully';
       })
       .addCase(editUser.rejected, (state, action) => {
         state.loading = false;

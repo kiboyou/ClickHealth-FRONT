@@ -14,6 +14,8 @@ const initialState = {
   currentRendezVous: null,
   loading: false,
   error: null,
+  success : null
+  
 };
 
 const rendezVousSlice = createSlice({
@@ -34,6 +36,8 @@ const rendezVousSlice = createSlice({
       .addCase(fetchRendezVous.fulfilled, (state, action) => {
         state.loading = false;
         state.rendezVousList = action.payload;
+        state.success = 'rdvs fetched successfully';
+
       })
       .addCase(fetchRendezVous.rejected, (state, action) => {
         state.loading = false;
@@ -48,6 +52,8 @@ const rendezVousSlice = createSlice({
       .addCase(fetchRendezVousById.fulfilled, (state, action) => {
         state.loading = false;
         state.currentRendezVous = action.payload;
+        state.success = 'rdv fetched successfully';
+
       })
       .addCase(fetchRendezVousById.rejected, (state, action) => {
         state.loading = false;
@@ -62,6 +68,8 @@ const rendezVousSlice = createSlice({
       .addCase(fetchRendezVousByCode.fulfilled, (state, action) => {
         state.loading = false;
         state.currentRendezVous = action.payload;
+        state.success = 'rdv fetched successfully';
+
       })
       .addCase(fetchRendezVousByCode.rejected, (state, action) => {
         state.loading = false;
@@ -76,6 +84,8 @@ const rendezVousSlice = createSlice({
       .addCase(createRendezVous.fulfilled, (state, action) => {
         state.loading = false;
         state.rendezVousList.push(action.payload);
+        state.success = 'rdv created successfully';
+
       })
       .addCase(createRendezVous.rejected, (state, action) => {
         state.loading = false;
@@ -93,6 +103,9 @@ const rendezVousSlice = createSlice({
         if (index !== -1) {
           state.rendezVousList[index] = action.payload;
         }
+        state.success = 'rdv updated successfully';
+
+
       })
       .addCase(updateRendezVous.rejected, (state, action) => {
         state.loading = false;
@@ -107,6 +120,8 @@ const rendezVousSlice = createSlice({
       .addCase(deleteRendezVous.fulfilled, (state, action) => {
         state.loading = false;
         state.rendezVousList = state.rendezVousList.filter(rdv => rdv.id !== action.payload);
+        state.success = 'rdv deleted successfully';
+
       })
       .addCase(deleteRendezVous.rejected, (state, action) => {
         state.loading = false;

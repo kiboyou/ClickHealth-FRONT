@@ -62,6 +62,18 @@ const routes = [
     ],
   },
   {
+    path: '/app/planning', // the url
+    icon: 'DiagnosticIcon',
+    name: 'Planning', // name that appear in Sidebar
+  },
+
+  {
+    path: '/app/rendez_vous', // the url
+    icon: 'DiagnosticIcon',
+    name: 'Rendez-vous', // name that appear in Sidebar
+  },
+
+  {
     path: '/app/patients', // the url
     icon: 'PatientIcon', // the component being exported from icons/index.js
     name: 'Patients', // name that appear in Sidebar

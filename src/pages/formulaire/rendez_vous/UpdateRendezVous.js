@@ -2,14 +2,13 @@ import { Input, Label, Select } from '@windmill/react-ui';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import { fetchPlannings } from '../../../Api/features/plannig/plannigThunks';
-import { createRendezVous } from '../../../Api/features/rendezVous/rendezVousThunks';
+import { updateRendezVous } from '../../../Api/features/rendezVous/rendezVousThunks';
 import ImageLight from '../../../assets/img/login-office.jpeg';
 import ImageDark from '../../../assets/img/login.jpg';
 import Loading from '../../../utils/Loading';
 
-const AjoutRendezVous = () => {
+const UpdateRendezVous = () => {
   const dispatch = useDispatch();
   const navigate = useHistory().push;
 
@@ -22,46 +21,65 @@ const AjoutRendezVous = () => {
   const [specialite, setSpecialite] = useState('');
   const [planning, setPlanning] = useState('');
 
-
-  const { success, loading, error } = useSelector((state) => state.rendezVous);
+  const { success, loading, error, currentRendezVous } = useSelector((state) => state.rendezVous);
+  
   const { plannings } = useSelector((state) => state.planning);
   const planningTrue = plannings.filter((plannig) => plannig.disponible);
 
-
+  // Récupération du rendez-vous à mettre à jour
+  useEffect(() => {
+    if (currentRendezVous) {
+      console.log('Données du rendez-vous', currentRendezVous);
+      setEmail(currentRendezVous.email);
+      setFirstName(currentRendezVous.prenom);
+      setLastName(currentRendezVous.nom);
+      setTelephone(currentRendezVous.telephone);
+      setMessage(currentRendezVous.message);
+      setSpecialite(currentRendezVous.specialite);
+      setPlanning(currentRendezVous.planning);
+    }
+  }, [currentRendezVous]);
 
   // Fonction de soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    
     const planningChoisi = plannings.find((p) => p.id === parseInt(planning));
     console.log(planning);
-    dispatch(
-      createRendezVous({
-        planning: planningChoisi?.id,
-        prenom: first_name,
-        nom: last_name,
-        email,
-        telephone,
-        message,
-        // specialite,
-        message
-      })
-    );
+    
+    if (planningChoisi) {
+      const rendezVousId = parseInt(currentRendezVous?.id);
+      const planningId = planningChoisi?.id;
+
+      console.log('Rendez-vous à mettre à jour:', rendezVousId, planningId);
+      
+      dispatch(
+        updateRendezVous({
+          id: rendezVousId,
+          rendezVous: {
+            planning: planningId,
+          },
+        })
+      );
+    } else {
+      console.error('Planning non valide sélectionné.');
+    }
+
+    console.log(planning);
+
   };
 
   // Fetch des plannings à chaque changement dans l'état des plannings
-    useEffect(() => {
-      dispatch(fetchPlannings());
-    }, [dispatch, plannings.lemgth]);
-  
-    
+  useEffect(() => {
+    dispatch(fetchPlannings());
+  }, [dispatch]);
+
   // Redirection après succès
   useEffect(() => {
-    if (success === 'rdv created successfully') {
-      navigate('/');
+    if (success === 'rdv updated successfully') {
+      navigate('/'); // Redirige après la mise à jour réussie
     }
   }, [navigate, success]);
-    
 
   return (
     <div className="flex items-center min-h-screen p-6 bg-cadre">
@@ -87,7 +105,7 @@ const AjoutRendezVous = () => {
             <div className="w-full">
               <form onSubmit={handleSubmit}>
                 <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
-                  Formulaire de rendez-vous
+                  Mise à jour de votre rendez-vous
                 </h1>
 
                 <Label className="mt-4">
@@ -155,7 +173,7 @@ const AjoutRendezVous = () => {
                   </Select>
                 </Label>
 
-                {/* Sélection du planning */}
+                  {/* Sélection du planning */}
               <Label className="mt-4">
                 <span>Planning</span>
                 <Select
@@ -176,18 +194,9 @@ const AjoutRendezVous = () => {
                   type="submit"
                   className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
                 >
-                  Envoyer
+                  Mettre à jour
                 </button>
               </form>
-
-              <p className="mt-10">
-                <NavLink
-                  className="text-sm font-medium text-white hover:underline"
-                  to="/verifie_rendez_vous"
-                >
-                  Voulez-vous modifier votre prise de rendez-vous ?
-                </NavLink>
-              </p>
             </div>
           </main>
         </div>
@@ -196,4 +205,4 @@ const AjoutRendezVous = () => {
   );
 };
 
-export default AjoutRendezVous;
+export default UpdateRendezVous;

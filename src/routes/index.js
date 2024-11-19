@@ -13,12 +13,16 @@ const Page404 = lazy(() => import('../pages/404'))
 const Blank = lazy(() => import('../pages/Blank'))
 
 
+const Planning = lazy(() => import('../pages/Planning'))
+const AjoutPlanning = lazy(() => import('../pages/formulaire/rendez_vous/AjoutPlanning'))
+
 const User = lazy(() => import('../pages/configuration/User'))
 const AjoutUser = lazy(() => import('../pages/formulaire/personnel/AjoutUser'))
 
-
-
 const RendezVous = lazy(() => import('../pages/RendezVous'))
+const AjoutRDV = lazy(() => import('../pages/formulaire/rendez_vous/AjoutRDV'))
+const UpdateRendezVous = lazy(() => import('../pages/formulaire/rendez_vous/UpdateRendezVous'))
+
 // const AjoutRendezVous = lazy(() => import('../pages/formulaire/rendez_vous/AjoutRendezVous'))
 
 const Patients = lazy(() => import('../pages/Patient'))
@@ -65,8 +69,23 @@ const routes = [
   },
 
   {
+    path: '/planning', 
+    component: Planning, 
+  },
+
+  {
+    path: '/planning/add', 
+    component: AjoutPlanning, 
+  },
+
+  {
     path: '/rendez_vous', 
     component: RendezVous, 
+  },
+
+  {
+    path: '/rendez_vous/add', 
+    component: AjoutRDV, 
   },
 
   {
@@ -78,6 +97,8 @@ const routes = [
     path: '/patients/add',
     component: AjoutPatient
   },
+
+
 
   // start les reception
   {
