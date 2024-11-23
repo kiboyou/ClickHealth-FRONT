@@ -27,6 +27,7 @@ const RendezVous = () => {
   const dispatch = useDispatch()
   const history = useHistory();
   const { success, rendezVousList, loading } = useSelector((state) => state.rendezVous)
+  const state = useSelector((state) => state)
 
   
   const [pageTable2, setPageTable2] = useState(1)
@@ -126,7 +127,7 @@ const RendezVous = () => {
             </tr>
           </TableHeader>
           <TableBody>
-    {        console.log(displayedRendezVous)}
+    {        console.log(state)}
             {displayedRendezVous.map((rdv, i) => (
               <TableRow key={i}>
                 

@@ -29,10 +29,17 @@ const Patients = lazy(() => import('../pages/Patient'))
 const AjoutPatient = lazy(() => import('../pages/formulaire/patient/AjoutPatient'))
 
 
-const Facturations = lazy(() => import('../pages/reception/Facturation'))
+//reception
+const FacturationsExamen = lazy(() => import('../pages/reception/FactureExamen'))
+const FacturationsRdv = lazy(() => import('../pages/reception/FactureRdv'))
 const Queues = lazy(() => import('../pages/reception/Queue'))
-const Ordonnances = lazy(() => import('../pages/consultation/Ordonance'))
-const Examens = lazy(() => import('../pages/consultation/Examen'))
+
+//sante
+const Consultations = lazy(() => import('../pages/sante/Consultation'))
+const Ordonnances = lazy(() => import('../pages/sante/Ordonnance'))
+const Examens = lazy(() => import('../pages/sante/Examen'))
+const Prescriptions = lazy(() => import('../pages/sante/Prescription'))
+
 
 const Groupe = lazy(() => import('../pages/configuration/Groupe'))
 const AjoutGroupe = lazy(() => import('../pages/formulaire/groupe/AjoutGroupe'))
@@ -98,13 +105,27 @@ const routes = [
     component: AjoutPatient
   },
 
-
-
   // start les reception
   {
-    path: '/reception/factures',
-    component: Facturations
+    path: '/reception/factures/examens',
+    component: FacturationsExamen
   },
+
+  {
+    path: '/reception/factures/examens/add',
+    component: FacturationsExamen
+  },
+
+  {
+    path: '/reception/factures/rdv',
+    component: FacturationsRdv
+  },
+
+  {
+    path: '/reception/factures/rdv/add',
+    component: FacturationsRdv
+  },
+
   {
     path: '/reception/queue',
     component: Queues
@@ -112,14 +133,48 @@ const routes = [
   // end reception
 
   //start consultation
+
+  {
+    path: '/consultation/',
+    component: Consultations
+  },
+
+  {
+    path: '/consultation/add',
+    component: Ordonnances
+  },
+
   {
     path: '/consultation/ordonnance',
     component: Ordonnances
   },
+
+  {
+    path: '/consultation/ordonnance/add',
+    component: Ordonnances
+  },
+
+  {
+    path: '/consultation/prescription',
+    component: Prescriptions
+  },
+
+  {
+    path: '/consultation/prescription/add',
+    component: Ordonnances
+  },
+
   {
     path: '/consultation/examen',
     component: Examens
   },
+
+  {
+    path: '/consultation/examen/add',
+    component: Examens
+  },
+
+
   //end consultation
   //start configuration
   {

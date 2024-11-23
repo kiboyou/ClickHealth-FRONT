@@ -4,8 +4,8 @@ import { Input, Label, Select } from '@windmill/react-ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 
-import { addUser } from '../../../Api/features/user/userThunks'
 import { fetchGroups } from '../../../Api/features/groupe/groupeThunks'
+import { addUser } from '../../../Api/features/user/userThunks'
 import Loading from '../../../utils/Loading'
 
 const  AjoutUser = () => {
@@ -36,7 +36,7 @@ const  AjoutUser = () => {
   
   useEffect(() => {
     if (success == 'User added successfully') {
-      navigate('/configuration/user');
+      navigate('/app/configuration/user');
     }
   }, [dispatch, navigate, success]);
       

@@ -21,13 +21,13 @@ function Header() {
   </p>
   <div className='flex flex-col items-center gap-6 mt-10 sm:flex-row sm:gap-20 sm:mt-20'>
         <NavLink to="/rendez_vous" className="flex justify-end mb-10">
-          <button className="px-6 py-3 text-lg font-bold bg-white rounded-lg sm:text-2xl btnprise font-montserrat">
+          <button className="px-6 py-3 text-lg font-bold bg-white rounded-lg sm:text-2xl btnprise font-montserrat focus:outline-none focus:border-none">
             Prendre un rendez-vous
           </button>
         </NavLink>
 
         <NavLink to="/login" className="flex justify-end mb-10">
-          <button className="px-6 py-3 text-lg font-bold bg-white rounded-lg sm:text-2xl font-montserrat btnConn">
+          <button className="px-6 py-3 text-lg font-bold bg-white rounded-lg sm:text-2xl font-montserrat btnConn focus:outline-none focus:border-none">
             Se connecter
           </button>
         </NavLink>

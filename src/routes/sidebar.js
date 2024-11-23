@@ -19,8 +19,12 @@ const routes = [
     routes: [
       // submenu
       {
-        path: '/app/reception/factures',
-        name: 'Facturation',
+        path: '/app/reception/factures/examens',
+        name: 'Facture des Examen',
+      },
+      {
+        path: '/app/reception/factures/rdv',
+        name: 'Facture des RDV',
       },
       {
         path: '/app/reception/queue',
@@ -30,12 +34,20 @@ const routes = [
   },
   {
     icon: 'DiagnosticIcon',
-    name: 'Consulation',
+    name: 'Santé',
     routes: [
       // submenu
       {
+        path: '/app/consultation',
+        name: 'Consultation',
+      },
+      {
         path: '/app/consultation/ordonnance',
-        name: 'Ordornance',
+        name: 'Ordonnance',
+      },
+      {
+        path: '/app/consultation/prescription',
+        name: 'Prescription',
       },
       {
         path: '/app/consultation/examen',
