@@ -8,7 +8,7 @@ import { fetchFonctions } from '../../../../Api/features/medecins/fonctionThunk'
 import { fetchSpecialites } from '../../../../Api/features/medecins/specialiteThunk';
 import Loading from '../../../../utils/Loading';
 
-const ajoutMedecin = () => {
+const AjoutMedecin = () => {
   const dispatch = useDispatch();
   const navigate = useHistory().push;
 
@@ -83,7 +83,7 @@ const ajoutMedecin = () => {
       {userLoading && <Loading />}
       {medecinLoading && <Loading />}
 
-      <div className="max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl flex flex-col bg-cadre1">
+      <div className="flex flex-col max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl bg-cadre1">
         <main className="flex items-center justify-center p-6 sm:p-12">
           <div className="w-full">
             <form onSubmit={handleSubmit}>
@@ -177,4 +177,4 @@ const ajoutMedecin = () => {
   );
 };
 
-export default ajoutMedecin;
+export default AjoutMedecin;

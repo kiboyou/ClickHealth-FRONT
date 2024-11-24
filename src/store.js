@@ -17,7 +17,12 @@ import typeExamensReducer from './Api/features/examen/typeExamenSlice';
 import typeConsultationsReducer from './Api/features/consultation/typeConsultationSlice';
 import caisseReducer from './Api/features/receptionnistes/caisseSlice';
 import receptionnisteReducer from './Api/features/receptionnistes/receptionnisteSlice';
-
+import consultationReducer from './Api/features/consultation/consultationSlice';
+import prescriptionReducer from './Api/features/prescription/prescriptionSlice';
+import examenReducer from './Api/features/examen/examenSlice';
+import ordonnanceReducer from './Api/features/ordonnance/ordonnanceSlice';
+import factureRdvReducer from './Api/features/factureRdv/factureRdvSlice';
+import factureExamenReducer from './Api/features/factureExamen/factureExamenSlice';
 
 
 const store = configureStore({
@@ -40,9 +45,9 @@ const store = configureStore({
     typeOrdonnances: typeOrdonnancesReducer,
     typeExamens: typeExamensReducer,
     typeConsultations: typeConsultationsReducer,
-     caisses: caisseReducer,
-     receptionnistes:receptionnisteReducer,
-       medicaments: medicamentReducer,
+    caisses: caisseReducer,
+    receptionnistes:receptionnisteReducer,
+    medicaments: medicamentReducer,
 
 
 
