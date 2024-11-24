@@ -1,4 +1,7 @@
 import { lazy } from 'react'
+import TypeOrdonnance from '../pages/configuration/TypeOrdonnance'
+import TypeConsultation from '../pages/configuration/TypeConsultation'
+ 
 
 
 // use lazy for better code splitting, a.k.a. load faster
@@ -33,9 +36,32 @@ const Examens = lazy(() => import('../pages/consultation/Examen'))
 const Groupe = lazy(() => import('../pages/configuration/Groupe'))
 const AjoutGroupe = lazy(() => import('../pages/formulaire/groupe/AjoutGroupe'))
 
-const Specialites = lazy(() => import('../pages/personnel/Specialiste'))
-const Receptionnistes = lazy(() => import('../pages/personnel/Receptionniste'))
+const Fonction = lazy(() => import('../pages/configuration/Fonction'))
+const Specialite = lazy(() => import('../pages/configuration/Specialite'))
+const TypeOrdonnances = lazy(() => import('../pages/configuration/TypeOrdonnance'))
+const TypeExamens = lazy(() => import('../pages/configuration/TypeExamen'))
+const TypeConsultations = lazy(() => import('../pages/configuration/TypeConsultation'))
+const Caisses = lazy(() => import('../pages/configuration/Caisse'))
+const Medicaments = lazy(() => import('../pages/configuration/Medicament'))
+const AjoutMedicaments = lazy(() => import('../pages/formulaire/configuration/AjoutMedicament'))
+ 
 
+
+
+const Receptionnistes = lazy(() => import('../pages/personnel/Receptionniste'))
+const AjoutReceptionnistes = lazy(() => import('../pages/formulaire/personnel/ajouts/ajoutReceptionniste'))
+
+const Medecins = lazy(() => import('../pages/personnel/Medecin'))
+const AjoutMedecin = lazy(() => import('../pages/formulaire/personnel/ajouts/ajoutMedecin'))
+const AjoutSpecialites = lazy(() => import('../pages/formulaire/configuration/AjoutSpecialite'))
+const AjoutFonctions = lazy(() => import('../pages/formulaire/configuration/AjoutFonction'))
+const AjoutTypeOrdonnances = lazy(() => import('../pages/formulaire/configuration/AjoutTypeOrdonnance'))
+const AjoutTypeExamens = lazy(() => import('../pages/formulaire/configuration/AjoutTypeExamen'))
+const AjoutTypeConsultations = lazy(() => import('../pages/formulaire/configuration/AjoutTypeConsultation'))
+const AjoutCaisses = lazy(() => import('../pages/formulaire/configuration/AjoutCaisse'))
+
+
+ 
 /**
  * ⚠ These are internal routes!
  * They will be rendered inside the app, using the default `containers/Layout`.
@@ -99,6 +125,8 @@ const routes = [
     path: '/consultation/examen',
     component: Examens
   },
+  
+
   //end consultation
   //start configuration
   {
@@ -111,19 +139,99 @@ const routes = [
     component: AjoutGroupe, 
 
   },
+{
+    path: '/configuration/fonction/', 
+    component: Fonction, 
 
+  },{
+    path: '/configuration/fonctions/add', 
+    component: AjoutFonctions, 
+
+  },
+  {
+    path: '/configuration/medicaments', 
+    component: Medicaments, 
+
+  },
+ {
+    path: '/configuration/medicaments/add', 
+    component: AjoutMedicaments, 
+
+  },
+
+
+  
+  {
+    path: '/configuration/specialites/', 
+    component: Specialite, 
+
+  },
+   {
+    path: '/configuration/specialites/add', 
+    component: AjoutSpecialites, 
+
+  },
+
+   {
+    path: '/configuration/type_ordonnance/', 
+    component: TypeOrdonnances, 
+  },
+  {
+    path: '/configuration/type_ordonnances/add', 
+    component: AjoutTypeOrdonnances, 
+  },
+
+  {
+    path: '/configuration/type_examen/', 
+    component: TypeExamens  , 
+  },
+  {
+    path: '/configuration/type_examen/add',
+    component: AjoutTypeExamens
+  },
+
+  {
+    path: '/configuration/type_consultation', 
+    component: TypeConsultations , 
+  },
+  {
+    path: '/configuration/type_consultation/add', 
+    component: AjoutTypeConsultations , 
+  },
+  {
+    path: '/configuration/caisse',
+    component: Caisses
+  },
+  {
+    path: '/configuration/caisse/add',
+    component: AjoutCaisses
+  },
+
+  
+ 
   //end configuration
 
   //start personnel path
-  {
-    path: '/personnel/specialites',
-    component: Specialites
-  },
+  
   {
     path: '/personnel/receptionnistes',
     component: Receptionnistes
   },
-
+  {
+    path: '/personnel/receptionniste/add',
+    component: AjoutReceptionnistes
+  },
+ 
+  {
+    path: '/personnel/medecin',
+    component: Medecins
+  },
+  {
+    path: '/personnel/medecin/add',
+    component: AjoutMedecin
+  },
+  
+ 
 
 
   //end personnel path

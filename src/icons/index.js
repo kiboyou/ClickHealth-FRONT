@@ -33,6 +33,7 @@ import { ReactComponent as ConfigurationIcon } from './configuration.svg'
 import { ReactComponent as DiagnosticIcon } from './diagnostic.svg'
 import { ReactComponent as PatientIcon } from './patients.svg'
 import { ReactComponent as TeamIcon } from './team.svg'
+import { ReactComponent as DoctorIcon } from './doctor.svg'
 
 export {
   ButtonsIcon,
@@ -70,4 +71,5 @@ export {
   DiagnosticIcon,
   PatientIcon,
   TeamIcon,
+  DoctorIcon
 }
