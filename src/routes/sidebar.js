@@ -71,6 +71,41 @@ const routes = [
         name: 'Utilisateur', // name that appear in Sidebar
       },
       
+      {
+        path: '/app/configuration/type_consultation', // the url
+        icon: 'TeamIcon', // the component being exported from icons/index.js
+        name: 'Type consulation', // name that appear in Sidebar
+      },
+       {
+        path: '/app/configuration/type_examen', // the url
+        icon: 'TeamIcon', // the component being exported from icons/index.js
+        name: 'Type examen', // name that appear in Sidebar
+      },
+      {
+        path: '/app/configuration/type_ordonnance', // the url
+        icon: 'TeamIcon', // the component being exported from icons/index.js
+        name: 'Type ordonnance', // name that appear in Sidebar
+      },
+      {
+        path: '/app/configuration/medicaments', // the url
+        icon: 'TeamIcon', // the component being exported from icons/index.js
+        name: 'Médicaments', // name that appear in Sidebar
+      },
+       {
+        path: '/app/configuration/fonction', // the url
+        icon: 'TeamIcon', // the component being exported from icons/index.js
+        name: 'Fonction', // name that appear in Sidebar
+      },
+      {
+        path: '/app/configuration/specialites', // the url
+        icon: 'TeamIcon', // the component being exported from icons/index.js
+        name: 'Spécialités', // name that appear in Sidebar
+      },
+       {
+        path: '/app/configuration/caisse', // the url
+        icon: 'TeamIcon', // the component being exported from icons/index.js
+        name: 'Caisse', // name that appear in Sidebar
+      },
     ],
   },
   {
@@ -97,16 +132,21 @@ const routes = [
     name: 'Personnels',
     routes: [
       // submenu
-      {
-        path: '/app/personnel/specialites',
-        name: 'Specialites',
-      },
+     
       {
         path: '/app/personnel/receptionnistes',
         name: 'Receptionnistes',
       },
+      {
+    path: '/app/personnel/medecin', // the url
+    icon: 'DoctorIcon', // the component being exported from icons/index.js
+    name: 'Medecins', // name that appear in Sidebar
+  }
     ],
   },
+
+  
+  
   // {
   //   path: '/app/avion', // the url
   //   icon: 'ModalsIcon', // the component being exported from icons/index.js

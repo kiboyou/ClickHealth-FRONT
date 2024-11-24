@@ -13,16 +13,12 @@ const Page404 = lazy(() => import('../pages/404'))
 const Blank = lazy(() => import('../pages/Blank'))
 
 
-const Planning = lazy(() => import('../pages/Planning'))
-const AjoutPlanning = lazy(() => import('../pages/formulaire/rendez_vous/AjoutPlanning'))
-
 const User = lazy(() => import('../pages/configuration/User'))
 const AjoutUser = lazy(() => import('../pages/formulaire/personnel/AjoutUser'))
 
-const RendezVous = lazy(() => import('../pages/RendezVous'))
-const AjoutRDV = lazy(() => import('../pages/formulaire/rendez_vous/AjoutRDV'))
-const UpdateRendezVous = lazy(() => import('../pages/formulaire/rendez_vous/UpdateRendezVous'))
 
+
+const RendezVous = lazy(() => import('../pages/RendezVous'))
 // const AjoutRendezVous = lazy(() => import('../pages/formulaire/rendez_vous/AjoutRendezVous'))
 
 const Patients = lazy(() => import('../pages/Patient'))
@@ -44,8 +40,31 @@ const Prescriptions = lazy(() => import('../pages/sante/Prescription'))
 const Groupe = lazy(() => import('../pages/configuration/Groupe'))
 const AjoutGroupe = lazy(() => import('../pages/formulaire/groupe/AjoutGroupe'))
 
-const Specialites = lazy(() => import('../pages/personnel/Specialiste'))
+const Fonction = lazy(() => import('../pages/configuration/Fonction'))
+const Specialite = lazy(() => import('../pages/configuration/Specialite'))
+const TypeOrdonnances = lazy(() => import('../pages/configuration/TypeOrdonnance'))
+const TypeExamens = lazy(() => import('../pages/configuration/TypeExamen'))
+const TypeConsultations = lazy(() => import('../pages/configuration/TypeConsultation'))
+const Caisses = lazy(() => import('../pages/configuration/Caisse'))
+const Medicaments = lazy(() => import('../pages/configuration/Medicament'))
+const AjoutMedicaments = lazy(() => import('../pages/formulaire/configuration/AjoutMedicament'))
+
+
+
+
 const Receptionnistes = lazy(() => import('../pages/personnel/Receptionniste'))
+const AjoutReceptionnistes = lazy(() => import('../pages/formulaire/personnel/ajouts/ajoutReceptionniste'))
+
+const Medecins = lazy(() => import('../pages/personnel/Medecin'))
+const AjoutMedecin = lazy(() => import('../pages/formulaire/personnel/ajouts/ajoutMedecin'))
+const AjoutSpecialites = lazy(() => import('../pages/formulaire/configuration/AjoutSpecialite'))
+const AjoutFonctions = lazy(() => import('../pages/formulaire/configuration/AjoutFonction'))
+const AjoutTypeOrdonnances = lazy(() => import('../pages/formulaire/configuration/AjoutTypeOrdonnance'))
+const AjoutTypeExamens = lazy(() => import('../pages/formulaire/configuration/AjoutTypeExamen'))
+const AjoutTypeConsultations = lazy(() => import('../pages/formulaire/configuration/AjoutTypeConsultation'))
+const AjoutCaisses = lazy(() => import('../pages/formulaire/configuration/AjoutCaisse'))
+
+
 
 /**
  * ⚠ These are internal routes!
@@ -76,13 +95,13 @@ const routes = [
   },
 
   {
-    path: '/planning', 
-    component: Planning, 
+    path: '/planning',
+    component: Planning,
   },
 
   {
-    path: '/planning/add', 
-    component: AjoutPlanning, 
+    path: '/planning/add',
+    component: AjoutPlanning,
   },
 
   {
@@ -91,8 +110,8 @@ const routes = [
   },
 
   {
-    path: '/rendez_vous/add', 
-    component: AjoutRDV, 
+    path: '/rendez_vous/add',
+    component: AjoutRDV,
   },
 
   {
@@ -187,18 +206,98 @@ const routes = [
     component: AjoutGroupe, 
 
   },
+{
+    path: '/configuration/fonction/',
+    component: Fonction,
+
+  },{
+    path: '/configuration/fonctions/add',
+    component: AjoutFonctions,
+
+  },
+  {
+    path: '/configuration/medicaments',
+    component: Medicaments,
+
+  },
+ {
+    path: '/configuration/medicaments/add',
+    component: AjoutMedicaments,
+
+  },
+
+
+
+  {
+    path: '/configuration/specialites/',
+    component: Specialite,
+
+  },
+   {
+    path: '/configuration/specialites/add',
+    component: AjoutSpecialites,
+
+  },
+
+   {
+    path: '/configuration/type_ordonnance/',
+    component: TypeOrdonnances,
+  },
+  {
+    path: '/configuration/type_ordonnances/add',
+    component: AjoutTypeOrdonnances,
+  },
+
+  {
+    path: '/configuration/type_examen/',
+    component: TypeExamens  ,
+  },
+  {
+    path: '/configuration/type_examen/add',
+    component: AjoutTypeExamens
+  },
+
+  {
+    path: '/configuration/type_consultation',
+    component: TypeConsultations ,
+  },
+  {
+    path: '/configuration/type_consultation/add',
+    component: AjoutTypeConsultations ,
+  },
+  {
+    path: '/configuration/caisse',
+    component: Caisses
+  },
+  {
+    path: '/configuration/caisse/add',
+    component: AjoutCaisses
+  },
+
+
 
   //end configuration
 
   //start personnel path
-  {
-    path: '/personnel/specialites',
-    component: Specialites
-  },
+
   {
     path: '/personnel/receptionnistes',
     component: Receptionnistes
   },
+  {
+    path: '/personnel/receptionniste/add',
+    component: AjoutReceptionnistes
+  },
+
+  {
+    path: '/personnel/medecin',
+    component: Medecins
+  },
+  {
+    path: '/personnel/medecin/add',
+    component: AjoutMedecin
+  },
+
 
 
 

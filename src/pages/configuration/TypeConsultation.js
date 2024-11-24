@@ -1,6 +1,5 @@
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import {
-  Badge,
   Button,
   Input,
   Pagination,
@@ -14,46 +13,44 @@ import {
 } from '@windmill/react-ui';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchReceptionnistes } from '../../Api/features/receptionnistes/receptionnisteThunk';  // Import des thunks pour les réceptionnistes
+import { fetchTypeConsultations } from '../../Api/features/consultation/typeConsultationThunk'; // Assurez-vous que le thunk est bien défini
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import { NavLink } from 'react-router-dom';
 
-const Receptionniste = () => {
+const TypeConsultation = () => {
   const dispatch = useDispatch();
-  const { success, receptionnistes, loading } = useSelector((state) => state.receptionnistes);  // Utilisation de l'état des réceptionnistes
+  const { success, typeConsultations, loading } = useSelector((state) => state.typeConsultations);
 
   const [pageTable, setPageTable] = useState(1);
   const [resultsPerPage] = useState(10);
 
-  // Synchronisation avec les données récupérées des réceptionnistes
+  // Synchronisation avec les données récupérées des types de consultations
   const [dataTable, setDataTable] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchReceptionnistes());  // Charge les réceptionnistes au premier rendu
+    dispatch(fetchTypeConsultations());  // Charge les types de consultations au premier rendu
   }, [dispatch]);
 
   useEffect(() => {
-      console.log(receptionnistes);  
-    // Met à jour les données de la table lorsque `receptionnistes` est modifié
-    setDataTable(receptionnistes);
-  }, [receptionnistes]);
+    // Met à jour les données de la table lorsque `typeConsultations` est modifié
+    setDataTable(typeConsultations);
+  }, [typeConsultations]);
 
   // Configuration de la pagination
   const totalResults = dataTable.length;
-  const displayedReceptionnistes = dataTable.slice((pageTable - 1) * resultsPerPage, pageTable * resultsPerPage);
+  const displayedTypeConsultations = dataTable.slice((pageTable - 1) * resultsPerPage, pageTable * resultsPerPage);
 
   // Changer de page dans la pagination
   function onPageChange(p) {
     setPageTable(p);
   }
- 
 
   return (
     <>
       {loading && <Loading />}
-      <PageTitle>Liste des Réceptionnistes</PageTitle>
+      <PageTitle>Liste des Types de Consultation</PageTitle>
 
       {/* Zone de recherche */}
       <div className="flex justify-center flex-1 lg:mr-32">
@@ -63,7 +60,7 @@ const Receptionniste = () => {
           </div>
           <Input
             className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
-            placeholder="Rechercher un réceptionniste"
+            placeholder="Rechercher un type de consultation"
             aria-label="Search"
           />
         </div>
@@ -72,48 +69,59 @@ const Receptionniste = () => {
       {/* Boutons de gestion */}
       <div className="flex justify-end space-x-4">
         <button
-          onClick={() => dispatch(fetchReceptionnistes())}
+          onClick={() => dispatch(fetchTypeConsultations())}
           className="px-4 py-2 mt-10 mb-10 text-lg font-bold text-white rounded-lg bg-cadre1 focus:outline-none focus:border-none sm:text-xl font-montserrat"
         >
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
 
-        <NavLink to="/app/personnel/receptionniste/add">
+        <NavLink to="/app/configuration/type_consultation/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
-            Ajouter un réceptionniste
+            Ajouter un type de consultation
           </button>
         </NavLink>
       </div>
 
-      {/* Table des réceptionnistes */}
+      {/* Table des types de consultations */}
       <TableContainer className="mb-8">
         <Table>
           <TableHeader>
             <tr>
-              <TableCell>Nom</TableCell>
-              <TableCell>Caisse</TableCell>
+              <TableCell>ID</TableCell>
+              <TableCell>Nom du Type de Consultation</TableCell>
+              <TableCell>Spécialité</TableCell>
+              <TableCell>Prix</TableCell>
               <TableCell>Actions</TableCell>
             </tr>
           </TableHeader>
           <TableBody>
-            {displayedReceptionnistes.map((receptionniste, i) => (
+            {displayedTypeConsultations.map((consultation, i) => (
               <TableRow key={i}>
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{receptionniste.utilisateur_info?.first_name} {receptionniste.utilisateur_info?.last_name}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{receptionniste.utilisateur_info?.email}</p>
+                      <p className="font-semibold">{consultation.id}</p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{receptionniste.caisse_detail?.caisse }</span>   
+                  <span className="text-sm">{consultation.nom}</span> {/* Affichage du nom du type de consultation */}
                 </TableCell>
                 <TableCell>
+                  <span className="text-sm">{consultation.specialite_detail?.nom_specialite}</span> {/* Affichage de la spécialité */}
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm">{consultation.prix} €</span> {/* Affichage du prix */}
+                </TableCell>
+
+                <TableCell>
                   <div className="flex items-center space-x-4">
+                    {/* Modifier un type de consultation */}
                     <Button layout="link" size="icon" aria-label="Edit">
                       <EditIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
+
+                    {/* Supprimer un type de consultation */}
                     <Button layout="link" size="icon" aria-label="Delete">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
@@ -137,4 +145,4 @@ const Receptionniste = () => {
   );
 };
 
-export default Receptionniste;
+export default TypeConsultation;
