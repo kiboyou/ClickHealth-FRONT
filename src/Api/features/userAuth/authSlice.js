@@ -11,6 +11,12 @@ const authSlice = createSlice({
     success: null
   },
   reducers: {
+    clearError: (state) => {
+      state.error = null;
+    },
+    clearSuccess: (state) => {
+      state.success = null;
+    },
     initializeAuth: (state) => {
       const token = localStorage.getItem('token');
       if (token) {
@@ -87,5 +93,5 @@ const authSlice = createSlice({
   },
 });
 
-export const { initializeAuth } = authSlice.actions;
+export const { initializeAuth, clearError, clearSuccess } = authSlice.actions;
 export default authSlice.reducer;

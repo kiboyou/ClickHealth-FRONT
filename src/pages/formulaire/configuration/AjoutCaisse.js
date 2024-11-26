@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addCaisse } from '../../../Api/features/receptionnistes/caisseThunk'; // Import du thunk
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/receptionnistes/caisseSlice';
 
 const AjoutCaisse = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const AjoutCaisse = () => {
   // Rediriger après un ajout réussi
   useEffect(() => {
     if (success === 'Caisse ajoutée avec succès') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/configuration/caisse');  // Rediriger vers la liste des caisses
     }
   }, [dispatch, navigate, success]);
@@ -54,7 +56,7 @@ const AjoutCaisse = () => {
  
 
                 {/* Afficher les erreurs, si elles existent */}
-                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 
                 {/* Bouton de soumission */}
                 <button

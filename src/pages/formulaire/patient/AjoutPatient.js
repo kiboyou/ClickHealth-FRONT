@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { addUser } from '../../../Api/features/user/userThunks';
 import { createPatient } from '../../../Api/features/patient/patientThunks';
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/patient/patientSlice';
 
 const AjoutPatient = () => {
   const dispatch = useDispatch();
@@ -63,6 +64,7 @@ const AjoutPatient = () => {
   // Effet pour surveiller le succès de la création du patient et rediriger
   useEffect(() => {
     if (success == 'Patient created successfully') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/patients');
     }
   }, [success, navigate]);

@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 import { fetchPlannings } from '../../../Api/features/plannig/plannigThunks';
 import { createRendezVous } from '../../../Api/features/rendezVous/rendezVousThunks';
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/rendezVous/rendezVousSlice';
+import { fetchTypeConsultations } from '../../../Api/features/consultation/typeConsultationThunk';
 
 const AjoutRDV = () => {
   const dispatch = useDispatch();
@@ -13,6 +15,7 @@ const AjoutRDV = () => {
 
   // Récupération des états depuis Redux
   const { success, loading, error } = useSelector((state) => state.rendezVous);
+  const { typeConsultations } = useSelector((state) => state.typeConsultations);
   const { plannings } = useSelector((state) => state.planning);
   const { user } = useSelector((state) => state.auth);
   const { patients } = useSelector((state) => state.patient);
@@ -41,19 +44,22 @@ const AjoutRDV = () => {
       createRendezVous({
         patient: 1, // ID du patient connecté
         planning: planningChoisi?.id,
+        type_consultation : specialite,
         message
       })
     );
   };
 
-  // Charger les plannings au montage
+  // Fetch des plannings à chaque changement dans l'état des plannings
   useEffect(() => {
     dispatch(fetchPlannings());
-  }, [dispatch, plannings.lemgth]);
+    dispatch(fetchTypeConsultations());
+  }, [dispatch, plannings.lemgth, typeConsultations.length]);
 
   // Redirection après succès
   useEffect(() => {
     if (success === 'rdv created successfully') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/rendez_vous');
     }
   }, [navigate, success]);
@@ -72,17 +78,20 @@ const AjoutRDV = () => {
 
               {/* Sélection de la spécialité */}
               <Label className="mt-4">
-                <span>Spécialité</span>
-                <Select
-                  className="mt-1"
-                  value={specialite}
-                  onChange={(e) => setSpecialite(e.target.value)}
-                >
-                  <option value="">Choisissez une spécialité</option>
-                  <option value="medecin_generale">Médecine générale</option>
-                  <option value="cardiologie">Cardiologie</option>
-                </Select>
-              </Label>
+                  <span>Type de consultation</span>
+                  <Select
+                    className="mt-1"
+                    value={specialite}
+                    onChange={(e) => setSpecialite(e.target.value)}
+                  >
+                    <option value="">Choisissez un type de consultation</option>
+                    {typeConsultations.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.nom}
+                      </option>
+                    ))}
+                  </Select>
+                </Label>
 
               {/* Sélection du planning */}
               <Label className="mt-4">

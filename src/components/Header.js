@@ -7,25 +7,24 @@ import {
 } from '../icons'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCurrentUser } from '../Api/features/userAuth/authThunks';
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { NavLink, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { FaChevronDown } from 'react-icons/fa';
+import { logoutUser } from '../Api/features/userAuth/authThunks';
 
 
 function Header() {
-
+  
   const dispatch = useDispatch();
-  const navigate = useHistory().push;
   
   const { user } = useSelector((state) => state.auth);
-  
   const { toggleSidebar } = useContext(SidebarContext)
+  
+  const [isOpen, setIsOpen] = useState(false);
+  const toggleDropdown = () => setIsOpen(!isOpen);
 
-
-  // useEffect(() => {
-  //   if (isAuthenticated) {
-  //     dispatch(fetchCurrentUser());
-  //   }
-  // }, [isAuthenticated, navigate]);
+  const handleLogout = () => {
+    dispatch(logoutUser()); // Déconnexion
+  };
 
   return (
     <header className="z-40 py-4 bg-white shadow-bottom bg-cadre1">
@@ -46,11 +45,11 @@ function Header() {
         </div>
         <ul className="flex items-center flex-shrink-0 space-x-6">
           {/* <!-- Profile menu --> */}
-          <li className="relative">
+          <li className="relative cursor-pointer">
           {         
             user ? (
-                <div className='text-white'>
-                  Hello, <span className='text-bold'>{user.first_name} {user.last_name}</span>
+                <div className='flex text-white' onClick={toggleDropdown}>
+                  Hello, <span className='text-bold'>{user.first_name} {user.last_name} </span> <FaChevronDown className='ml-2' />
                 </div>
               ) : (
                 <div className="px-4 my-6">
@@ -58,6 +57,32 @@ function Header() {
                 </div>
               )
           }
+          {/* Dropdown Menu */}
+            {isOpen && (
+              <div className="absolute right-0 w-48 mt-2 rounded-lg shadow-lg ">
+                
+                  <button className="w-full px-4 py-2 mt-1 text-lg font-bold bg-white focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
+                  onClick={handleLogout}>
+                    Deconnexion
+                  </button>
+                
+                {/* <NavLink
+                  to="/app/configuration/user/add"
+                  className="block px-4 py-2 text-gray-700 btnprise"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Administrateur
+                </NavLink>
+
+                <NavLink
+                  to="/app/patients/add"
+                  className="block px-4 py-2 text-gray-700 btnprise"
+                  onClick={() => setIsOpen(false)}
+                >
+                  patient
+                </NavLink>           */}
+              </div>
+            )}
             
           </li>
         </ul>

@@ -33,6 +33,9 @@ const AjoutPatient = lazy(() => import('../pages/formulaire/patient/AjoutPatient
 
 //reception
 const FacturationsExamen = lazy(() => import('../pages/reception/FactureExamen'))
+const AjoutFactureExamen = lazy(() => import('../pages/formulaire/facture/AjoutFactureExamen'))
+const DetailFactureRdv = lazy(() => import('../pages/reception/detailsFactures/DetailFactureRdv'))
+const DetailFactureExamen = lazy(() => import('../pages/reception/detailsFactures/DetailFactureExamen'))
 const FacturationsRdv = lazy(() => import('../pages/reception/FactureRdv'))
 const Queues = lazy(() => import('../pages/reception/Queue'))
 
@@ -138,7 +141,12 @@ const routes = [
 
   {
     path: '/reception/factures/examens/add',
-    component: FacturationsExamen
+    component: AjoutFactureExamen
+  },
+
+  {
+    path: '/reception/factures/examens/detail',
+    component: DetailFactureExamen
   },
 
   {
@@ -149,6 +157,11 @@ const routes = [
   {
     path: '/reception/factures/rdv/add',
     component: FacturationsRdv
+  },
+
+  {
+    path: '/reception/factures/rdv/detail',
+    component: DetailFactureRdv
   },
 
   {

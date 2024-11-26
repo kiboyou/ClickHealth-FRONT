@@ -112,8 +112,11 @@ const Examen = () => {
                 <TableCell>
                   <span className="text-sm">{examen.patient_detail.telephone}</span>
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <span className="text-sm">{examen.type_examen_detail.specialite_detail.nom_specialite}</span>
+                </TableCell> */}
+                <TableCell>
+                  <span className="text-sm">{examen.type_examen_detail.nom}</span>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">{examen.type_examen_detail.nom}</span>

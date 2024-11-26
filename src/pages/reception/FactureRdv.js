@@ -1,4 +1,4 @@
-import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon, EyeIcon, PencilIcon, TrashIcon } from '@heroicons/react/24/outline';
 import {
   Badge,
   Button,
@@ -15,15 +15,17 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+import { NavLink, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { fetchFacturesRdv } from '../../Api/features/factureRdv/factureRdvThunks';
 import PageTitle from '../../components/Typography/PageTitle';
-import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
+import { EditIcon, SearchIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 
 
 const FactureRdv = () => {
   const dispatch = useDispatch()
+  const  navigate = useHistory().push;
+
   const { success, factures, loading } = useSelector((state) => state.factureRdv)
 
   const [pageTable2, setPageTable2] = useState(1)
@@ -49,6 +51,11 @@ const FactureRdv = () => {
   function onPageChangeTable2(p) {
     setPageTable2(p)
   }
+
+    // Fonction pour gérer l'action Voir Plus
+  const handleVoirPlus = (facture) => {
+    navigate('/app/reception/factures/rdv/detail', {facture}); // Redirection avec les données
+  };
 
   return (
     <>
@@ -77,11 +84,11 @@ const FactureRdv = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
-        <NavLink to="/app/patients/add">
+        {/* <NavLink to="/app/patients/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter une facture
           </button>
-        </NavLink>
+        </NavLink> */}
         
       </div>
 
@@ -99,10 +106,10 @@ const FactureRdv = () => {
             {displayedPatients.map((facture, i) => (
               <TableRow key={i}>
                 <TableCell>
-                  <span className="text-sm">{facture.rendezVous_code}</span>
+                  <span className="text-sm">{facture.rendezVous_details.code_rendez_vous}</span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{facture.total_montant}</span>
+                  <span className="text-sm">{facture.montant}  €</span>
                 </TableCell>
                 
                 <TableCell>
@@ -117,12 +124,23 @@ const FactureRdv = () => {
                 
                 <TableCell>
                   <div className="flex items-center space-x-4">
-                    <Button layout="link" size="icon" aria-label="Edit" >
-                      <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
-                    </Button>
-                    <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
+                    {/* Bouton Voir Plus */}
+                    <button className="focus:outline-none focus:border-none"
+                      onClick={() => handleVoirPlus(facture)} // Appel de la fonction handleVoirPlus
+                    >
+                      <EyeIcon className="w-6 h-6 focus:outline-none focus:border-none" aria-hidden="true" />
+                    </button>
+
+                    {/* Bouton Modifier */}
+                    <button layout="link" size="icon" aria-label="Modifier" className="focus:outline-none focus:border-none">
+                      <PencilIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
+                    </button>
+
+                    {/* Bouton Supprimer */}
+                    <button layout="link" size="icon" aria-label="Supprimer" className="focus:outline-none focus:border-none">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
+                    </button>
+                    
                   </div>
                 </TableCell>
               </TableRow>

@@ -21,6 +21,7 @@ import { EditIcon, SearchIcon, TrashIcon } from '../icons';
 import Loading from '../utils/Loading';
 
 import { fetchRendezVous, fetchRendezVousByCode } from '../Api/features/rendezVous/rendezVousThunks';
+import { clearSuccess } from '../Api/features/rendezVous/rendezVousSlice';
 
 
 const RendezVous = () => {
@@ -68,6 +69,7 @@ const RendezVous = () => {
   useEffect(() => {
     // Si le code est valide, rediriger vers la page de mise à jour
     if (success === 'rdv fetched successfully') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       // Si le code est validé avec succès
       history.push(`/app/patients/add`);
     } else {

@@ -27,6 +27,8 @@
     "chart.js": "2.9.3",
     "classnames": "2.2.6",
     "faker": "4.1.0",
+    "html2canvas": "^1.4.1",
+    "jspdf": "^2.5.2",
     "react": "^18.3.1",
     "react-chartjs-2": "2.9.0",
     "react-dom": "^18.3.1",

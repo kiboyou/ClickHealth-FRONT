@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 import { fetchGroups } from '../../../Api/features/groupe/groupeThunks'
 import { addUser } from '../../../Api/features/user/userThunks'
 import Loading from '../../../utils/Loading'
+import { clearSuccess } from '../../../Api/features/user/userSlice'
 
 const  AjoutUser = () => {
   
@@ -36,6 +37,7 @@ const  AjoutUser = () => {
   
   useEffect(() => {
     if (success == 'User added successfully') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/configuration/user');
     }
   }, [dispatch, navigate, success]);

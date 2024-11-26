@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { addTypeConsultation } from '../../../Api/features/consultation/typeConsultationThunk'; // Assurez-vous que ce fichier de thunk est correctement importé
 import { fetchSpecialites } from '../../../Api/features/medecins/specialiteThunk'; // Assurez-vous de bien importer le bon thunk
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/consultation/typeConsultationSlice';
 
 const AjoutTypeConsultation = () => {
   const dispatch = useDispatch();
@@ -33,6 +34,7 @@ const AjoutTypeConsultation = () => {
   // Rediriger après un ajout réussi
   useEffect(() => {
     if (success === 'Type de consultation ajouté avec succès') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/configuration/type_consultation');  // Rediriger vers la liste des types de consultations
     }
   }, [dispatch, navigate, success]);
@@ -92,7 +94,7 @@ const AjoutTypeConsultation = () => {
                 </Label>
 
                 {/* Affichage des erreurs */}
-                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 
                 {/* Bouton de soumission */}
                 <button 

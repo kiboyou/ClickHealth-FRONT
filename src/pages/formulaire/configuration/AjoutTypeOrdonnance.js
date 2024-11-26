@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addTypeOrdonnance } from '../../../Api/features/ordonnance/typeOrdonnanceThunk'; // Assurez-vous que ce fichier de thunk est correctement importé
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/ordonnance/typeOrdonnanceSlice'; // Assurez-vous que ce fichier de tranche est correctement importé
 
 const AjoutTypeOrdonnance = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const AjoutTypeOrdonnance = () => {
   // Rediriger après un ajout réussi
   useEffect(() => {
     if (success === 'Type d\'ordonnance ajouté avec succès') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/configuration/type_ordonnance');  // Rediriger vers la liste des types d'ordonnances
     }
   }, [dispatch, navigate, success]);
@@ -52,7 +54,7 @@ const AjoutTypeOrdonnance = () => {
                 </Label>
 
                 {/* Afficher les erreurs, si elles existent */}
-                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 
                 {/* Bouton de soumission */}
                 <button 

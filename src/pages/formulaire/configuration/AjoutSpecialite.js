@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addSpecialite } from '../../../Api/features/medecins/specialiteThunk'; // Assure-toi d'avoir ce fichier de thunk
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/medecins/specialiteSlice';
 
 const AjoutSpecialite = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const AjoutSpecialite = () => {
   // Rediriger après un ajout réussi
   useEffect(() => {
     if (success === 'Spécialité ajoutée avec succès') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/configuration/specialites');  // Rediriger vers la liste des spécialités
     }
   }, [dispatch, navigate, success]);

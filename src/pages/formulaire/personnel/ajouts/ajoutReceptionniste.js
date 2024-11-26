@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
 import { Input, Label, Select } from '@windmill/react-ui';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { addUser } from '../../../../Api/features/user/userThunks';
+import { fetchCaisses } from '../../../../Api/features/receptionnistes/caisseThunk'; // Assurez-vous de disposer de cette action pour récupérer les caisses
+import { clearSuccess } from '../../../../Api/features/receptionnistes/receptionnisteSlice';
 import { addReceptionniste } from '../../../../Api/features/receptionnistes/receptionnisteThunk';
-import { fetchCaisses } from '../../../../Api/features/receptionnistes/caisseThunk';  // Assurez-vous de disposer de cette action pour récupérer les caisses
+import { addUser } from '../../../../Api/features/user/userThunks';
 import Loading from '../../../../utils/Loading';
 
 const AjoutReceptionniste = () => {
@@ -47,8 +48,9 @@ const AjoutReceptionniste = () => {
 
   // Effet pour surveiller le succès de la création du réceptionniste et rediriger
   useEffect(() => {
-    if (userSuccess) {
-       navigate('/app/personnel/receptionnistes');
+    if (receptionnisteSuccess) {
+      dispatch(clearSuccess()); // Réinitialiser success à null
+      navigate('/app/personnel/receptionnistes');
  
     }
   }, [userSuccess, navigate]);

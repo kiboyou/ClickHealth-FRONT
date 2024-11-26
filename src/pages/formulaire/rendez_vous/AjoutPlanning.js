@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 
 import { createPlanning } from '../../../Api/features/plannig/plannigThunks';
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/plannig/plannigSlice';
 
 const AjoutPlanning = () => {
   const dispatch = useDispatch();
@@ -46,6 +47,7 @@ const AjoutPlanning = () => {
 
   useEffect(() => {
     if (success == 'Planning created successfully') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/planning');
     }
   }, [dispatch, navigate, success]);

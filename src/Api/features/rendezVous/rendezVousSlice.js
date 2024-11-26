@@ -22,6 +22,12 @@ const rendezVousSlice = createSlice({
   name: 'rendezVous',
   initialState,
   reducers: {
+    clearError: (state) => {
+      state.error = null;
+    },
+    clearSuccess: (state) => {
+      state.success = null;
+    },
     resetCurrentRendezVous: (state) => {
       state.currentRendezVous = null;
     },
@@ -130,5 +136,5 @@ const rendezVousSlice = createSlice({
   },
 });
 
-export const { resetCurrentRendezVous } = rendezVousSlice.actions;
+export const { resetCurrentRendezVous, clearError, clearSuccess } = rendezVousSlice.actions;
 export default rendezVousSlice.reducer;

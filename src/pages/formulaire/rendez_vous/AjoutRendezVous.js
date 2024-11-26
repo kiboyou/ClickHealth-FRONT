@@ -8,6 +8,9 @@ import { createRendezVous } from '../../../Api/features/rendezVous/rendezVousThu
 import ImageLight from '../../../assets/img/login-office.jpeg';
 import ImageDark from '../../../assets/img/login.jpg';
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/rendezVous/rendezVousSlice';
+import { fetchTypeConsultations } from '../../../Api/features/consultation/typeConsultationThunk';
+
 
 const AjoutRendezVous = () => {
   const dispatch = useDispatch();
@@ -24,6 +27,7 @@ const AjoutRendezVous = () => {
 
 
   const { success, loading, error } = useSelector((state) => state.rendezVous);
+  const { typeConsultations } = useSelector((state) => state.typeConsultations);
   const { plannings } = useSelector((state) => state.planning);
   const planningTrue = plannings.filter((plannig) => plannig.disponible);
 
@@ -34,7 +38,7 @@ const AjoutRendezVous = () => {
     e.preventDefault();
 
     const planningChoisi = plannings.find((p) => p.id === parseInt(planning));
-    console.log(planning);
+    console.log(planning, specialite);
     dispatch(
       createRendezVous({
         planning: planningChoisi?.id,
@@ -43,7 +47,7 @@ const AjoutRendezVous = () => {
         email,
         telephone,
         message,
-        // specialite,
+        type_consultation : specialite,
         message
       })
     );
@@ -52,12 +56,14 @@ const AjoutRendezVous = () => {
   // Fetch des plannings à chaque changement dans l'état des plannings
     useEffect(() => {
       dispatch(fetchPlannings());
-    }, [dispatch, plannings.lemgth]);
+      dispatch(fetchTypeConsultations());
+    }, [dispatch, plannings.lemgth, typeConsultations.length]);
   
     
   // Redirection après succès
   useEffect(() => {
     if (success === 'rdv created successfully') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/');
     }
   }, [navigate, success]);
@@ -143,15 +149,18 @@ const AjoutRendezVous = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Spécialité</span>
+                  <span>Type de consultation</span>
                   <Select
                     className="mt-1"
                     value={specialite}
                     onChange={(e) => setSpecialite(e.target.value)}
                   >
-                    <option></option>
-                    <option>Médecin généraliste</option>
-                    <option>Cardiologie</option>
+                    <option value="">Choisissez un type de consultation</option>
+                    {typeConsultations.map((p) => (
+                      <option key={p.id} value={p.id}>
+                        {p.nom}
+                      </option>
+                    ))}
                   </Select>
                 </Label>
 

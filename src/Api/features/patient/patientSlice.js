@@ -14,6 +14,12 @@ const patientSlice = createSlice({
   name: 'patient',
   initialState,
   reducers: {
+    clearError: (state) => {
+      state.error = null;
+    },
+    clearSuccess: (state) => {
+      state.success = null;
+    },
     resetCurrentPatient: (state) => {
       state.currentPatient = null;
     }
@@ -100,5 +106,5 @@ const patientSlice = createSlice({
   },
 });
 
-export const { resetCurrentPatient } = patientSlice.actions;
+export const { resetCurrentPatient, clearError, clearSuccess  } = patientSlice.actions;
 export default patientSlice.reducer;

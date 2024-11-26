@@ -14,6 +14,12 @@ const planningSlice = createSlice({
   name: 'planning',
   initialState,
   reducers: {
+    clearError: (state) => {
+      state.error = null;
+    },
+    clearSuccess: (state) => {
+      state.success = null;
+    },
     resetCurrentPlanning: (state) => {
       state.currentPlanning = null;
     }
@@ -104,5 +110,5 @@ const planningSlice = createSlice({
   },
 });
 
-export const { resetCurrentPlanning } = planningSlice.actions;
+export const { resetCurrentPlanning, clearError, clearSuccess  } = planningSlice.actions;
 export default planningSlice.reducer;

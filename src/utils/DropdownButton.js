@@ -33,11 +33,7 @@ function DropdownButton() {
             onClick={() => setIsOpen(false)}
           >
             patient
-          </NavLink>
-
-        
-
-          
+          </NavLink>          
         </div>
       )}
     </div>

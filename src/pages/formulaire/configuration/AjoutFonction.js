@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addFonction } from '../../../Api/features/medecins/fonctionThunk'; // Import du thunk
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/medecins/fonctionSlice';
 
 const AjoutFonction = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const AjoutFonction = () => {
   // Rediriger après un ajout réussi
   useEffect(() => {
     if (success === 'Fonction ajoutée avec succès') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/configuration/fonction');  // Rediriger vers la liste des fonctions
     }
   }, [dispatch, navigate, success]);

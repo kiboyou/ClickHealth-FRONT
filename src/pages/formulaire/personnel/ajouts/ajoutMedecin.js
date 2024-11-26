@@ -7,6 +7,7 @@ import { addMedecin } from '../../../../Api/features/medecins/medecinThunks';
 import { fetchFonctions } from '../../../../Api/features/medecins/fonctionThunk';
 import { fetchSpecialites } from '../../../../Api/features/medecins/specialiteThunk';
 import Loading from '../../../../utils/Loading';
+import { clearSuccess } from '../../../../Api/features/medecins/medecinSlice';
 
 const AjoutMedecin = () => {
   const dispatch = useDispatch();
@@ -52,8 +53,9 @@ const AjoutMedecin = () => {
 
   // Effet pour surveiller le succès de la création du médecin et rediriger
   useEffect(() => {
-    if (userSuccess) {
-       navigate('/app/personnel/medecin');
+    if (medecinSuccess == 'Medecin ajouté avec succès') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
+      navigate('/app/personnel/medecin');
     }
   }, [userSuccess,navigate]);
 

@@ -7,6 +7,7 @@ import { updateRendezVous } from '../../../Api/features/rendezVous/rendezVousThu
 import ImageLight from '../../../assets/img/login-office.jpeg';
 import ImageDark from '../../../assets/img/login.jpg';
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/rendezVous/rendezVousSlice';
 
 const UpdateRendezVous = () => {
   const dispatch = useDispatch();
@@ -77,6 +78,7 @@ const UpdateRendezVous = () => {
   // Redirection après succès
   useEffect(() => {
     if (success === 'rdv updated successfully') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/'); // Redirige après la mise à jour réussie
     }
   }, [navigate, success]);

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createMedicament } from '../../../Api/features/medicaments/medicamentThunk'; // Import du thunk pour ajouter un médicament
 import Loading from '../../../utils/Loading';
+// import { clearSuccess } from '../../../Api/features/medicaments/medicamentSlice';
 
 const AjoutMedicament = () => {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const AjoutMedicament = () => {
   // Rediriger après un ajout réussi
   useEffect(() => {
     if (success === 'Médicament ajouté avec succès') {
+      // dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/configuration/medicaments');  // Rediriger vers la liste des médicaments
     }
   }, [dispatch,success, navigate]);

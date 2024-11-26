@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { addTypeExamen } from '../../../Api/features/examen/typeExamenThunk'; // Assurez-vous que ce fichier de thunk est correctement importé
 import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/examen/typeExamenSlice';
 
 const AjoutTypeExamen = () => {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ const AjoutTypeExamen = () => {
   // Rediriger après un ajout réussi
   useEffect(() => {
     if (success === 'Type d\'examen ajouté avec succès') {
+      dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/configuration/type_examen');  // Rediriger vers la liste des types d'examens
     }
   }, [dispatch, navigate, success]);
@@ -65,7 +67,7 @@ const AjoutTypeExamen = () => {
                 </Label>
 
                 {/* Afficher les erreurs, si elles existent */}
-                {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
 
                 {/* Bouton de soumission */}
                 <button 
