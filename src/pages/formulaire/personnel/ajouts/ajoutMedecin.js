@@ -53,11 +53,11 @@ const AjoutMedecin = () => {
 
   // Effet pour surveiller le succès de la création du médecin et rediriger
   useEffect(() => {
-    if (medecinSuccess == 'Medecin ajouté avec succès') {
+    if (medecinSuccess == 'Médecin ajouté avec succès') {
       dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/personnel/medecin');
     }
-  }, [userSuccess,navigate]);
+  }, [medecinSuccess,navigate]);
 
   // Gérer la soumission du formulaire
   const handleSubmit = async (e) => {

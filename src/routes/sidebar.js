@@ -5,7 +5,7 @@
  * If you're looking to actual Router routes, go to
  * `routes/index.js`
  */
-const routes = [
+const routesAdmin = [
   {
     path: '/app/dashboard', // the url
     icon: 'HomeIcon', // the component being exported from icons/index.js
@@ -145,96 +145,7 @@ const routes = [
     ],
   },
 
-  
-  
-  // {
-  //   path: '/app/avion', // the url
-  //   icon: 'ModalsIcon', // the component being exported from icons/index.js
-  //   name: 'Avion', // name that appear in Sidebar
-  // },
-
-  // {
-  //   path: '/app/reservation', // the url
-  //   icon: 'ModalsIcon', // the component being exported from icons/index.js
-  //   name: 'Reservation', // name that appear in Sidebar
-  // },
-
-  // {
-  //   path: '/app/personne', // the url
-  //   icon: 'ModalsIcon', // the component being exported from icons/index.js
-  //   name: 'Personne', // name that appear in Sidebar
-  // },
-
-  // {
-  //   path: '/app/conges', // the url
-  //   icon: 'ModalsIcon', // the component being exported from icons/index.js
-  //   name: 'Conges', // name that appear in Sidebar
-  // },
-
-  // {
-  //   path: '/app/notification', // the url
-  //   icon: 'ModalsIcon', // the component being exported from icons/index.js
-  //   name: 'Notification', // name that appear in Sidebar
-  // },
-
-
-  // {
-  //   path: '/app/forms',
-  //   icon: 'FormsIcon',
-  //   name: 'Forms',
-  // },
-  // {
-  //   path: '/app/cards',
-  //   icon: 'CardsIcon',
-  //   name: 'Cards',
-  // },
-  // {
-  //   path: '/app/charts',
-  //   icon: 'ChartsIcon',
-  //   name: 'Charts',
-  // },
-  // {
-  //   path: '/app/buttons',
-  //   icon: 'ButtonsIcon',
-  //   name: 'Buttons',
-  // },
-  // {
-  //   path: '/app/modals',
-  //   icon: 'ModalsIcon',
-  //   name: 'Modals',
-  // },
-  // {
-  //   path: '/app/tables',
-  //   icon: 'TablesIcon',
-  //   name: 'Tables',
-  // },
-  // {
-  //   icon: 'PagesIcon',
-  //   name: 'Pages',
-  //   routes: [
-  //     // submenu
-  //     {
-  //       path: '/login',
-  //       name: 'Login',
-  //     },
-  //     {
-  //       path: '/create-account',
-  //       name: 'Create new account',
-  //     },
-  //     {
-  //       path: '/forgot-password',
-  //       name: 'Forgot my password',
-  //     },
-  //     {
-  //       path: '/app/404',
-  //       name: '404 Page',
-  //     },
-  //     {
-  //       path: '/app/blank',
-  //       name: 'Blank Page',
-  //     },
-  //   ],
-  // },
+ 
 ]
 
-export default routes
+export default routesAdmin

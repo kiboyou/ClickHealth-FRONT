@@ -3,13 +3,12 @@ import { useDispatch } from 'react-redux';
 import { Redirect, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import { initializeAuth } from './Api/features/userAuth/authSlice';
 import { fetchCurrentUser } from './Api/features/userAuth/authThunks';
-import AccessibleNavigationAnnouncer from './components/AccessibleNavigationAnnouncer';
 
 
 const Acceuil = lazy(() => import('./pages/clients/Acceuil'))
 const Layout = lazy(() => import('./containers/Layout'))
 const Login = lazy(() => import('./pages/Login'))
-const CreateAccount = lazy(() => import('./pages/CreateAccount'))
+
 const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
 const UpdatePassword = lazy(() => import('./pages/UpdatePassword'))
 const AjoutRendezVous = lazy(() => import('./pages/formulaire/rendez_vous/AjoutRendezVous'))
@@ -33,13 +32,11 @@ function App() {
   return (
     <>
       <Router>
-        <AccessibleNavigationAnnouncer />
         <Switch>
 
           <Route path="/client" component={Acceuil} />
 
           <Route path="/login" component={Login} />
-          <Route path="/create-account" component={CreateAccount} />
           <Route path="/update-password" component={UpdatePassword} />
           <Route path="/forgot-password" component={ForgotPassword} />
 

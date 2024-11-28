@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react'
-import routes from '../../routes/sidebar'
-import {  Route } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Route } from 'react-router-dom'
 import * as Icons from '../../icons'
+import routesAdmin from '../../routes/sidebar'
+import routesMedecin from '../../routes/sidebarMedecin'
 import SidebarSubmenu from './SidebarSubmenu'
-import { Button } from '@windmill/react-ui'
 
-import logoCH from "../../assets/img/LOGO - PD.png";
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
 import { useDispatch, useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
 import { logoutUser } from '../../Api/features/userAuth/authThunks'
-import { useHistory } from 'react-router-dom';
+import logoCH from "../../assets/img/LOGO - PD.png"
 import Loading from '../../utils/Loading'
+import routesReceptionniste from '../../routes/sidebarReceptionniste'
+import routesPatient from '../../routes/sidebarPatient'
 
 
 function Icon({ icon, ...props }) {
@@ -23,6 +25,7 @@ function SidebarContent() {
   const  navigate = useHistory().push;
   const dispatch = useDispatch();
   
+  const [routes, setRoutes] = useState([])
   const { isAuthenticated, user, loading } = useSelector((state) => state.auth);
 
   const handleLogout = () => {
@@ -32,8 +35,31 @@ function SidebarContent() {
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/login');
+    } else {
+      // Vérifiez si l'utilisateur a des groupes
+      const userGroup = user?.groups[0]?.name || null;
+  
+      switch (userGroup) {
+        case 'administrateur':
+          setRoutes(routesAdmin);
+          break;
+        case 'medecin':
+          setRoutes(routesMedecin);
+          break;
+        case 'patient':
+          setRoutes(routesPatient);
+          break;
+        case 'receptionniste':
+          setRoutes(routesReceptionniste);
+          break;
+        default:
+          // Gérer le cas d'un groupe non reconnu ou non assigné
+          console.warn("Groupe d'utilisateur non reconnu :", userGroup);
+          // navigate('/login'); // Redirige vers une page par défaut ou une erreur
+      }
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, user]);
+  
   
   return (
     <div className="py-4 text-gray-500 dark:text-gray-400">
@@ -77,7 +103,7 @@ function SidebarContent() {
           )
         )}
       </ul>
-
+{/* 
       { 
         
         user ? (
@@ -93,7 +119,7 @@ function SidebarContent() {
         <div className="px-4 my-6">
           <>username</>
         </div>
-      )}      
+      )}       */}
       </div>
     )
 }

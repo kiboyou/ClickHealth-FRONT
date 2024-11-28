@@ -1,68 +1,59 @@
+// Graph Legends
 export const doughnutLegends = [
-  { title: 'Shirts', color: 'bg-blue-500' },
-  { title: 'Shoes', color: 'bg-teal-600' },
-  { title: 'Bags', color: 'bg-purple-600' },
-]
+  { title: 'Confirmés', color: 'bg-green-500' },
+  { title: 'Annulés', color: 'bg-red-500' },
+  { title: 'En attente', color: 'bg-yellow-500' },
+];
 
 export const lineLegends = [
-  { title: 'Organic', color: 'bg-teal-600' },
-  { title: 'Paid', color: 'bg-purple-600' },
-]
+  { title: 'Consultations', color: 'bg-blue-500' },
+  { title: 'Examens', color: 'bg-teal-600' },
+];
 
 export const barLegends = [
-  { title: 'Shoes', color: 'bg-teal-600' },
-  { title: 'Bags', color: 'bg-purple-600' },
-]
+  { title: 'Consultations', color: 'bg-green-500' },
+  { title: 'Examens', color: 'bg-yellow-500' },
+];
 
+// Donut Chart Configuration
 export const doughnutOptions = {
   data: {
     datasets: [
       {
-        data: [33, 33, 33],
-        /**
-         * These colors come from Tailwind CSS palette
-         * https://tailwindcss.com/docs/customizing-colors/#default-color-palette
-         */
-        backgroundColor: ['#0694a2', '#1c64f2', '#7e3af2'],
-        label: 'Dataset 1',
+        data: [40, 30, 30], // Pourcentage des rendez-vous confirmés, annulés, en attente
+        backgroundColor: ['#10b981', '#ef4444', '#f59e0b'], // Vert, rouge, jaune
+        label: 'Rendez-vous',
       },
     ],
-    labels: ['Shoes', 'Shirts', 'Bags'],
+    labels: ['Confirmés', 'Annulés', 'En attente'],
   },
   options: {
     responsive: true,
-    cutoutPercentage: 80,
+    cutoutPercentage: 70, // Ajuster l'épaisseur du donut
   },
   legend: {
     display: false,
   },
-}
+};
 
+// Line Chart Configuration
 export const lineOptions = {
   data: {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet'], // Mois
     datasets: [
       {
-        label: 'Organic',
-        /**
-         * These colors come from Tailwind CSS palette
-         * https://tailwindcss.com/docs/customizing-colors/#default-color-palette
-         */
-        backgroundColor: '#0694a2',
-        borderColor: '#0694a2',
-        data: [43, 48, 40, 54, 67, 73, 70],
+        label: 'Consultations',
+        backgroundColor: '#3b82f6', // Bleu
+        borderColor: '#3b82f6',
+        data: [120, 150, 180, 200, 220, 250, 300], // Nombre de consultations
         fill: false,
       },
       {
-        label: 'Paid',
+        label: 'Examens',
+        backgroundColor: '#14b8a6', // Teal
+        borderColor: '#14b8a6',
+        data: [50, 70, 90, 110, 130, 150, 170], // Nombre d'examens
         fill: false,
-        /**
-         * These colors come from Tailwind CSS palette
-         * https://tailwindcss.com/docs/customizing-colors/#default-color-palette
-         */
-        backgroundColor: '#7e3af2',
-        borderColor: '#7e3af2',
-        data: [24, 50, 64, 74, 52, 51, 65],
       },
     ],
   },
@@ -81,14 +72,14 @@ export const lineOptions = {
         display: true,
         scaleLabel: {
           display: true,
-          labelString: 'Month',
+          labelString: 'Mois',
         },
       },
       y: {
         display: true,
         scaleLabel: {
           display: true,
-          labelString: 'Value',
+          labelString: 'Nombre',
         },
       },
     },
@@ -96,32 +87,41 @@ export const lineOptions = {
   legend: {
     display: false,
   },
-}
+};
 
+// Bar Chart Configuration
 export const barOptions = {
   data: {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: ['Cardiologie', 'Dermatologie', 'Pédiatrie', 'Neurologie'], // Spécialités
     datasets: [
       {
-        label: 'Shoes',
-        backgroundColor: '#0694a2',
-        // borderColor: window.chartColors.red,
+        label: 'Consultations',
+        // Utiliser une couleur orange pour toutes les barres de consultations
+        backgroundColor: '#f59e0b', // Orange
         borderWidth: 1,
-        data: [-3, 14, 52, 74, 33, 90, 70],
+        data: [40, 50, 35, 60], // Consultations par spécialité
       },
       {
-        label: 'Bags',
-        backgroundColor: '#7e3af2',
-        // borderColor: window.chartColors.blue,
+        label: 'Examens',
+        // Utiliser une couleur vert clair pour toutes les barres d'examen
+        backgroundColor: '#10b981', // Vert clair
         borderWidth: 1,
-        data: [66, 33, 43, 12, 54, 62, 84],
+        data: [20, 30, 25, 35], // Examens par spécialité
       },
     ],
   },
   options: {
     responsive: true,
+    scales: {
+      x: {
+        stacked: true, // Empiler les barres
+      },
+      y: {
+        stacked: true,
+      },
+    },
   },
   legend: {
     display: false,
   },
-}
+};

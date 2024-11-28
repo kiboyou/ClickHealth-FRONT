@@ -3,7 +3,8 @@ import axios from 'axios';
 
 // Configuration d'instance Axios
 const api = axios.create({
-baseURL: 'http://192.168.10.137:9800/api/', // Remplacez par l'URL de base de votre backend
+  baseURL: 'http://192.168.10.137:9800/api/', // Remplacez par l'URL de base de votre backend
+  // baseURL: 'http://localhost:8000/api/', // Remplacez par l'URL de base de votre backend
   headers: {
     'Content-Type': 'application/json',
   },

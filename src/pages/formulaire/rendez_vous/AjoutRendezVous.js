@@ -1,73 +1,90 @@
-import { Input, Label, Select } from '@windmill/react-ui';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+import { fetchTypeConsultations } from '../../../Api/features/consultation/typeConsultationThunk';
 import { fetchPlannings } from '../../../Api/features/plannig/plannigThunks';
+import { clearSuccess } from '../../../Api/features/rendezVous/rendezVousSlice';
 import { createRendezVous } from '../../../Api/features/rendezVous/rendezVousThunks';
 import ImageLight from '../../../assets/img/login-office.jpeg';
 import ImageDark from '../../../assets/img/login.jpg';
 import Loading from '../../../utils/Loading';
-import { clearSuccess } from '../../../Api/features/rendezVous/rendezVousSlice';
-import { fetchTypeConsultations } from '../../../Api/features/consultation/typeConsultationThunk';
-
+import { Input, Label, Select } from '@windmill/react-ui';
 
 const AjoutRendezVous = () => {
   const dispatch = useDispatch();
   const navigate = useHistory().push;
 
-  // Déclaration des états pour les différents champs du formulaire
+  // États pour les champs du formulaire
   const [email, setEmail] = useState('');
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [telephone, setTelephone] = useState('');
   const [message, setMessage] = useState('');
   const [specialite, setSpecialite] = useState('');
-  const [planning, setPlanning] = useState('');
+  const [selectedSlot, setSelectedSlot] = useState(null);
 
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5;
 
-  const { success, loading, error } = useSelector((state) => state.rendezVous);
+  // Sélecteurs Redux
+  const { success, loading } = useSelector((state) => state.rendezVous);
   const { typeConsultations } = useSelector((state) => state.typeConsultations);
   const { plannings } = useSelector((state) => state.planning);
-  const planningTrue = plannings.filter((plannig) => plannig.disponible);
 
+  const planningTrue = plannings.filter((p) => p.disponible);
+  
+  const visibleSlots = planningTrue.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
 
+  // Gestion de la navigation entre les pages
+  const handlePreviousPage = () => {
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
+  };
 
-  // Fonction de soumission du formulaire
+  const handleNextPage = () => {
+    if ((currentPage + 1) * itemsPerPage < planningTrue.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Gestion du clic sur un créneau horaire
+  const handleSlotClick = (dayID, slot) => {
+    setSelectedSlot({ dayID, slot });
+  };
+
+  // Gestion de la soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const planningChoisi = plannings.find((p) => p.id === parseInt(planning));
-    console.log(planning, specialite);
     dispatch(
       createRendezVous({
-        planning: planningChoisi?.id,
+        planning: selectedSlot?.dayID,
         prenom: first_name,
         nom: last_name,
         email,
         telephone,
         message,
-        type_consultation : specialite,
-        message
+        type_consultation: specialite,
       })
     );
   };
 
-  // Fetch des plannings à chaque changement dans l'état des plannings
-    useEffect(() => {
-      dispatch(fetchPlannings());
-      dispatch(fetchTypeConsultations());
-    }, [dispatch, plannings.lemgth, typeConsultations.length]);
-  
-    
+  // Chargement des plannings et types de consultations
+  useEffect(() => {
+    dispatch(fetchPlannings());
+    dispatch(fetchTypeConsultations());
+  }, [dispatch]);
+
   // Redirection après succès
   useEffect(() => {
     if (success === 'rdv created successfully') {
-      dispatch(clearSuccess()); // Réinitialiser success à null
+      dispatch(clearSuccess());
       navigate('/');
     }
   }, [navigate, success]);
-    
 
   return (
     <div className="flex items-center min-h-screen p-6 bg-cadre">
@@ -96,13 +113,14 @@ const AjoutRendezVous = () => {
                   Formulaire de rendez-vous
                 </h1>
 
+                {/* Nom et prénom */}
                 <Label className="mt-4">
                   <span>Nom</span>
                   <Input
                     className="px-4 py-3 mt-1"
                     placeholder="OUATTARA"
-                    value={first_name}
-                    onChange={(e) => setFirstName(e.target.value)}
+                    value={last_name}
+                    onChange={(e) => setLastName(e.target.value)}
                   />
                 </Label>
 
@@ -111,11 +129,12 @@ const AjoutRendezVous = () => {
                   <Input
                     className="px-4 py-3 mt-1"
                     placeholder="Kiboyou Mohamed"
-                    value={last_name}
-                    onChange={(e) => setLastName(e.target.value)}
+                    value={first_name}
+                    onChange={(e) => setFirstName(e.target.value)}
                   />
                 </Label>
 
+                {/* Email et téléphone */}
                 <Label className="mt-4">
                   <span>Email</span>
                   <Input
@@ -138,11 +157,12 @@ const AjoutRendezVous = () => {
                   />
                 </Label>
 
+                {/* Message et type de consultation */}
                 <Label className="mt-4">
                   <span>Message</span>
                   <Input
                     className="px-4 py-3 mt-1"
-                    placeholder="message pour le spécialiste"
+                    placeholder="Message pour le spécialiste"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                   />
@@ -163,27 +183,60 @@ const AjoutRendezVous = () => {
                     ))}
                   </Select>
                 </Label>
-
+                      
                 {/* Sélection du planning */}
-              <Label className="mt-4">
-                <span>Planning</span>
-                <Select
-                  className="mt-1"
-                  value={planning}
-                  onChange={(e) => setPlanning(e.target.value)}
-                >
-                  <option value="">Choisissez un planning</option>
-                  {planningTrue.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      Planning du {p.jour} {p.date} de {p.heure_debut} à {p.heure_fin}
-                    </option>
-                  ))}
-                </Select>
-              </Label>
+                <Label className="mt-4">
+                  <span>Sélection du planning</span>
+                </Label>
+                <div className="mt-4 planning-container">
+
+                  <div className="navigation">
+                    <button
+                      onClick={handlePreviousPage}
+                      type="button"
+                      className="nav-button focus:outline-none focus:border-none"
+                      disabled={currentPage === 0}
+                    >
+                      &lt;
+                    </button>
+                    <button
+                      onClick={handleNextPage}
+                      type="button"
+                      className="nav-button focus:outline-none focus:border-none"
+                      disabled={(currentPage + 1) * itemsPerPage >= planningTrue.length}
+                    >
+                      &gt;
+                    </button>
+                  </div>
+
+                  <div className="days">
+                    {visibleSlots.map((slot) => (
+                      <div key={slot.id} className="day-column">
+                        <div className="day-header">
+                          <span>
+                            {slot.jour} <br/> ({slot.date})
+                          </span>
+                        </div>
+                        <div className="time-slot">
+                          <button
+                            type="button"
+                            className={`focus:outline-none focus:border-none slot-button ${
+                              selectedSlot?.dayID === slot.id ? 'selected' : ''
+                            }`}
+                            onClick={() => handleSlotClick(slot.id, slot)}
+                            disabled={!slot.disponible}
+                          >
+                            {slot.heure_debut} - {slot.heure_fin}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
                 <button
                   type="submit"
-                  className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
+                  className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg btnprise focus:outline-none focus:border-none"
                 >
                   Envoyer
                 </button>

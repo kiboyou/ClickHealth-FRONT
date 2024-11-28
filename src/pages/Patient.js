@@ -19,11 +19,14 @@ import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import PageTitle from '../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../icons';
 import Loading from '../utils/Loading';
+import { fetchRendezVous } from '../Api/features/rendezVous/rendezVousThunks';
 
 
 const Patient = () => {
   const dispatch = useDispatch()
   const { success, patients, loading } = useSelector((state) => state.patient)
+  const { rendezVousList } = useSelector((state) => state.rendezVous)
+  const { user } = useSelector((state) => state.auth);
 
   const [pageTable2, setPageTable2] = useState(1)
   const [resultsPerPage] = useState(10)
@@ -32,13 +35,35 @@ const Patient = () => {
   const [dataTable2, setDataTable2] = useState([])
 
   useEffect(() => {
-    dispatch(fetchPatients())
-  }, [dispatch])
-
+    dispatch(fetchPatients());
+    dispatch(fetchRendezVous());
+  }, [dispatch]);
+  
   useEffect(() => {
-    // Met à jour les données à afficher lorsque users change
-    setDataTable2(patients)
-  }, [patients])
+    if (user && user.groups) {
+      // Si l'utilisateur est un médecin
+      if (user.groups[0].name === 'medecin') {
+        const filteredRendezVous = rendezVousList.filter(
+          (rdv) =>
+            rdv.planning_detail.medecin_detail.utilisateur_info.id === user.id // Filtre les rendez-vous par médecin
+        );
+  
+        // Extraire les patients correspondant aux rendez-vous filtrés
+        const filteredPatients = patients.filter((patient) =>
+          filteredRendezVous.some(
+            (rdv) =>
+              rdv.patient && rdv.patient_detail.id === patient.id // Vérifie si le patient du rendez-vous est dans la liste des patients
+          )
+        );
+  
+        setDataTable2(filteredPatients); // Met à jour les données affichées avec les patients filtrés
+      } else {
+        // Si administrateur ou autre rôle, afficher tous les patients
+        setDataTable2(patients);
+      }
+    }
+  }, [rendezVousList, patients, user]);
+  
 
   // Pagination setup
   const totalResults = dataTable2.length
@@ -75,12 +100,16 @@ const Patient = () => {
         >
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
+
         
-        <NavLink to="/app/patients/add">
-          <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
-            Ajouter un patient
-          </button>
-        </NavLink>
+        {user && user.groups[0].name == 'receptionniste' && (
+          
+          <NavLink to="/app/patients/add">
+            <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
+              Ajouter un patient
+            </button>
+          </NavLink>
+        )}
         
       </div>
 

@@ -25,7 +25,8 @@ import Loading from '../../utils/Loading';
 const FactureRdv = () => {
   const dispatch = useDispatch()
   const  navigate = useHistory().push;
-
+  
+  const { user } = useSelector((state) => state.auth);
   const { success, factures, loading } = useSelector((state) => state.factureRdv)
 
   const [pageTable2, setPageTable2] = useState(1)
@@ -39,9 +40,19 @@ const FactureRdv = () => {
   }, [dispatch])
 
   useEffect(() => {
-    // Met à jour les données à afficher lorsque users change
-    setDataTable2(factures)
-  }, [factures])
+    if (user && user.groups) {
+      if (user.groups[0].name === 'patient') {
+        // Filtrer les factures associées au patient connecté
+        const facturesPatient = factures.filter(
+          (facture) => facture.rendezVous_details?.patient_detail?.user === user.id
+        );
+        setDataTable2(facturesPatient);
+      } else {
+        // Sinon, afficher toutes les factures
+        setDataTable2(factures);
+      }
+    }
+  }, [factures, user]);
 
   // Pagination setup
   const totalResults = dataTable2.length

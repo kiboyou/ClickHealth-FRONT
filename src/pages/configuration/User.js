@@ -52,6 +52,8 @@ const User = () => {
   return (
     <>
       { loading && <Loading />}
+      {
+      console.log('users:', users)}
       <PageTitle>Liste des utilisateurs</PageTitle>
 
       {/* <!-- Search input --> */}

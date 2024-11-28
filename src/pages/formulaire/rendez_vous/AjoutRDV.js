@@ -3,11 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { fetchTypeConsultations } from '../../../Api/features/consultation/typeConsultationThunk';
 import { fetchPlannings } from '../../../Api/features/plannig/plannigThunks';
+import { clearSuccess } from '../../../Api/features/rendezVous/rendezVousSlice';
 import { createRendezVous } from '../../../Api/features/rendezVous/rendezVousThunks';
 import Loading from '../../../utils/Loading';
-import { clearSuccess } from '../../../Api/features/rendezVous/rendezVousSlice';
-import { fetchTypeConsultations } from '../../../Api/features/consultation/typeConsultationThunk';
+import { fetchPatients } from '../../../Api/features/patient/patientThunks';
 
 const AjoutRDV = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,32 @@ const AjoutRDV = () => {
 
   const planningTrue = plannings.filter((plannig) => plannig.disponible)
   
+  const [selectedSlot, setSelectedSlot] = useState(null);
+    // Pagination
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5;
+    
+  const visibleSlots = planningTrue.slice(
+    currentPage * itemsPerPage,
+    (currentPage + 1) * itemsPerPage
+  );
+
+  // Gestion de la navigation entre les pages
+  const handlePreviousPage = () => {
+    if (currentPage > 0) setCurrentPage(currentPage - 1);
+  };
+
+  const handleNextPage = () => {
+    if ((currentPage + 1) * itemsPerPage < planningTrue.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  // Gestion du clic sur un créneau horaire
+  const handleSlotClick = (dayID, slot) => {
+    setSelectedSlot({ dayID, slot });
+  };
+  
   // Trouver l'ID du patient lié à l'utilisateur connecté
   const patientId = patients.find((patient) => patient.user === user.id)?.id;
 
@@ -33,7 +60,7 @@ const AjoutRDV = () => {
   // Soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!specialite || !planning) {
+    if (!specialite) {
       alert("Veuillez remplir tous les champs nécessaires !");
       return;
     }
@@ -42,8 +69,8 @@ const AjoutRDV = () => {
 
     dispatch(
       createRendezVous({
-        patient: 1, // ID du patient connecté
-        planning: planningChoisi?.id,
+        patient: patientId, // ID du patient connecté
+        planning: selectedSlot?.dayID,
         type_consultation : specialite,
         message
       })
@@ -54,7 +81,8 @@ const AjoutRDV = () => {
   useEffect(() => {
     dispatch(fetchPlannings());
     dispatch(fetchTypeConsultations());
-  }, [dispatch, plannings.lemgth, typeConsultations.length]);
+    dispatch(fetchPatients());
+  }, [dispatch, plannings.lemgth, typeConsultations.length, patients.length]);
 
   // Redirection après succès
   useEffect(() => {
@@ -92,8 +120,19 @@ const AjoutRDV = () => {
                     ))}
                   </Select>
                 </Label>
+                
+            {/* Message pour le spécialiste */}
+              <Label className="mt-4">
+                <span>Message</span>
+                <Input
+                  className="px-4 py-3 mt-1"
+                  placeholder="Message pour le spécialiste"
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                />
+              </Label>
 
-              {/* Sélection du planning */}
+              {/* Sélection du planning
               <Label className="mt-4">
                 <span>Planning</span>
                 <Select
@@ -108,18 +147,59 @@ const AjoutRDV = () => {
                     </option>
                   ))}
                 </Select>
-              </Label>
+              </Label> */}
 
-              {/* Message pour le spécialiste */}
+              {/* Sélection du planning */}
               <Label className="mt-4">
-                <span>Message</span>
-                <Input
-                  className="px-4 py-3 mt-1"
-                  placeholder="Message pour le spécialiste"
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                />
-              </Label>
+                  <span>Sélection du planning</span>
+                </Label>
+                <div className="mt-4 planning-container">
+
+                  <div className="navigation">
+                    <button
+                      onClick={handlePreviousPage}
+                      type="button"
+                      className="nav-button focus:outline-none focus:border-none"
+                      disabled={currentPage === 0}
+                    >
+                      &lt;
+                    </button>
+                    <button
+                      onClick={handleNextPage}
+                      type="button"
+                      className="nav-button focus:outline-none focus:border-none"
+                      disabled={(currentPage + 1) * itemsPerPage >= planningTrue.length}
+                    >
+                      &gt;
+                    </button>
+                  </div>
+
+                  <div className="days">
+                    {visibleSlots.map((slot) => (
+                      <div key={slot.id} className="day-column">
+                        <div className="day-header">
+                          <span>
+                            {slot.jour} <br/> ({slot.date})
+                          </span>
+                        </div>
+                        <div className="time-slot">
+                          <button
+                            type="button"
+                            className={`focus:outline-none focus:border-none slot-button ${
+                              selectedSlot?.dayID === slot.id ? 'selected' : ''
+                            }`}
+                            onClick={() => handleSlotClick(slot.id, slot)}
+                            disabled={!slot.disponible}
+                          >
+                            {slot.heure_debut} - {slot.heure_fin}
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+             
 
               {/* Bouton de soumission */}
               <button

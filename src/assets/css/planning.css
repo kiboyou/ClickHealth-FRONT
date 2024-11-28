@@ -1,0 +1,109 @@
+/* Conteneur principal */
+.planning-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+/* Navigation */
+.navigation {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.nav-button {
+  background-color: #a1e455;
+  color: black;
+  border: none;
+  padding: 10px;
+  margin: 0 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+.nav-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.nav-button:hover:not(:disabled) {
+  background-color: #a1e455;
+}
+
+/* Jours et créneaux */
+.days {
+  display: flex;
+  gap: 20px;
+}
+
+.day-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100px;
+}
+
+.day-header {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: white;
+}
+
+
+.no-slots {
+  color: #b0b0b0;
+  font-style: italic;
+}
+
+.slot-button {
+    background-color: #e0e0e0;
+    border: none;
+    padding: 8px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .slot-button:hover {
+    background-color: #c0c0c0;
+  }
+  
+  /* Créneau sélectionné */
+  .slot-button.selected {
+    background-color: #a1e455; /* Fond jaune */
+    font-weight: bold;
+  }
+  
+  /* Créneau désactivé */
+  .slot-button:disabled {
+    background-color: #f0f0f0;
+    color: #999;
+    cursor: not-allowed;
+  }
+  
+  .days {
+    display: flex;
+    flex-wrap: wrap; /* Pour que les éléments s'enroulent sur plusieurs lignes */
+    gap: 1rem; /* Espacement entre les colonnes */
+  }
+  
+  .day-column {
+    flex: 1 1 30%; /* Par défaut, chaque élément prend 30% de la largeur */
+  }
+  
+  @media (max-width: 1200px) {
+    .day-column {
+      flex: 1 1 45%; /* Lorsque l'écran fait moins de 1200px de large, chaque élément prend 45% */
+    }
+  }
+  
+  @media (max-width: 800px) {
+    .day-column {
+      flex: 1 1 100%; /* Lorsque l'écran fait moins de 800px de large, chaque élément prend 100% (une seule colonne) */
+    }
+  }
+  

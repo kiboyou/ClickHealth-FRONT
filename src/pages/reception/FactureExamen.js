@@ -24,7 +24,8 @@ import Loading from '../../utils/Loading';
 const FactureExamen = () => {
   const dispatch = useDispatch()
   const  navigate = useHistory().push;
-
+  
+  const { user } = useSelector((state) => state.auth);
   const { success, factures, loading } = useSelector((state) => state.factureExamen)
 
   const [pageTable2, setPageTable2] = useState(1)
@@ -38,9 +39,20 @@ const FactureExamen = () => {
   }, [dispatch])
 
   useEffect(() => {
-    // Met à jour les données à afficher lorsque users change
-    setDataTable2(factures)
-  }, [factures])
+    if (user && user.groups) {
+      if (user.groups[0].name === 'patient') {
+        // Filtrer les factures associées au patient connecté
+        const facturesPatient = factures.filter(
+          (facture) => facture.patient_detail.user_detail.id === user.id
+        );
+        setDataTable2(facturesPatient);
+      } else {
+        // Sinon, afficher toutes les factures
+        setDataTable2(factures);
+      }
+    }
+  }, [factures, user]);
+  
 
   // Pagination setup
   const totalResults = dataTable2.length
@@ -83,11 +95,14 @@ const FactureExamen = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
+        {user && user.groups[0].name == 'receptionniste' &&
+        
         <NavLink to="/app/reception/factures/examens/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter une facture
           </button>
         </NavLink>
+        }
         
       </div>
 

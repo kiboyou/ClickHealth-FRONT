@@ -48,12 +48,12 @@ const AjoutReceptionniste = () => {
 
   // Effet pour surveiller le succès de la création du réceptionniste et rediriger
   useEffect(() => {
-    if (receptionnisteSuccess) {
+    if (receptionnisteSuccess == 'Réceptionniste ajouté avec succès') {
       dispatch(clearSuccess()); // Réinitialiser success à null
       navigate('/app/personnel/receptionnistes');
  
     }
-  }, [userSuccess, navigate]);
+  }, [receptionnisteSuccess, navigate]);
 
   // Gérer la soumission du formulaire
   const handleSubmit = async (e) => {

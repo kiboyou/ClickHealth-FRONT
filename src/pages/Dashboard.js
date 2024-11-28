@@ -1,167 +1,62 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react';
 
-import { Bar, Doughnut, Line } from 'react-chartjs-2'
-import InfoCard from '../components/Cards/InfoCard'
-import ChartCard from '../components/Chart/ChartCard'
-import ChartLegend from '../components/Chart/ChartLegend'
-import RoundIcon from '../components/RoundIcon'
-import PageTitle from '../components/Typography/PageTitle'
-import { CartIcon, ChartsIcon, ChatIcon, ModalsIcon, MoneyIcon, PeopleIcon, SunIcon } from '../icons'
-import response from '../utils/demo/tableData'
+import { useDispatch, useSelector } from 'react-redux';
 
-
-import {
-  barLegends,
-  barOptions,
-  doughnutLegends,
-  doughnutOptions,
-  lineLegends,
-  lineOptions,
-} from '../utils/demo/chartsData'
-import { useSelector, useDispatch } from 'react-redux'
-import { fetchCurrentUser } from '../Api/features/userAuth/authThunks'
-
-
+// Importez vos composants Dashboard
+import AdminDashboard from './dashboard/DashboardAdmin';
+import MedecinDashboard from './dashboard/DashboardMedecin';
+import DashboardPatient from './dashboard/DashboardPatient';
+import ReceptionnisteDashboard from './dashboard/DashboardReceptionniste';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 function Dashboard() {
   const dispatch = useDispatch();
-  const state = useSelector ((state) => state)
-  
-  const [page, setPage] = useState(1)
-  const [data, setData] = useState([])
-  const { isAuthenticated, user, error } = useSelector((state) => state.auth);
-
-  // pagination setup
-  const resultsPerPage = 10
-  const totalResults = response.length
-
-  // pagination change control
-  function onPageChange(p) {
-    setPage(p)
-  }
+  const  navigate = useHistory().push;
 
 
+  // Récupérez les données du store Redux
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      dispatch(fetchCurrentUser()); // Appel pour récupérer l'utilisateur connecté
+    // Redirigez si l'utilisateur n'est pas authentifié
+    if (!isAuthenticated) {
+      navigate('/login');
+    } else if (user.groups[0].name === 'patient') {
+      navigate('/app/rendez_vous');
+    } else if (user.groups[0].name === 'medecin') {
+      navigate('/app/planning');
+    } else if (user.groups[0].name === 'receptionniste') {
+      navigate('/app/reception/queue');
+    } else if (user.groups[0].name === 'administrateur') {
+      navigate('/app/dashboard');
+    } else {
+      navigate('/login');
     }
-  }, [isAuthenticated, dispatch]);
-
+  }, [isAuthenticated, navigate, user.groups]);
   
-  // on page change, load new sliced data
-  // here you would make another server request for new data
-  useEffect(() => {
-    setData(response.slice((page - 1) * resultsPerPage, page * resultsPerPage))
-  }, [page])
 
-  
+  // Déterminez quel tableau de bord afficher
+  const renderDashboard = () => {
+    if (!user || !user.groups || user.groups.length === 0) {
+      return <p>Groupe utilisateur non défini</p>; // Cas par défaut ou erreur
+    }
+
+    const userGroup = user.groups[0].name; 
+
+    switch (userGroup) {
+      case 'administrateur':
+        return <AdminDashboard />;
+      default:
+        return <p>Groupe utilisateur inconnu : {userGroup}</p>;
+    }
+  };
+
   return (
     <>
-      <PageTitle>Dashboard</PageTitle>
-
-  
-      {/* <!-- Cards --> */}
-      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-
-        <InfoCard title="TOTAL GENERAL" value="9389">
-          <RoundIcon
-            icon={ChartsIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard title="Nombre de patient" value="700">
-          <RoundIcon
-            icon={MoneyIcon}
-            iconColorClass="text-green-500 dark:text-green-100"
-            bgColorClass="bg-green-100 dark:bg-green-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard title="Nombre d'examen" value="376">
-          <RoundIcon
-            icon={CartIcon}
-            iconColorClass="text-blue-500 dark:text-blue-100"
-            bgColorClass="bg-blue-100 dark:bg-blue-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard title="Nombre de specialistes" value="35">
-          <RoundIcon
-            icon={ChatIcon}
-            iconColorClass="text-teal-500 dark:text-teal-100"
-            bgColorClass="bg-teal-100 dark:bg-teal-500"
-            className="mr-4"
-          />
-        </InfoCard>
-      </div>
-
-      <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
-        <InfoCard title="Nombre de consultation" value="6389">
-          <RoundIcon
-            icon={PeopleIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard title="Nombre de congès" value="$ 46,760.89">
-          <RoundIcon
-            icon={SunIcon}
-            iconColorClass="text-green-500 dark:text-green-100"
-            bgColorClass="bg-green-100 dark:bg-green-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard title="Nombre de receptionniste" value="376">
-          <RoundIcon
-            icon={PeopleIcon}
-            iconColorClass="text-blue-500 dark:text-blue-100"
-            bgColorClass="bg-blue-100 dark:bg-blue-500"
-            className="mr-4"
-          />
-        </InfoCard>
-
-        <InfoCard title="Nombre de groupes" value="35">
-          <RoundIcon
-            icon={ModalsIcon}
-            iconColorClass="text-teal-500 dark:text-teal-100"
-            bgColorClass="bg-teal-100 dark:bg-teal-500"
-            className="mr-4"
-          />
-        </InfoCard>
-      </div>
-
-
-      <PageTitle>Charts</PageTitle>
-      
-      <div className="grid gap-6 mb-8 md:grid-cols-2">
-        <ChartCard title="Revenue">
-          <Doughnut {...doughnutOptions} />
-          <ChartLegend legends={doughnutLegends} />
-        </ChartCard>
-
-        <ChartCard title="Traffic">
-          <Line {...lineOptions} />
-          <ChartLegend legends={lineLegends} />
-        </ChartCard>
-
-        <ChartCard title="Bars">
-          <Bar {...barOptions} />
-          <ChartLegend legends={barLegends} />
-        </ChartCard>
-        
-      </div>
+      {renderDashboard()}
     </>
-  )
+  );
 }
 
-export default Dashboard
+export default Dashboard;

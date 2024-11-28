@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCurrentUser, loginUser, logoutUser, changePasseWordUser } from './authThunks';
+import { changePasseWordUser, fetchCurrentUser, loginUser, logoutUser } from './authThunks';
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
-    user: { first_name: '', last_name: '', email: '', groups: [], isPasswordChanged: true },
+    user: null,
     isAuthenticated: !!localStorage.getItem('token'), // Initialisation en fonction du token
     loading: false,
     error: null,
