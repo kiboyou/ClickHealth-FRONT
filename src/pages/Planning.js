@@ -38,7 +38,7 @@
 //   useEffect(() => {
 //     if (user && user.groups) {
 //       // Si l'utilisateur est un médecin, on filtre les plannings
-//       if (user.groups[0].name == 'medecin') {
+//       if (user.groups[0].name == groupeUser.medecin) {
 //         setDataTable2(
 //           plannings.filter(
 //             (planning) =>
@@ -91,7 +91,7 @@
 //           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
 //         </button>
 
-//         {user && user.groups[0].name == 'medecin' && (
+//         {user && user.groups[0].name == groupeUser.medecin && (
 //           <NavLink to="/app/planning/add">
 //             <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
 //               Ajouter un planning
@@ -104,7 +104,7 @@
 //         <Table>
 //           <TableHeader>
 //             <tr>
-//               {user && user.groups[0].name == 'medecin' ?  <TableCell>ID</TableCell> : <TableCell>Medecin</TableCell>}
+//               {user && user.groups[0].name == groupeUser.medecin ?  <TableCell>ID</TableCell> : <TableCell>Medecin</TableCell>}
 //               <TableCell>Date de disponibilité</TableCell>
 //               <TableCell>Jour</TableCell>
 //               <TableCell>Heure de début</TableCell>
@@ -118,7 +118,7 @@
 //               <TableRow key={i}>
 //                 <TableCell>
 //                   <div className="flex items-center text-sm">
-//                   { user && user.groups[0].name == 'medecin' ? <span className="text-sm">{i+1}</span> :
+//                   { user && user.groups[0].name == groupeUser.medecin ? <span className="text-sm">{i+1}</span> :
 //                     <div>
 //                       <p className="font-semibold">
 //                         {planning.medecin_detail.utilisateur_info.first_name}{' '}
@@ -213,6 +213,7 @@ import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import PageTitle from '../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../icons';
 import Loading from '../utils/Loading';
+import groupeUser from "../utils/GrourpeUser";
 
 moment.locale("fr");
 const localizer = momentLocalizer(moment);
@@ -239,7 +240,7 @@ const Planning = () => {
     useEffect(() => {
     if (user && user.groups) {
       // Si l'utilisateur est un médecin, on filtre les plannings
-      if (user.groups[0].name === 'medecin') {
+      if (user.groups[0].name === groupeUser.medecin) {
         setDataTable2(
           plannings.filter(
             (planning) =>
@@ -296,7 +297,7 @@ const Planning = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
 
-        {user && user.groups[0].name == 'medecin' && (
+        {user && user.groups[0].name == groupeUser.medecin && (
           <NavLink to="/app/planning/add">
             <button className="px-4 py-2 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
               Ajouter un planning
@@ -326,7 +327,7 @@ const Planning = () => {
            <Table>
              <TableHeader>
                <tr>
-                 {user && user.groups[0].name == 'medecin' ?  <TableCell>ID</TableCell> : <TableCell>Medecin</TableCell>}
+                 {user && user.groups[0].name == groupeUser.medecin ?  <TableCell>ID</TableCell> : <TableCell>Medecin</TableCell>}
                  <TableCell>Date de disponibilité</TableCell>
                  <TableCell>Jour</TableCell>
                  <TableCell>Heure de début</TableCell>
@@ -340,7 +341,7 @@ const Planning = () => {
               <TableRow key={i}>
                 <TableCell>
                   <div className="flex items-center text-sm">
-                  { user && user.groups[0].name == 'medecin' ? <span className="text-sm">{i+1}</span> :
+                  { user && user.groups[0].name == groupeUser.medecin ? <span className="text-sm">{i+1}</span> :
                     <div>
                       <p className="font-semibold">
                         {planning.medecin_detail.utilisateur_info.first_name}{' '}

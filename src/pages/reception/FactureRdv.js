@@ -20,6 +20,7 @@ import { fetchFacturesRdv } from '../../Api/features/factureRdv/factureRdvThunks
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon } from '../../icons';
 import Loading from '../../utils/Loading';
+import groupeUser from '../../utils/GrourpeUser';
 
 
 const FactureRdv = () => {
@@ -41,7 +42,7 @@ const FactureRdv = () => {
 
   useEffect(() => {
     if (user && user.groups) {
-      if (user.groups[0].name === 'patient') {
+      if (user.groups[0].name === groupeUser.patient) {
         // Filtrer les factures associées au patient connecté
         const facturesPatient = factures.filter(
           (facture) => facture.rendezVous_details?.patient_detail?.user === user.id
@@ -68,11 +69,15 @@ const FactureRdv = () => {
     navigate('/app/reception/factures/rdv/detail', {facture}); // Redirection avec les données
   };
 
+      // Fonction pour gérer l'action Voir Plus
+  const payefacture = (facture) => {
+    navigate('/app/reception/factures/paiement/add', {facture}); // Redirection avec les données
+  };
+
   return (
     <>
       { loading && <Loading />}
       <PageTitle>Liste des factures</PageTitle>
-
       {/* <!-- Search input --> */}
       <div className="flex justify-center flex-1 lg:mr-32">
         <div className="relative w-full max-w-xl mr-6 bg-text">
@@ -108,6 +113,7 @@ const FactureRdv = () => {
           <TableHeader>
             <tr>
               <TableCell>Code du RDV</TableCell>
+              <TableCell>Num de la facture</TableCell>
               <TableCell>Montant total</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Actions</TableCell>
@@ -119,6 +125,11 @@ const FactureRdv = () => {
                 <TableCell>
                   <span className="text-sm">{facture.rendezVous_details.code_rendez_vous}</span>
                 </TableCell>
+
+                <TableCell>
+                  <span className="text-sm">{facture.numfacture} </span>
+                </TableCell>
+                
                 <TableCell>
                   <span className="text-sm">{facture.montant}  €</span>
                 </TableCell>
@@ -141,6 +152,18 @@ const FactureRdv = () => {
                     >
                       <EyeIcon className="w-6 h-6 focus:outline-none focus:border-none" aria-hidden="true" />
                     </button>
+
+                    { user && user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur && (
+                    facture.statut_paiement === 'Non payé' ? (
+                      <button type="button"  className="px-4 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
+                        onClick={() => payefacture(facture)} 
+                      >
+                        Payé
+                      </button>
+                    ) : (
+                      null
+                    )
+                  )}
 
                     {/* Bouton Modifier */}
                     <button layout="link" size="icon" aria-label="Modifier" className="focus:outline-none focus:border-none">

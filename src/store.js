@@ -24,6 +24,7 @@ import ordonnanceReducer from './Api/features/ordonnance/ordonnanceSlice';
 import factureRdvReducer from './Api/features/factureRdv/factureRdvSlice';
 import factureExamenReducer from './Api/features/factureExamen/factureExamenSlice';
 import fileAttenteReducer from './Api/features/fileAttente/fileAttenteSlice';
+import paiementReducer from './Api/features/paiement/paiementSlice';
 
 
 const store = configureStore({
@@ -50,6 +51,7 @@ const store = configureStore({
     receptionnistes:receptionnisteReducer,
     medicaments: medicamentReducer,
     fileAttente: fileAttenteReducer,
+    paiement: paiementReducer,
 
 
   },

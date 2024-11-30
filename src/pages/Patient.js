@@ -20,6 +20,7 @@ import PageTitle from '../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../icons';
 import Loading from '../utils/Loading';
 import { fetchRendezVous } from '../Api/features/rendezVous/rendezVousThunks';
+import groupeUser from '../utils/GrourpeUser';
 
 
 const Patient = () => {
@@ -42,7 +43,7 @@ const Patient = () => {
   useEffect(() => {
     if (user && user.groups) {
       // Si l'utilisateur est un médecin
-      if (user.groups[0].name === 'medecin') {
+      if (user.groups[0].name === groupeUser.medecin) {
         const filteredRendezVous = rendezVousList.filter(
           (rdv) =>
             rdv.planning_detail.medecin_detail.utilisateur_info.id === user.id // Filtre les rendez-vous par médecin
@@ -102,7 +103,7 @@ const Patient = () => {
         </button>
 
         
-        {user && user.groups[0].name == 'receptionniste' && (
+        {user && user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur && (
           
           <NavLink to="/app/patients/add">
             <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">

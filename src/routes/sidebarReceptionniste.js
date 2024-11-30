@@ -12,6 +12,10 @@ const routesReceptionniste = [
     routes: [
       // submenu
       {
+        path: '/app/reception/queue',
+        name: 'File d\'attente',
+      },
+      {
         path: '/app/reception/factures/examens',
         name: 'Facture des Examen',
       },
@@ -20,9 +24,10 @@ const routesReceptionniste = [
         name: 'Facture des RDV',
       },
       {
-        path: '/app/reception/queue',
-        name: 'File d\'attente',
+        path: '/app/reception/factures/paiement',
+        name: 'Reçu de paiement',
       },
+      
     ],
   },
   

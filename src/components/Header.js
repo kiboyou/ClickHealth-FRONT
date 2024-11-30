@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { SidebarContext } from '../context/SidebarContext'
+import React, { useContext, useState } from 'react';
+import { SidebarContext } from '../context/SidebarContext';
 import {
-
   MenuIcon,
+} from '../icons';
 
-} from '../icons'
-
-import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { FaChevronDown } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../Api/features/userAuth/authThunks';
+import groupeUser from '../utils/GrourpeUser';
 
 
 function Header() {
@@ -46,17 +44,37 @@ function Header() {
         <ul className="flex items-center flex-shrink-0 space-x-6">
           {/* <!-- Profile menu --> */}
           <li className="relative cursor-pointer">
-          {         
+          {
             user ? (
-                <div className='flex text-white' onClick={toggleDropdown}>
-                  Hello, <span className='text-bold'>{user.first_name} {user.last_name} </span> <FaChevronDown className='ml-2' />
-                </div>
-              ) : (
-                <div className="px-4 my-6">
-                  <>username</>
-                </div>
-              )
+              <div className="flex text-white" onClick={toggleDropdown}>
+                <span className="font-bold">
+                  {user.groups.length > 0 && (() => {
+                    const groupName = user.groups[0].name;
+                    if (groupName === groupeUser.patient) {
+                      return groupeUser.patient;
+                    } else if (groupName === groupeUser.medecin) {
+                      return groupeUser.medecin;
+                    } else if (groupName === groupeUser.receptionniste) {
+                      return groupeUser.receptionniste;
+                    } else if (groupName === groupeUser.administrateur) {
+                      return groupeUser.administrateur;
+                    } else {
+                      return 'Non spécifié';
+                    }
+                  })()}
+                </span>
+                <span className="ml-2">
+                  - {user.first_name} {user.last_name}
+                </span>
+                <FaChevronDown className="ml-2" />
+              </div>
+            ) : (
+              <div className="px-4 my-6">
+                <span>Username</span>
+              </div>
+            )
           }
+
           {/* Dropdown Menu */}
             {isOpen && (
               <div className="absolute right-0 w-48 mt-2 rounded-lg shadow-lg ">

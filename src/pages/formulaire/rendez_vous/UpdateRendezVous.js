@@ -237,7 +237,7 @@ const UpdateRendezVous = () => {
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 4;
 
   // Sélecteurs Redux
   const { success, loading, error, currentRendezVous } = useSelector((state) => state.rendezVous);
@@ -436,12 +436,9 @@ const UpdateRendezVous = () => {
                   <div className="days">
                     {visibleSlots.map((slot) => (
                       <div key={slot.id} className="day-column">
-                        <div className="day-header">
-                          <span>
-                            {slot.jour} <br/> ({slot.date})
-                          </span>
-                        </div>
+                        
                         <div className="time-slot">
+                        
                           <button
                             type="button"
                             className={`focus:outline-none focus:border-none slot-button ${
@@ -450,6 +447,11 @@ const UpdateRendezVous = () => {
                             onClick={() => handleSlotClick(slot.id, slot)}
                             disabled={!slot.disponible}
                           >
+                            <div className="text-black day-header">
+                              <span>
+                                {slot.jour} <br/> ({slot.date})
+                              </span>
+                            </div>
                             {slot.heure_debut} - {slot.heure_fin}
                           </button>
                         </div>

@@ -19,6 +19,7 @@ import { fetchFacturesExamen } from '../../Api/features/factureExamen/factureExa
 import PageTitle from '../../components/Typography/PageTitle';
 import { SearchIcon } from '../../icons';
 import Loading from '../../utils/Loading';
+import groupeUser from '../../utils/GrourpeUser';
 
 
 const FactureExamen = () => {
@@ -40,7 +41,7 @@ const FactureExamen = () => {
 
   useEffect(() => {
     if (user && user.groups) {
-      if (user.groups[0].name === 'patient') {
+      if (user.groups[0].name === groupeUser.patient) {
         // Filtrer les factures associées au patient connecté
         const facturesPatient = factures.filter(
           (facture) => facture.patient_detail.user_detail.id === user.id
@@ -66,6 +67,10 @@ const FactureExamen = () => {
   // Fonction pour gérer l'action Voir Plus
   const handleVoirPlus = (facture) => {
     navigate('/app/reception/factures/examens/detail', {facture}); // Redirection avec les données
+  };
+    // Fonction pour gérer l'action Voir Plus
+  const payefacture = (facture) => {
+      navigate('/app/reception/factures/paiement/add', {facture}); // Redirection avec les données
   };
 
   return (
@@ -95,7 +100,7 @@ const FactureExamen = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
-        {user && user.groups[0].name == 'receptionniste' &&
+        {user && user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur &&
         
         <NavLink to="/app/reception/factures/examens/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
@@ -111,6 +116,7 @@ const FactureExamen = () => {
           <TableHeader>
             <tr>
               <TableCell>Patient</TableCell>
+              <TableCell>Num de la facture </TableCell>
               <TableCell>Montant total</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Actions</TableCell>
@@ -129,7 +135,10 @@ const FactureExamen = () => {
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{facture.total_montant}  €</span>
+                  <span className="text-sm">{facture.numfacture} </span>
+                </TableCell>
+                <TableCell>
+                  <span className="text-sm">{facture.montant}  €</span>
                 </TableCell>
                 
                 <TableCell>
@@ -150,6 +159,18 @@ const FactureExamen = () => {
                   >
                     <EyeIcon className="w-6 h-6 focus:outline-none focus:border-none" aria-hidden="true" />
                   </button>
+
+                  { user && user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur && (
+                    facture.statut_paiement === 'Non payé' ? (
+                      <button type="button"  className="px-4 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
+                      onClick={() => payefacture(facture)}
+                      >
+                        Payé
+                      </button>
+                    ) : (
+                      null
+                    )
+                  )}
 
                   {/* Bouton Modifier */}
                   <button layout="link" size="icon" aria-label="Modifier" className="focus:outline-none focus:border-none">

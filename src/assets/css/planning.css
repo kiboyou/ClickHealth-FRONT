@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   font-family: Arial, sans-serif;
   margin: 20px;
 }
@@ -34,23 +35,11 @@
   background-color: #a1e455;
 }
 
-/* Jours et créneaux */
-.days {
-  display: flex;
-  gap: 20px;
-}
-
-.day-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100px;
-}
 
 .day-header {
   font-weight: bold;
   margin-bottom: 10px;
-  color: white;
+  color: black;
 }
 
 
@@ -85,25 +74,41 @@
     cursor: not-allowed;
   }
   
+
+  
+  
+
+  /* Conteneur principal pour les jours */
   .days {
+    width: 100%;
     display: flex;
-    flex-wrap: wrap; /* Pour que les éléments s'enroulent sur plusieurs lignes */
-    gap: 1rem; /* Espacement entre les colonnes */
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center; /* Centrer les colonnes */
+    align-items: center;
+    margin: 0 auto; /* Éviter les marges externes inutiles */
+    
+
   }
   
+  /* Colonne d'un jour */
   .day-column {
-    flex: 1 1 30%; /* Par défaut, chaque élément prend 30% de la largeur */
+    flex: 1 1 calc(20% - 1rem); /* 6 éléments par ligne */
+    max-width: calc(30% - 1rem); 
   }
   
+  /* Adaptation pour les tailles d’écran */
   @media (max-width: 1200px) {
     .day-column {
-      flex: 1 1 45%; /* Lorsque l'écran fait moins de 1200px de large, chaque élément prend 45% */
+      flex: 1 1 calc(20% - 1rem); /* 2 éléments par ligne */
+      max-width: calc(40% - 1rem);
     }
   }
   
   @media (max-width: 800px) {
     .day-column {
-      flex: 1 1 100%; /* Lorsque l'écran fait moins de 800px de large, chaque élément prend 100% (une seule colonne) */
+      flex: 1 1 10%; /* 1 élément par ligne */
+      max-width: 100%;
     }
   }
   

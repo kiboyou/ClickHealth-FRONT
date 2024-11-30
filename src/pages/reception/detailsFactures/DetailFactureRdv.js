@@ -52,7 +52,8 @@ const DetailFactureRdv = (props) => {
         className="w-full p-8 mx-auto bg-white rounded-lg"
       >
         <h1 className="mb-12 text-3xl font-bold text-center text-gray-700">
-          Facture de la consultation
+          Facture de la consultation <br/>
+         <span className="text-lg font-semibold text-gray-700"><strong>Référence </strong> : {facture.numfacture}</span>
         </h1>
 
         {/* Section : Informations hôpital et patient */}

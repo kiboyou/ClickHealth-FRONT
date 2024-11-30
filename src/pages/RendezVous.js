@@ -22,6 +22,7 @@ import Loading from '../utils/Loading';
 
 import { clearSuccess } from '../Api/features/rendezVous/rendezVousSlice';
 import { fetchRendezVous, fetchRendezVousByCode } from '../Api/features/rendezVous/rendezVousThunks';
+import groupeUser from '../utils/GrourpeUser';
 
 
 const RendezVous = () => {
@@ -44,7 +45,7 @@ const RendezVous = () => {
 
   useEffect(() => {
     if (user && user.groups) {
-      if (user.groups[0].name === 'medecin') {
+      if (user.groups[0].name === groupeUser.medecin) {
         // Filtrer les rendez-vous pour le médecin connecté
         setDataTable2(
           rendezVousList.filter(
@@ -52,7 +53,7 @@ const RendezVous = () => {
               rdv.planning_detail.medecin_detail.utilisateur_info.id === user.id
           )
         );
-      } else if (user.groups[0].name === 'patient') {
+      } else if (user.groups[0].name === groupeUser.patient) {
         // Filtrer les rendez-vous pour le patient connecté
         setDataTable2(
           rendezVousList.filter(
@@ -128,7 +129,7 @@ const RendezVous = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
-        { user && user.groups[0].name == 'patient' && (
+        { user && user.groups[0].name == groupeUser.patient && (
         <NavLink to="/app/rendez_vous/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter un rendez-vous
@@ -143,7 +144,7 @@ const RendezVous = () => {
           <TableHeader>
             <tr>
               {
-                user && user.groups[0].name == 'patient' ? <TableCell>Medecin</TableCell> : <TableCell>Patient</TableCell>
+                user && user.groups[0].name == groupeUser.patient ? <TableCell>Medecin</TableCell> : <TableCell>Patient</TableCell>
               }
               <TableCell>Code du RDV</TableCell>
               <TableCell>Date du rendez-vous</TableCell>
@@ -163,7 +164,7 @@ const RendezVous = () => {
                       {/* Condition pour vérifier si les détails du patient existent */}
                       {rdv.patient ? (
                       <>
-                        {user && user.groups[0].name === 'patient' ? (
+                        {user && user.groups[0].name === groupeUser.patient ? (
                           <div>
                             <p className="font-semibold">
                               {rdv.planning_detail.medecin_detail.utilisateur_info.first_name} {rdv.planning_detail.medecin_detail.utilisateur_info.last_name}
@@ -228,7 +229,7 @@ const RendezVous = () => {
                 </div>
                 ) : (
                   <div className="flex items-center space-x-4">
-                    { user && user.groups[0].name == 'receptionniste' ? (
+                    { user && user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur ? (
                       <button type="button" onClick={() => handleSubmit(rdv.code_rendez_vous)} className="px-4 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
                         ajouter le patient
                       </button>

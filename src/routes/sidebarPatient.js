@@ -20,6 +20,10 @@ const routesPatient = [
         path: '/app/reception/factures/rdv',
         name: 'Facture des RDV',
       },
+      {
+        path: '/app/reception/factures/paiement',
+        name: 'Reçu de paiement',
+      },
     ],
   },
 

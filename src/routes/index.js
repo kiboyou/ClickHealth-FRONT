@@ -1,7 +1,6 @@
 import { lazy } from 'react'
 
 
-
 // use lazy for better code splitting, a.k.a. load faster
 const Dashboard = lazy(() => import('../pages/Dashboard'))
 
@@ -30,6 +29,9 @@ const AjoutFactureExamen = lazy(() => import('../pages/formulaire/facture/AjoutF
 const DetailFactureRdv = lazy(() => import('../pages/reception/detailsFactures/DetailFactureRdv'))
 const DetailFactureExamen = lazy(() => import('../pages/reception/detailsFactures/DetailFactureExamen'))
 const FacturationsRdv = lazy(() => import('../pages/reception/FactureRdv'))
+const FacturePaiement = lazy(() => import('../pages/reception/FacturePaiement'))
+const AjoutPaiement = lazy(() => import('../pages/formulaire/facture/AjoutPaiement'))
+const DetailRecu = lazy(() => import('../pages/reception/detailsFactures/DetailRecu'))
 
 const Queues = lazy(() => import('../pages/reception/Queue'))
 const AjoutQueue = lazy(() => import('../pages/formulaire/queue/AjoutQueue'))
@@ -157,6 +159,21 @@ const routes = [
   {
     path: '/reception/factures/rdv/detail',
     component: DetailFactureRdv
+  },
+
+  {
+    path: '/reception/factures/paiement',
+    component: FacturePaiement
+  },
+
+  {
+    path: '/reception/factures/paiement/add',
+    component: AjoutPaiement
+  },
+
+  {
+    path: '/reception/factures/paiement/detail',
+    component: DetailRecu
   },
 
   {

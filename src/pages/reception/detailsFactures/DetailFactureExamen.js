@@ -52,7 +52,9 @@ const DetailFactureExamen = (props) => {
         className="w-full p-8 mx-auto bg-white rounded-lg"
       >
         <h1 className="mb-12 text-3xl font-bold text-center text-gray-700">
-          Facture des examens
+          Facture des examens <br/>
+         <span className="text-lg font-semibold text-gray-700"><strong>Référence </strong> : {facture.numfacture}</span>
+          
         </h1>
 
         {/* Section : Informations hôpital et patient */}
@@ -131,7 +133,7 @@ const DetailFactureExamen = (props) => {
         <div className="flex items-center justify-between py-10 border-t">
           <div>
             <p className="text-lg font-semibold text-gray-700">
-              <strong>Montant Total :</strong> {facture.total_montant} €
+              <strong>Montant Total :</strong> {facture.montant} €
             </p>
           </div>
           <div>
