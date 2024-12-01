@@ -229,7 +229,7 @@ const RendezVous = () => {
                 </div>
                 ) : (
                   <div className="flex items-center space-x-4">
-                    { user && user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur ? (
+                    { user && user.groups[0].name == groupeUser.receptionniste  ? (
                       <button type="button" onClick={() => handleSubmit(rdv.code_rendez_vous)} className="px-4 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
                         ajouter le patient
                       </button>

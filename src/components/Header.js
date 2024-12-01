@@ -57,7 +57,7 @@ function Header() {
                     } else if (groupName === groupeUser.receptionniste) {
                       return groupeUser.receptionniste;
                     } else if (groupName === groupeUser.administrateur) {
-                      return groupeUser.administrateur;
+                      return "gestionnaire";
                     } else {
                       return 'Non spécifié';
                     }
