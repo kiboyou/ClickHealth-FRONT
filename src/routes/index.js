@@ -1,4 +1,5 @@
 import { lazy } from 'react'
+import AjoutPrescription from '../pages/formulaire/sante/AjoutPrescription'
 
 
 // use lazy for better code splitting, a.k.a. load faster
@@ -41,9 +42,17 @@ const Queues = lazy(() => import('../pages/reception/Queue'))
 
 //sante
 const Consultations = lazy(() => import('../pages/sante/Consultation'))
+const AjoutConsultations = lazy(() => import('../pages/formulaire/sante/AjoutConsultation'))
+
 const Ordonnances = lazy(() => import('../pages/sante/Ordonnance'))
+const DetailOrdonnances= lazy(() => import('../pages/sante/detailsOrdonnances/DetailOrdonnance'))
+const AjoutOrdonnances = lazy(() => import('../pages/formulaire/sante/AjoutOrdonnance'))
 const Examens = lazy(() => import('../pages/sante/Examen'))
-const Prescriptions = lazy(() => import('../pages/sante/Prescription'))
+const AjoutExamens = lazy(() => import('../pages/formulaire/sante/AjoutExamen'))
+
+const Prescriptions = lazy(() => import('../pages/sante/Prescription')) 
+const AjoutPrescriptions = lazy(() => import('../pages/formulaire/sante/AjoutPrescription')) 
+
 
 
 const Groupe = lazy(() => import('../pages/configuration/Groupe'))
@@ -170,6 +179,8 @@ const routes = [
   },
   // end reception
 
+    
+
   //start consultation
 
   {
@@ -179,17 +190,21 @@ const routes = [
 
   {
     path: '/consultation/add',
-    component: Ordonnances
+    component: AjoutConsultations
   },
 
   {
     path: '/consultation/ordonnance',
     component: Ordonnances
   },
+   {
+    path: '/consultation/ordonnance/detail',
+    component:  DetailOrdonnances
+  },
 
   {
     path: '/consultation/ordonnance/add',
-    component: Ordonnances
+    component:  AjoutOrdonnances
   },
 
   {
@@ -199,7 +214,7 @@ const routes = [
 
   {
     path: '/consultation/prescription/add',
-    component: Ordonnances
+    component: AjoutPrescriptions
   },
 
   {
@@ -209,7 +224,7 @@ const routes = [
 
   {
     path: '/consultation/examen/add',
-    component: Examens
+    component: AjoutExamens
   },
 
 
