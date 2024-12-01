@@ -1,14 +1,15 @@
+ import React, { useState, useEffect } from 'react';
 import { Input, Label, Select } from '@windmill/react-ui';
-import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { fetchCaisses } from '../../../../Api/features/receptionnistes/caisseThunk'; // Assurez-vous de disposer de cette action pour récupérer les caisses
-import { clearSuccess } from '../../../../Api/features/receptionnistes/receptionnisteSlice';
-import { addReceptionniste } from '../../../../Api/features/receptionnistes/receptionnisteThunk';
-import { addUser } from '../../../../Api/features/user/userThunks';
-import Loading from '../../../../utils/Loading';
+import { addUser } from '../../../Api/features/user/userThunks';
+import { addMedecin } from '../../../Api/features/medecins/medecinThunks';
+import { fetchFonctions } from '../../../Api/features/medecins/fonctionThunk';
+import { fetchSpecialites } from '../../../Api/features/medecins/specialiteThunk';
+import Loading from '../../../utils/Loading';
+import { clearSuccess } from '../../../Api/features/medecins/medecinSlice';
 
-const AjoutReceptionniste = () => {
+const AjoutMedecin = () => {
   const dispatch = useDispatch();
   const navigate = useHistory().push;
 
@@ -16,25 +17,29 @@ const AjoutReceptionniste = () => {
   const [email, setEmail] = useState('');
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
-  const [caisse, setCaisse] = useState('');
+  const [fonction, setFonction] = useState('');
+  const [specialite, setSpecialite] = useState('');
   const [loading, setLoading] = useState(false);
 
   // Sélecteurs pour obtenir l'état des actions Redux
   const { success: userSuccess, error: userError, loading: userLoading, selectedUser } = useSelector(state => state.user);
-  const { success: receptionnisteSuccess, error: receptionnisteError, loading: receptionnisteLoading } = useSelector(state => state.receptionnistes);
-  const { caisses } = useSelector(state => state.caisses);  // Récupère la liste des caisses depuis le Redux store
+  const { success: medecinSuccess, error: medecinError, loading: medecinLoading } = useSelector(state => state.medecins);
+  const { fonctions } = useSelector(state => state.fonctions);
+  const { specialites } = useSelector(state => state.specialites);
 
-  // Effet pour charger les caisses au démarrage du composant
+  // Effet pour charger les fonctions et spécialités au démarrage du composant
   useEffect(() => {
-    dispatch(fetchCaisses());  // Dispatche l'action pour récupérer les caisses
+    dispatch(fetchFonctions());
+    dispatch(fetchSpecialites());
   }, [dispatch]);
 
-  // Effet pour surveiller le succès de la création d'utilisateur et créer le réceptionniste
+  // Effet pour surveiller le succès de la création d'utilisateur et créer le médecin
   useEffect(() => {
     if (userSuccess && selectedUser) {
-      const receptionnisteData = {
+      const medecinData = {
         utilisateur: selectedUser.id, // Utilisation de l'ID de l'utilisateur créé
-        caisse: caisse,  // Attribue la caisse sélectionnée
+        fonction: fonction,
+        specialite: specialite,
         utilisateur_info: {
           email,
           first_name,
@@ -42,30 +47,29 @@ const AjoutReceptionniste = () => {
         },
       };
 
-      dispatch(addReceptionniste(receptionnisteData));
+      dispatch(addMedecin(medecinData));
     }
-  }, [userSuccess, selectedUser, caisse, email, first_name, last_name, dispatch]);
+  }, [userSuccess, selectedUser, fonction, specialite, email, first_name, last_name, dispatch]);
 
-  // Effet pour surveiller le succès de la création du réceptionniste et rediriger
+  // Effet pour surveiller le succès de la création du médecin et rediriger
   useEffect(() => {
-    if (receptionnisteSuccess == 'Réceptionniste ajouté avec succès') {
+    if (medecinSuccess == 'Médecin ajouté avec succès') {
       dispatch(clearSuccess()); // Réinitialiser success à null
-      navigate('/app/personnel/receptionnistes');
- 
+      navigate('/app/personnel/medecin');
     }
-  }, [receptionnisteSuccess, navigate]);
+  }, [medecinSuccess,navigate]);
 
   // Gérer la soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
 
-    // Créer un utilisateur avant de créer le réceptionniste
+    // Créer un utilisateur avant de créer un médecin
     const userData = {
       email,
       first_name,
       last_name,
-      groups: ['receptionniste'], // Le réceptionniste fait partie du groupe "receptionniste"
+      groups: ['medecin'], // Le médecin fait partie du groupe "medecin"
     };
 
     try {
@@ -79,14 +83,14 @@ const AjoutReceptionniste = () => {
   return (
     <div className="px-4 py-3 mt-10 mb-8 rounded-lg">
       {userLoading && <Loading />}
-      {receptionnisteLoading && <Loading />}
+      {medecinLoading && <Loading />}
 
       <div className="flex flex-col max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl bg-cadre1">
         <main className="flex items-center justify-center p-6 sm:p-12">
           <div className="w-full">
             <form onSubmit={handleSubmit}>
               <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
-                Ajouter un Réceptionniste
+                Ajouter un Médecin
               </h1>
 
               {/* Email */}
@@ -125,18 +129,35 @@ const AjoutReceptionniste = () => {
                 />
               </Label>
 
-              {/* Caisse */}
+              {/* Fonction */}
               <Label className="mt-4">
-                <span>Caisse</span>
+                <span>Fonction</span>
                 <Select
                   className="mt-2"
-                  value={caisse}
-                  onChange={(e) => setCaisse(e.target.value)}
+                  value={fonction}
+                  onChange={(e) => setFonction(e.target.value)}
                 >
-                  <option value="">Sélectionner la caisse</option>
-                  {caisses.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.caisse}
+                  <option value="">Sélectionner la fonction</option>
+                  {fonctions.map((f) => (
+                    <option key={f.id} value={f.id}>
+                      {f.nom_fonction}
+                    </option>
+                  ))}
+                </Select>
+              </Label>
+
+              {/* Spécialité */}
+              <Label className="mt-4">
+                <span>Spécialité</span>
+                <Select
+                  className="mt-2"
+                  value={specialite}
+                  onChange={(e) => setSpecialite(e.target.value)}
+                >
+                  <option value="">Sélectionner la spécialité</option>
+                  {specialites.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.nom_specialite}
                     </option>
                   ))}
                 </Select>
@@ -148,7 +169,7 @@ const AjoutReceptionniste = () => {
                 className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
                 disabled={loading}
               >
-                Ajouter Réceptionniste
+                Ajouter Médecin
               </button>
             </form>
           </div>
@@ -158,4 +179,4 @@ const AjoutReceptionniste = () => {
   );
 };
 
-export default AjoutReceptionniste;
+export default AjoutMedecin;

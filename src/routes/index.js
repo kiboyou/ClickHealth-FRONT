@@ -59,10 +59,10 @@ const AjoutMedicaments = lazy(() => import('../pages/formulaire/configuration/Aj
 
 
 const Receptionnistes = lazy(() => import('../pages/personnel/Receptionniste'))
-const AjoutReceptionnistes = lazy(() => import('../pages/formulaire/personnel/ajouts/AjoutReceptionniste'))
+const AjoutReceptionnistes = lazy(() => import('../pages/formulaire/personnel/AjoutReceptionniste'))
 
 const Medecins = lazy(() => import('../pages/personnel/Medecin'))
-const AjoutMedecin = lazy(() => import('../pages/formulaire/personnel/ajouts/AjoutMedecin'))
+const AjoutMedecin = lazy(() => import('../pages/formulaire/personnel/AjoutMedecin'))
 const AjoutSpecialites = lazy(() => import('../pages/formulaire/configuration/AjoutSpecialite'))
 const AjoutFonctions = lazy(() => import('../pages/formulaire/configuration/AjoutFonction'))
 const AjoutTypeOrdonnances = lazy(() => import('../pages/formulaire/configuration/AjoutTypeOrdonnance'))
