@@ -69,6 +69,7 @@ const paiementSlice = createSlice({
       .addCase(addPaiement.fulfilled, (state, action) => {
         state.loading = false;
         state.paiements.push(action.payload);
+        state.currentPaiement = action.payload;
         state.success = 'Paiement added successfully';
       })
       .addCase(addPaiement.rejected, (state, action) => {

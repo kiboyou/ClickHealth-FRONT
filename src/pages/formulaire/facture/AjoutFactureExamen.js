@@ -52,7 +52,7 @@ const  AjoutFactureExamen = () => {
       examens.forEach((examen) => {
         // Vérifie si facture est non payée
         if (examen.facture === false) {
-          const patient = examen.patient_detail;
+          const patient = examen.consultation_detail?.patient_detail;
   
           // Utilise un identifiant unique pour éviter les doublons
           if (!patientsMap.has(patient.id)) {

@@ -38,8 +38,7 @@ const  AjoutPaiement = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addPaiement({numero_facture: codeFaccture, montant: montantRecu}));
-    
-
+  
   };
 
   useEffect(() => {

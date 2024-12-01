@@ -51,7 +51,7 @@ const FacturePaiement = () => {
         setDataTable2(paiements);
       }
     }
-  }, [paiements, user]);
+  }, [dispatch, paiements, user]);
   
 
   // Pagination setup
@@ -73,7 +73,7 @@ const FacturePaiement = () => {
     <>
       { loading && <Loading />}
       <PageTitle>Liste des reçus de paiement</PageTitle>
-
+      {console.log(dataTable2)}
       {/* <!-- Search input --> */}
       <div className="flex justify-center flex-1 lg:mr-32">
         <div className="relative w-full max-w-xl mr-6 bg-text">
@@ -116,8 +116,6 @@ const FacturePaiement = () => {
               <TableRow key={i}>
                 <TableCell>
                   <div className="flex items-center text-sm">
-                    {/* <Avatar className="hidden mr-3 md:block" src={user.avatar} alt="User avatar" /> */}
-
                     {
                       paiement.facture.patient ? (
                         <div>

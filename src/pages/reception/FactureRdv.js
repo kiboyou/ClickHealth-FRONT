@@ -153,7 +153,7 @@ const FactureRdv = () => {
                       <EyeIcon className="w-6 h-6 focus:outline-none focus:border-none" aria-hidden="true" />
                     </button>
 
-                    { user && user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur && (
+                    { user && (user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur) && (
                     facture.statut_paiement === 'Non payé' ? (
                       <button type="button"  className="px-4 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
                         onClick={() => payefacture(facture)} 

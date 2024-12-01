@@ -100,7 +100,7 @@ const FactureExamen = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
-        {user && user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur &&
+        {user && (user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur) &&
         
         <NavLink to="/app/reception/factures/examens/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
@@ -160,7 +160,7 @@ const FactureExamen = () => {
                     <EyeIcon className="w-6 h-6 focus:outline-none focus:border-none" aria-hidden="true" />
                   </button>
 
-                  { user && user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur && (
+                  { user && (user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur) && (
                     facture.statut_paiement === 'Non payé' ? (
                       <button type="button"  className="px-4 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
                       onClick={() => payefacture(facture)}

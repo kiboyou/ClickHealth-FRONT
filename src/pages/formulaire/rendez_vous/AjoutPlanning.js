@@ -132,7 +132,7 @@
 import moment from 'moment';
 import 'moment/locale/fr'; // Importer la locale française
 import React, { useEffect, useState } from 'react';
-import { Calendar, momentLocalizer } from 'react-big-calendar';
+import { Calendar, momentLocalizer, Views } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
@@ -266,6 +266,10 @@ const AjoutPlanning = () => {
           eventPropGetter={eventStyleGetter} // Applique un style personnalisé à l'événement
           style={{ height: 500, width: '100%' }}
           culture="fr" // Utiliser la culture française pour le calendrier
+          views={{ week: true, day: true }} // Définit uniquement les vues autorisées
+          defaultView={Views.WEEK}
+
+
         />
       </div>
 
