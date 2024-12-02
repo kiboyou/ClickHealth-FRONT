@@ -49,6 +49,11 @@ const Consultation = () => {
     setPageTable2(p)
   }
 
+    const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  //const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+  return date.toLocaleDateString('fr-FR'  ); // Ici, 'fr-FR' pour un format français
+}
   return (
     <>
       { loading && <Loading />}
@@ -76,7 +81,7 @@ const Consultation = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
-        <NavLink to="/app/patients/add">
+        <NavLink to="/app/consultation/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter une consultation
           </button>
@@ -92,7 +97,7 @@ const Consultation = () => {
               <TableCell>Telephone</TableCell>
               <TableCell>Specialite</TableCell>
               <TableCell>Type de consultation</TableCell>
-              <TableCell>Date de la consultation</TableCell>
+              <TableCell>Date consultation</TableCell>
               <TableCell>Diagnostic</TableCell>
               <TableCell>Actions</TableCell>
             </tr>
@@ -119,7 +124,7 @@ const Consultation = () => {
                   <span className="text-sm">{consultation.type_consultation_detail.nom}</span>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{consultation.date_consultation}</span>
+                  <span className="text-sm">{formatDate(consultation.date_consultation)}</span>
                 </TableCell>
                 <TableCell>
                   <span className="text-sm">{consultation.diagnostic}</span>

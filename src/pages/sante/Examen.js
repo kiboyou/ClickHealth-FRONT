@@ -49,11 +49,18 @@ const Examen = () => {
     setPageTable2(p)
   }
 
+  const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  //const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+  return date.toLocaleDateString('fr-FR'  ); // Ici, 'fr-FR' pour un format français
+}
+
   return (
     <>
       { loading && <Loading />}
       <PageTitle>Liste des examens</PageTitle>
-
+      {console.log(examens)
+      }
       {/* <!-- Search input --> */}
       <div className="flex justify-center flex-1 lg:mr-32">
         <div className="relative w-full max-w-xl mr-6 bg-text">
@@ -76,7 +83,7 @@ const Examen = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
-        <NavLink to="/app/patients/add">
+        <NavLink to="/app/consultation/examen/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter un examen
           </button>
@@ -90,10 +97,10 @@ const Examen = () => {
             <tr>
               <TableCell>Patient</TableCell>
               <TableCell>Telephone</TableCell>
-              <TableCell>Specialite</TableCell>
+              {/* <TableCell>Specialite</TableCell> */}
               <TableCell>Type d'examen</TableCell>
               <TableCell>Date de la examen</TableCell>
-              <TableCell>Status</TableCell>
+              {/* <TableCell>Status</TableCell> */}
               <TableCell>Actions</TableCell>
             </tr>
           </TableHeader>
@@ -104,13 +111,13 @@ const Examen = () => {
                   <div className="flex items-center text-sm">
                     {/* <Avatar className="hidden mr-3 md:block" src={user.avatar} alt="User avatar" /> */}
                     <div>
-                      <p className="font-semibold">{examen.patient_detail.user_detail.first_name} {examen.patient_detail.user_detail.last_name}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{examen.patient_detail.user_detail.email}</p>
+                      {/* <p className="font-semibold">{examen.consultation_detail.patient_detail.user_detail.first_name} {examen.consultation_detail.patient_detail.user_detail.last_name}</p> */}
+                      <p className="text-xs text-gray-600 dark:text-gray-400">{examen?.consultation_detail?.patient_detail?.user_detail.first_name}  {examen?.consultation_detail?.patient_detail?.user_detail.last_name}</p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{examen.patient_detail.telephone}</span>
+                  <span className="text-sm">{examen.consultation_detail.patient_detail.telephone}</span>
                 </TableCell>
                 {/* <TableCell>
                   <span className="text-sm">{examen.type_examen_detail.specialite_detail.nom_specialite}</span>
@@ -118,15 +125,13 @@ const Examen = () => {
                 <TableCell>
                   <span className="text-sm">{examen.type_examen_detail.nom}</span>
                 </TableCell>
+                
                 <TableCell>
-                  <span className="text-sm">{examen.type_examen_detail.nom}</span>
+                  <span className="text-sm">{formatDate(examen.date_examen)}</span>
                 </TableCell>
-                <TableCell>
-                  <span className="text-sm">{examen.date_examen}</span>
-                </TableCell>
-                <TableCell>
+                {/* <TableCell>
                   <span className="text-sm">{examen.resultat}</span>
-                </TableCell>
+                </TableCell> */}
                 
                 <TableCell>
                   <div className="flex items-center space-x-4">

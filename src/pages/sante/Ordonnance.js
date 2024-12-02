@@ -1,4 +1,4 @@
-import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon,EyeIcon } from '@heroicons/react/24/outline';
 import {
     Button,
     Input,
@@ -14,7 +14,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+import { NavLink,useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 import { fetchOrdonnances } from '../../Api/features/ordonnance/ordonnanceThunks';
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
@@ -24,6 +24,7 @@ import Loading from '../../utils/Loading';
 const Ordonnance = () => {
   const dispatch = useDispatch()
   const { success, ordonnances, loading } = useSelector((state) => state.ordonnance)
+    const  navigate = useHistory().push;
 
   const [pageTable2, setPageTable2] = useState(1)
   const [resultsPerPage] = useState(10)
@@ -49,6 +50,11 @@ const Ordonnance = () => {
     setPageTable2(p)
   }
 
+
+    // Fonction pour gérer l'action Voir Plus
+  const handleVoirPlus = (ordonnance) => {
+    navigate('/app/consultation/ordonnance/detail', {ordonnance}); // Redirection avec les données
+  };
   return (
     <>
       { loading && <Loading />}
@@ -76,7 +82,7 @@ const Ordonnance = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
-        <NavLink to="/app/patients/add">
+        <NavLink to="/app/consultation/ordonnance/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter une ordonnance
           </button>
@@ -90,9 +96,9 @@ const Ordonnance = () => {
             <tr>
               <TableCell>Patient</TableCell>
               <TableCell>Telephone</TableCell>
-              <TableCell>Specialite</TableCell>
+           
               <TableCell>Type de ordonnance</TableCell>
-              <TableCell>Date de la ordonnance</TableCell>
+            
               <TableCell>Actions</TableCell>
             </tr>
           </TableHeader>
@@ -103,27 +109,28 @@ const Ordonnance = () => {
                   <div className="flex items-center text-sm">
                     {/* <Avatar className="hidden mr-3 md:block" src={user.avatar} alt="User avatar" /> */}
                     <div>
-                      <p className="font-semibold">{ordonnance.patient_detail.user_detail.first_name} {ordonnance.patient_detail.user_detail.last_name}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{ordonnance.patient_detail.user_detail.email}</p>
+                      <p className="font-semibold">{ordonnance.consultation_detail.patient_detail.user_detail.first_name} {ordonnance.consultation_detail.patient_detail.user_detail.last_name}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">{ordonnance.consultation_detail.patient_detail.user_detail.email}</p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  <span className="text-sm">{ordonnance.patient_detail.telephone}</span>
+                  <span className="text-sm">{ordonnance.consultation_detail.patient_detail.telephone}</span>
                 </TableCell>
-                <TableCell>
-                  <span className="text-sm">{ordonnance.type_ordonnance_detail.specialite_detail.nom_specialite}</span>
-                </TableCell>
+              
                 <TableCell>
                   <span className="text-sm">{ordonnance.type_ordonnance_detail.nom}</span>
                 </TableCell>
-                <TableCell>
-                  <span className="text-sm">{ordonnance.date_ordonnance}</span>
-                </TableCell>
-               
+                
                 
                 <TableCell>
                   <div className="flex items-center space-x-4">
+                      {/* Bouton Voir Plus */}
+                    <button className="focus:outline-none focus:border-none"
+                      onClick={() => handleVoirPlus(ordonnance)} // Appel de la fonction handleVoirPlus
+                    >
+                      <EyeIcon className="w-6 h-6 focus:outline-none focus:border-none" aria-hidden="true" />
+                    </button>
                     <Button layout="link" size="icon" aria-label="Edit" >
                       <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
                     </Button>

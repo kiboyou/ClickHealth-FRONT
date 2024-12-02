@@ -1,4 +1,4 @@
-import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon ,EyeIcon, PencilIcon} from '@heroicons/react/24/outline';
 import {
     Button,
     Input,
@@ -76,7 +76,7 @@ const Prescription = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
-        <NavLink to="/app/patients/add">
+        <NavLink to="/app/consultation/prescription/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter une prescription
           </button>
@@ -102,8 +102,8 @@ const Prescription = () => {
                   <div className="flex items-center text-sm">
                     {/* <Avatar className="hidden mr-3 md:block" src={user.avatar} alt="User avatar" /> */}
                     <div>
-                      <p className="font-semibold">Ordonnance de {prescription.ordonnance_detail.patient_detail.user_detail.first_name} {prescription.ordonnance_detail.patient_detail.user_detail.last_name}</p>
-                      <p className="text-xs text-gray-600 dark:text-gray-400">Num - {prescription.ordonnance_detail.id}</p>
+                      <p className="font-semibold">Ordonnance n-{prescription.ordonnance_detail.id} de {prescription.ordonnance_detail.consultation_detail.patient_detail.user_detail.first_name}  {prescription.ordonnance_detail.consultation_detail.patient_detail.user_detail.last_name}</p>
+    
                     </div>
                   </div>
                 </TableCell>
@@ -119,6 +119,7 @@ const Prescription = () => {
                 
                 <TableCell>
                   <div className="flex items-center space-x-4">
+                    
                     <Button layout="link" size="icon" aria-label="Edit" >
                       <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
                     </Button>
