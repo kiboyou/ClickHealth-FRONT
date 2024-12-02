@@ -112,12 +112,12 @@ const Examen = () => {
                     {/* <Avatar className="hidden mr-3 md:block" src={user.avatar} alt="User avatar" /> */}
                     <div>
                       {/* <p className="font-semibold">{examen.consultation_detail.patient_detail.user_detail.first_name} {examen.consultation_detail.patient_detail.user_detail.last_name}</p> */}
-                      <p className="text-xs text-gray-600 dark:text-gray-400">{examen?.consultation_detail?.patient_detail?.user_detail.email}</p>
+                      <p className="text-xs text-gray-600 dark:text-gray-400">{examen?.consultation_detail?.patient_detail?.user_detail.first_name}  {examen?.consultation_detail?.patient_detail?.user_detail.last_name}</p>
                     </div>
                   </div>
                 </TableCell>
                 <TableCell>
-                  {/* <span className="text-sm">{examen.consultation_detail.patient_detail.telephone}</span> */}
+                  <span className="text-sm">{examen.consultation_detail.patient_detail.telephone}</span>
                 </TableCell>
                 {/* <TableCell>
                   <span className="text-sm">{examen.type_examen_detail.specialite_detail.nom_specialite}</span>

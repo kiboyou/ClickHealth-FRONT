@@ -7,7 +7,7 @@ import { fetchPatients } from '../../../Api/features/patient/patientThunks';  //
 import { fetchTypeConsultations } from '../../../Api/features/consultation/typeConsultationThunk'; // À ajuster si nécessaire
 import Loading from '../../../utils/Loading';
 import { clearSuccess } from '../../../Api/features/consultation/consultationSlice'; // À ajuster si nécessaire
-
+import { fetchRendezVous } from '../../../Api/features/rendezVous/rendezVousThunks';
 const AjoutConsultation = () => {
   const dispatch = useDispatch();
   const navigate = useHistory().push;
@@ -22,13 +22,48 @@ const AjoutConsultation = () => {
   // Sélecteurs pour obtenir l'état des actions Redux
   const { success: consultationSuccess, loading: consultationLoading } = useSelector(state => state.consultation);
   const { patients } = useSelector(state => state.patient); // Liste des patients
+   const { rendezVousList } = useSelector(state => state.rendezVous); // Liste des rendez-vous
   const { typeConsultations } = useSelector(state => state.typeConsultations); // Liste des types de consultations
 
   // Effet pour charger les patients et types de consultations au démarrage du composant
   useEffect(() => {
+    console.log('Patients:', patients); // Vérifier la liste des patients
+    console.log('Rendez-vous:', rendezVousList); 
+      dispatch(fetchRendezVous());
     dispatch(fetchPatients());
     dispatch(fetchTypeConsultations());  // Charger les types de consultations
   }, [dispatch]);
+
+
+  // Filtrer les patients qui ont déjà pris un rendez-vous
+ const patientsAvecRendezVous = () => {
+  // Vérifier que rendezVousList est un tableau valide
+  if (!Array.isArray(rendezVousList)) return [];
+
+  // Créer un Set pour stocker les ID des patients qui ont un rendez-vous
+  const patientsAvecRdvIds = new Set();
+
+  // Parcourir chaque rendez-vous et récupérer les patients qui ont un rendez-vous
+  rendezVousList.forEach((rdv) => {
+    if (rdv.patient_detail && rdv.patient_detail.id) {
+      // Ajouter l'ID du patient dans le Set
+      patientsAvecRdvIds.add(rdv.patient_detail.id);
+    }
+  });
+
+  // Filtrer les patients qui ont un rendez-vous en utilisant le Set
+  const patientsFiltrés = patients.filter((patient) =>
+    patientsAvecRdvIds.has(patient.id)
+  );
+
+  return patientsFiltrés;
+};
+
+
+  const patientsFiltrés = patientsAvecRendezVous();
+
+
+
 
   // Effet pour surveiller le succès de la création de la consultation et rediriger
   useEffect(() => {
@@ -58,6 +93,8 @@ const AjoutConsultation = () => {
     }
   };
 
+  
+
   return (
     <div className="px-4 py-3 mt-10 mb-8 rounded-lg">
       {consultationLoading && <Loading />}
@@ -80,7 +117,7 @@ const AjoutConsultation = () => {
                   required
                 >
                   <option value="">Sélectionner un patient</option>
-                  {patients.map((p) => (
+                  {patientsFiltrés.map((p) => (
                     <option key={p.id} value={p.id}>
                       {p.user_detail.first_name} {p.user_detail.last_name}
                     </option>
@@ -119,7 +156,7 @@ const AjoutConsultation = () => {
               </Label>
 
               {/* Date de Consultation */}
-              <Label className="mt-4">
+              {/* <Label className="mt-4">
                 <span>Date de la Consultation</span>
                 <Input
                   className="mt-2"
@@ -128,7 +165,7 @@ const AjoutConsultation = () => {
                   onChange={(e) => setDateConsultation(e.target.value)}
                   required
                 />
-              </Label>
+              </Label> */}
 
               {/* Bouton de soumission */}
               <button
