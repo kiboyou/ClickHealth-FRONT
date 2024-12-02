@@ -9,6 +9,8 @@ import { clearSuccess } from '../../../Api/features/ordonnance/ordonnanceSlice';
 import { fetchConsultations } from '../../../Api/features/consultation/consultationThunks';
 import { fetchTypeOrdonnances } from '../../../Api/features/ordonnance/typeOrdonnanceThunk';
 import { fetchMedicaments } from '../../../Api/features/medicaments/medicamentThunk';  // Importation de l'action pour récupérer les médicaments
+import {fetchOrdonnances } from '../../../Api/features/ordonnance/ordonnanceThunks';
+
 
 const AjoutPrescription = () => {
   const dispatch = useDispatch();
@@ -24,12 +26,13 @@ const AjoutPrescription = () => {
   // Sélecteurs pour obtenir l'état des données Redux
   const { consultations, loading: consultationsLoading } = useSelector((state) => state.consultation);
   const { typeOrdonnances, loading: typeOrdonnancesLoading } = useSelector((state) => state.typeOrdonnances);
-  const { selectedOrdonnance, loading: ordonnanceLoading, success, error } = useSelector((state) => state.ordonnance);
+  const { selectedOrdonnance, ordonnances,loading: ordonnanceLoading, success, error } = useSelector((state) => state.ordonnance);
   const { success: prescriptionSuccess, loading: prescriptionLoading } = useSelector((state) => state.prescription);
   const { medicaments, loading: medicamentsLoading } = useSelector((state) => state.medicaments);  // Sélecteur pour les médicaments
 
   // Effet pour récupérer les consultations, types d'ordonnances et médicaments
   useEffect(() => {
+    dispatch(fetchOrdonnances());
     dispatch(fetchConsultations());
     dispatch(fetchTypeOrdonnances());
     dispatch(fetchMedicaments());  // Récupérer les médicaments depuis l'API
@@ -69,10 +72,14 @@ const AjoutPrescription = () => {
       type_ordonnance: typeOrdonnanceId,
     };
 
+    // si l'ordonnance existe on récupère et on prend son id 
+    const ordannanceConsultation = ordonnances.find((ordonnance) => ordonnance.consultation === parseInt(consultationId) && ordonnance.type_ordonnance === parseInt(typeOrdonnanceId));
+
+
     // Si une ordonnance est déjà sélectionnée, on l'utilise pour ajouter la prescription
-    if (selectedOrdonnance && selectedOrdonnance.id) {
+    if (ordannanceConsultation ) {
       const prescriptionData = {
-        ordonnance: selectedOrdonnance.id,
+        ordonnance: ordannanceConsultation.id,
         medicament,
         posologie,
         quantite,
