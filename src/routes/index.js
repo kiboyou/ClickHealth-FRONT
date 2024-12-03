@@ -1,12 +1,11 @@
 import { lazy } from 'react'
-import AjoutPrescription from '../pages/formulaire/sante/AjoutPrescription'
-
 
 // use lazy for better code splitting, a.k.a. load faster
 const Dashboard = lazy(() => import('../pages/Dashboard'))
 
 
 const User = lazy(() => import('../pages/configuration/User'))
+const ProfileUser = lazy(() => import('../pages/ProfileUser'))
 const AjoutUser = lazy(() => import('../pages/formulaire/personnel/AjoutUser'))
 
 const Planning = lazy(() => import('../pages/Planning'))
@@ -100,6 +99,11 @@ const routes = [
   {
     path: '/configuration/user', 
     component: User, 
+
+  },
+  {
+    path: '/profile', 
+    component: ProfileUser, 
 
   },
 

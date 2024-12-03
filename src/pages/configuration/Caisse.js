@@ -99,7 +99,7 @@ const Caisse = () => {
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{caisse.id} </p>
+                      <p className="font-semibold">{i+1} </p>
                     </div>
                   </div>
                 </TableCell>

@@ -98,7 +98,7 @@ const Groupe = () => {
                   <div className="flex items-center text-sm">
                    
                     <div>
-                      <p className="font-semibold">{groupe.id} </p>
+                      <p className="font-semibold">{i+1} </p>
                     </div>
                   </div>
                 </TableCell>

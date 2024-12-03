@@ -5,7 +5,9 @@ import {
 } from '../icons';
 
 import { FaChevronDown } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
 import { logoutUser } from '../Api/features/userAuth/authThunks';
 import groupeUser from '../utils/GrourpeUser';
 
@@ -78,6 +80,14 @@ function Header() {
           {/* Dropdown Menu */}
             {isOpen && (
               <div className="absolute right-0 w-48 mt-2 rounded-lg shadow-lg ">
+                
+                  <NavLink
+                    to="/app/profile"
+                    className="flex px-4 py-2 text-gray-700 btnprise"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    <FaUser className="mr-5 text-2xl text-gray-600" /> Mon Profile 
+                  </NavLink>
                 
                   <button className="w-full px-4 py-2 mt-1 text-lg font-bold bg-white focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
                   onClick={handleLogout}>

@@ -136,6 +136,10 @@
 .text-c{
   color: #a1e455;
 }
+
+.text-c1{
+  color: #003d3b;
+}
 .section1{
     /* background-image: linear-gradient(90deg, hwb(0 0% 100% / 0.894), #000000c7); */
     background-image: linear-gradient(360deg,#003d3bc9, #26aba7d7);

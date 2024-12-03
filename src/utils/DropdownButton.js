@@ -24,7 +24,7 @@ function DropdownButton() {
             className="block px-4 py-2 text-gray-700 btnprise"
             onClick={() => setIsOpen(false)}
           >
-            Administrateur
+            administrateur
           </NavLink>
 
           <NavLink
@@ -33,7 +33,23 @@ function DropdownButton() {
             onClick={() => setIsOpen(false)}
           >
             patient
-          </NavLink>          
+          </NavLink>   
+
+          <NavLink
+            to="/app/personnel/medecin/add"
+            className="block px-4 py-2 text-gray-700 btnprise"
+            onClick={() => setIsOpen(false)}
+          >
+            medecin
+          </NavLink>   
+
+          <NavLink
+            to="/app/personnel/receptionniste/add"
+            className="block px-4 py-2 text-gray-700 btnprise"
+            onClick={() => setIsOpen(false)}
+          >
+            receptionniste 
+          </NavLink>           
         </div>
       )}
     </div>

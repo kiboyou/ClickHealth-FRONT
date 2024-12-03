@@ -123,7 +123,7 @@ const Planning = () => {
       ) : (
         <>
           {/* Calendrier interactif */}
-          <div className="my-6">
+          <div className="my-6 text-white focus:outline-none">
             <Calendar
               localizer={localizer}
               events={events}

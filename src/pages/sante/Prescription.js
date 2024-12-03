@@ -19,12 +19,18 @@ import { fetchPrescriptions } from '../../Api/features/prescription/prescription
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
+import groupeUser from '../../utils/GrourpeUser';
+import { fetchRendezVous } from '../../Api/features/rendezVous/rendezVousThunks';
+
 
 
 const Prescription = () => {
   const dispatch = useDispatch()
   const { success, prescriptions, loading } = useSelector((state) => state.prescription)
+  const { rendezVousList } = useSelector((state) => state.rendezVous)
+  const { user } = useSelector((state) => state.auth);
 
+  
   const [pageTable2, setPageTable2] = useState(1)
   const [resultsPerPage] = useState(10)
 
@@ -33,12 +39,43 @@ const Prescription = () => {
 
   useEffect(() => {
     dispatch(fetchPrescriptions())
+    dispatch(fetchRendezVous())
+
   }, [dispatch])
 
+  // useEffect(() => {
+  //   // Met à jour les données à afficher lorsque users change
+  //   setDataTable2(prescriptions)
+  // }, [prescriptions])
+
   useEffect(() => {
-    // Met à jour les données à afficher lorsque users change
-    setDataTable2(prescriptions)
-  }, [prescriptions])
+    if (user && user.groups) {
+      if (user.groups[0].name === groupeUser.medecin) {
+        
+        const rendezVousListPatient = rendezVousList.filter(
+          (rdv) =>
+            rdv.planning_detail.medecin_detail.utilisateur_info.id === user.id
+        )
+        
+        // Étape 1: Extraire les identifiants des patients présents dans les rendez-vous
+        const patientsInRendezVous = new Set(
+          rendezVousListPatient.map((rdv) => rdv.patient_detail?.id)
+        );
+  
+        // Étape 2: Filtrer les consultations pour garder celles dont les patients sont dans les rendez-vous
+        const consultationsFiltered = prescriptions.filter((prescription) =>
+          patientsInRendezVous.has(prescription.ordonnance_detail.consultation_detail.patient)
+        );
+  
+        // Résultat: consultationsFiltered contient les consultations des patients dans les rendez-vous
+        setDataTable2(consultationsFiltered);
+        
+      } else {
+        // Si administrateur ou autre rôle, afficher tous les rendez-vous
+        setDataTable2(prescriptions);
+      }
+    }
+  }, [rendezVousList, prescriptions, user]);
 
   // Pagination setup
   const totalResults = dataTable2.length
@@ -76,11 +113,13 @@ const Prescription = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
         
+        {user && user.groups[0].name == groupeUser.medecin && (
         <NavLink to="/app/consultation/prescription/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter une prescription
           </button>
         </NavLink>
+        )}
         
       </div>
 

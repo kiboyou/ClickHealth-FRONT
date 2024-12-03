@@ -99,7 +99,7 @@ const TypeOrdonnance = () => {
                 <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold">{type.id} </p>
+                      <p className="font-semibold">{i+1} </p>
                     </div>
                   </div>
                 </TableCell>

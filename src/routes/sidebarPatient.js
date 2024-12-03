@@ -41,10 +41,6 @@ const routesPatient = [
         name: 'Mes Ordonnance',
       },
       {
-        path: '/app/consultation/prescription',
-        name: 'Mes Prescription',
-      },
-      {
         path: '/app/consultation/examen',
         name: 'Mes Examen',
       },

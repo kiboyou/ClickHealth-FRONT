@@ -68,7 +68,7 @@ const  AjoutUser = () => {
             <div className="w-full">
             <form onSubmit={handleSubmit}>
               <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
-                Ajouter un patient
+                Ajouter un administrateur
               </h1>
               
               <Label className="mt-4">

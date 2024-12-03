@@ -43,7 +43,7 @@ const FacturePaiement = () => {
       if (user.groups[0].name === groupeUser.patient) {
         // Filtrer les paiements associées au patient connecté
         const paiementsPatient = paiements.filter(
-          (facture) => facture.patient_detail?.user_detail.id === user.id
+          (paiement) => paiement.facture.patient_detail?.user_detail.id === user.id
         );
         setDataTable2(paiementsPatient);
       } else {
