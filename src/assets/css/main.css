@@ -123,8 +123,14 @@
 
 }
 
+.bg-color-trait2{
+  color: black;
+  font-size: bold;
+
+}
+
 .bg-text{
-  color: #a1e455;
+  color: #003d3b;
   /* background-color: #a1e455; */
 }
 
@@ -288,3 +294,27 @@
 .top-04 {
   top: 6rem;
 }
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rbc-toolbar button {
+  outline: none; /* Supprime le contour par défaut */
+  border: none; /* Supprime les bordures */
+  background-color: transparent; /* Peut personnaliser le fond */
+  cursor: pointer;
+}
+
+.rbc-toolbar button:hover {
+  background-color: #f0f0f0; /* Optionnel : effet de survol */
+}
+
+

@@ -27,8 +27,8 @@ function Header() {
   };
 
   return (
-    <header className="z-40 py-4 bg-white shadow-bottom bg-cadre1">
-      <div className="container flex items-center justify-between h-full px-6 mx-auto text-purple-600 dark:text-purple-300">
+    <header className="z-40 py-4 shadow-bottom bg-cadre1">
+      <div className="container flex items-center justify-between h-full px-6 mx-auto text-gray-300">
         {/* <!-- Mobile hamburger --> */}
         <button
           className="p-1 mr-5 -ml-1 rounded-md lg:hidden focus:outline-none focus:shadow-outline-purple"
@@ -39,10 +39,11 @@ function Header() {
         </button>
         {/* <!-- Search input --> */}
         <div className="flex justify-center flex-1 lg:mr-32">
-          <div className="relative w-full max-w-xl mr-6 focus-within:text-purple-500">
+          <div className="relative w-full max-w-xl mr-6 focus-within:text-gray-500">
             
           </div>
         </div>
+        
         <ul className="flex items-center flex-shrink-0 space-x-6">
           {/* <!-- Profile menu --> */}
           <li className="relative cursor-pointer">
@@ -72,7 +73,7 @@ function Header() {
               </div>
             ) : (
               <div className="px-4 my-6">
-                <span>Username</span>
+                <span className='text-gray-200'>Username</span>
               </div>
             )
           }

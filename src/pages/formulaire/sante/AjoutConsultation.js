@@ -103,13 +103,13 @@ const AjoutConsultation = () => {
         <main className="flex items-center justify-center p-6 sm:p-12">
           <div className="w-full">
             <form onSubmit={handleSubmit}>
-              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                 Ajouter une Consultation
               </h1>
 
               {/* Patient */}
               <Label className="mt-4">
-                <span>Patient</span>
+                <span className='text-gray-200'>Patient</span>
                 <Select
                   className="mt-2"
                   value={patient}
@@ -127,7 +127,7 @@ const AjoutConsultation = () => {
 
               {/* Type de Consultation */}
               <Label className="mt-4">
-                <span>Type de Consultation</span>
+                <span className='text-gray-200'>Type de Consultation</span>
                 <Select
                   className="mt-2"
                   value={typeConsultation}
@@ -145,9 +145,9 @@ const AjoutConsultation = () => {
 
               {/* Diagnostic */}
               <Label className="mt-4">
-                <span>Diagnostic</span>
+                <span className='text-gray-200'>Diagnostic</span>
                 <Input
-                  className="mt-2"
+                  className="mt-2 border-0 focus:ring-0"
                   type="text"
                   value={diagnostic}
                   onChange={(e) => setDiagnostic(e.target.value)}
@@ -157,9 +157,9 @@ const AjoutConsultation = () => {
 
               {/* Date de Consultation */}
               {/* <Label className="mt-4">
-                <span>Date de la Consultation</span>
+                <span className='text-gray-200'>Date de la Consultation</span>
                 <Input
-                  className="mt-2"
+                  className="mt-2 border-0 focus:ring-0"
                   type="date"
                   value={dateConsultation}
                   onChange={(e) => setDateConsultation(e.target.value)}

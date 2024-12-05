@@ -100,13 +100,13 @@ const AjoutPrescription = () => {
           <main className="flex items-center justify-center p-6 sm:p-12 ">
             <div className="w-full">
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                   Ajouter une prescription
                 </h1>
 
                 {/* Consultation */}
                 <Label className="mt-4">
-                  <span>Consultation</span>
+                  <span className='text-gray-200'>Consultation</span>
                   <Select
                     className="px-4 py-3 mt-1"
                     onChange={(e) => setConsultationId(e.target.value)}
@@ -123,7 +123,7 @@ const AjoutPrescription = () => {
 
                 {/* Type Ordonnance */}
                 <Label className="mt-4">
-                  <span>Type d'ordonnance</span>
+                  <span className='text-gray-200'>Type d'ordonnance</span>
                   <Select
                     className="px-4 py-3 mt-1"
                     onChange={(e) => setTypeOrdonnanceId(e.target.value)}
@@ -140,7 +140,7 @@ const AjoutPrescription = () => {
 
                 {/* Médicament */}
                 <Label className="mt-4">
-                  <span>Médicament</span>
+                  <span className='text-gray-200'>Médicament</span>
                   <Select
                     className="px-4 py-3 mt-1"
                     onChange={(e) => setMedicament(e.target.value)}
@@ -157,9 +157,9 @@ const AjoutPrescription = () => {
 
                 {/* Posologie */}
                 <Label className="mt-4">
-                  <span>Posologie</span>
+                  <span className='text-gray-200'>Posologie</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="Posologie"
                     onChange={(e) => setPosologie(e.target.value)}
                     value={posologie}
@@ -168,9 +168,9 @@ const AjoutPrescription = () => {
 
                 {/* Quantité */}
                 <Label className="mt-4">
-                  <span>Quantité</span>
+                  <span className='text-gray-200'>Quantité</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="Quantité"
                     onChange={(e) => setQuantite(e.target.value)}
                     value={quantite}

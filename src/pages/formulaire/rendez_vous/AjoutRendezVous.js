@@ -6,10 +6,11 @@ import { fetchTypeConsultations } from '../../../Api/features/consultation/typeC
 import { fetchPlannings } from '../../../Api/features/plannig/plannigThunks';
 import { clearSuccess } from '../../../Api/features/rendezVous/rendezVousSlice';
 import { createRendezVous } from '../../../Api/features/rendezVous/rendezVousThunks';
-import ImageLight from '../../../assets/img/login-office.jpeg';
+import ImageLight from '../../../assets/img/login.jpg';
 import ImageDark from '../../../assets/img/login.jpg';
 import Loading from '../../../utils/Loading';
 import { Input, Label, Select } from '@windmill/react-ui';
+import DialogSuccessRdv from '../../../utils/dialog/DialogSuccessRdv';
 
 const AjoutRendezVous = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,8 @@ const AjoutRendezVous = () => {
   const [specialite, setSpecialite] = useState('');
   const [selectedSlot, setSelectedSlot] = useState(null);
 
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  
   // Pagination
   const [currentPage, setCurrentPage] = useState(0);
   const itemsPerPage = 4;
@@ -82,9 +85,15 @@ const AjoutRendezVous = () => {
   useEffect(() => {
     if (success === 'rdv created successfully') {
       dispatch(clearSuccess());
-      navigate('/');
+      setIsDialogOpen(true);
     }
   }, [navigate, success]);
+
+  // Gestion de la fermeture du dialog
+  const handleCloseDialog = () => {
+    setIsDialogOpen(false);
+    navigate('/');
+  };
 
   return (
     <div className="flex items-center min-h-screen p-6 bg-cadre">
@@ -109,15 +118,15 @@ const AjoutRendezVous = () => {
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                   Formulaire de rendez-vous
                 </h1>
 
                 {/* Nom et prénom */}
                 <Label className="mt-4">
-                  <span>Nom</span>
+                  <span className="text-gray-200">Nom</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="OUATTARA"
                     value={last_name}
                     onChange={(e) => setLastName(e.target.value)}
@@ -125,9 +134,9 @@ const AjoutRendezVous = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Prénom(s)</span>
+                  <span className="text-gray-200">Prénom(s)</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="Kiboyou Mohamed"
                     value={first_name}
                     onChange={(e) => setFirstName(e.target.value)}
@@ -136,9 +145,9 @@ const AjoutRendezVous = () => {
 
                 {/* Email et téléphone */}
                 <Label className="mt-4">
-                  <span>Email</span>
+                  <span className="text-gray-200">Email</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     type="email"
                     placeholder="kiboyou@gmail.com"
                     value={email}
@@ -147,9 +156,9 @@ const AjoutRendezVous = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Téléphone</span>
+                  <span className="text-gray-200">Téléphone</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     type="number"
                     placeholder="0707073567"
                     value={telephone}
@@ -159,9 +168,9 @@ const AjoutRendezVous = () => {
 
                 {/* Message et type de consultation */}
                 <Label className="mt-4">
-                  <span>Message</span>
+                  <span className="text-gray-200">Message</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="Message pour le spécialiste"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
@@ -169,7 +178,7 @@ const AjoutRendezVous = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Type de consultation</span>
+                  <span className="text-gray-200">Type de consultation</span>
                   <Select
                     className="mt-1"
                     value={specialite}
@@ -186,7 +195,7 @@ const AjoutRendezVous = () => {
                       
                 {/* Sélection du planning */}
                 <Label className="mt-4">
-                  <span>Sélection du planning</span>
+                  <span className="text-gray-200">Sélection du planning</span>
                 </Label>
                 <div className="mt-4 planning-container">
 
@@ -256,6 +265,10 @@ const AjoutRendezVous = () => {
           </main>
         </div>
       </div>
+      
+      {/* Dialog de succès pour le RDV */}
+      <DialogSuccessRdv open={isDialogOpen} onClose={handleCloseDialog} />
+      
     </div>
   );
 };

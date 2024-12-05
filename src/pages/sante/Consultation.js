@@ -21,6 +21,7 @@ import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import groupeUser from '../../utils/GrourpeUser';
 import { fetchRendezVous } from '../../Api/features/rendezVous/rendezVousThunks';
+import TableWithPagination from '../../utils/TableWithPagination';
 
 
 
@@ -113,7 +114,7 @@ const Consultation = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Search for users"
             aria-label="Search"
           />
@@ -140,7 +141,7 @@ const Consultation = () => {
 
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
               <TableCell>Patient</TableCell>
               <TableCell>Telephone</TableCell>
@@ -181,12 +182,20 @@ const Consultation = () => {
                 
                 <TableCell>
                   <div className="flex items-center space-x-4">
-                    <Button layout="link" size="icon" aria-label="Edit" >
-                      <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
-                    </Button>
-                    <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
-                      <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
+                
+                  { (user.groups[0].name === groupeUser.medecin) ? (
+                            <>
+                              <Button layout="link" size="icon" aria-label="Edit">
+                                <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
+                              </Button>
+                              <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
+                                <TrashIcon className="w-5 h-5" aria-hidden="true" />
+                              </Button>
+                            </>
+                          ) : (
+                            "-"
+                    )}
+                    
                   </div>
                 </TableCell>
               </TableRow>
@@ -194,14 +203,12 @@ const Consultation = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChangeTable2}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChangeTable2}
+  />
+</TableFooter>
       </TableContainer>
     </>
   )

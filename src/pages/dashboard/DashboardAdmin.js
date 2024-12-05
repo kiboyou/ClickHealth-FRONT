@@ -105,18 +105,17 @@ function Dashboard() {
         +rendezVousList.length+groups.length}>
           <RoundIcon
             icon={ChartsIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            iconColorClass="text-orange-100"
+            bgColorClass="bg-orange-500"
             className="mr-4"
           />
         </InfoCard>
 
         <InfoCard title="Nombre de patient" value={patients.length}>
           <RoundIcon
-                        icon={PeopleIcon}
-
-            iconColorClass="text-green-500 dark:text-green-100"
-            bgColorClass="bg-green-100 dark:bg-green-500"
+            icon={PeopleIcon}
+            iconColorClass="text-green-100"
+            bgColorClass="bg-green-500"
             className="mr-4"
           />
         </InfoCard>
@@ -124,8 +123,8 @@ function Dashboard() {
         <InfoCard title="Nombre d'examen" value={examens.length}>
           <RoundIcon
             icon={SunIcon}
-            iconColorClass="text-blue-500 dark:text-blue-100"
-            bgColorClass="bg-blue-100 dark:bg-blue-500"
+            iconColorClass="text-blue-100"
+            bgColorClass="bg-blue-500"
             className="mr-4"
           />
         </InfoCard>
@@ -133,8 +132,8 @@ function Dashboard() {
         <InfoCard title="Nombre de specialistes" value={medecins.length}>
           <RoundIcon
             icon={MoneyIcon}
-            iconColorClass="text-teal-500 dark:text-teal-100"
-            bgColorClass="bg-teal-100 dark:bg-teal-500"
+            iconColorClass="text-teal-100"
+            bgColorClass="bg-teal-500"
             className="mr-4"
           />
         </InfoCard>
@@ -144,18 +143,17 @@ function Dashboard() {
         <InfoCard title="Nombre de consultation" value={consultations.length}>
           <RoundIcon
             icon={PeopleIcon}
-            iconColorClass="text-orange-500 dark:text-orange-100"
-            bgColorClass="bg-orange-100 dark:bg-orange-500"
+            iconColorClass="text-orange-100"
+            bgColorClass="bg-orange-500"
             className="mr-4"
           />
         </InfoCard>
 
         <InfoCard title="Nombre de facture" value={factureExamen.length + factureRdv.length}>
           <RoundIcon
-                        icon={CartIcon}
-
-            iconColorClass="text-green-500 dark:text-green-100"
-            bgColorClass="bg-green-100 dark:bg-green-500"
+            icon={CartIcon}
+            iconColorClass="text-green-100"
+            bgColorClass="bg-green-500"
             className="mr-4"
           />
         </InfoCard>
@@ -163,8 +161,8 @@ function Dashboard() {
         <InfoCard title="Nombre de rendez-vous" value={rendezVousList.length}>
           <RoundIcon
             icon={MoneyIcon}
-            iconColorClass="text-blue-500 dark:text-blue-100"
-            bgColorClass="bg-blue-100 dark:bg-blue-500"
+            iconColorClass="text-blue-100"
+            bgColorClass="bg-blue-500"
             className="mr-4"
           />
         </InfoCard>
@@ -172,8 +170,8 @@ function Dashboard() {
         <InfoCard title="Nombre de groupes" value={groups.length}>
           <RoundIcon
             icon={ModalsIcon}
-            iconColorClass="text-teal-500 dark:text-teal-100"
-            bgColorClass="bg-teal-100 dark:bg-teal-500"
+            iconColorClass="text-teal-100"
+            bgColorClass="bg-teal-500"
             className="mr-4"
           />
         </InfoCard>

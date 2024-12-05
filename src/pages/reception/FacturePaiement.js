@@ -19,6 +19,7 @@ import PageTitle from '../../components/Typography/PageTitle';
 import { SearchIcon } from '../../icons';
 import groupeUser from '../../utils/GrourpeUser';
 import Loading from '../../utils/Loading';
+import TableWithPagination from '../../utils/TableWithPagination';
 
 
 const FacturePaiement = () => {
@@ -43,7 +44,7 @@ const FacturePaiement = () => {
       if (user.groups[0].name === groupeUser.patient) {
         // Filtrer les paiements associées au patient connecté
         const paiementsPatient = paiements.filter(
-          (paiement) => paiement.facture.patient_detail?.user_detail.id === user.id
+          (paiement) => paiement.facture?.patient_detail?.user_detail.id === user.id
         );
         setDataTable2(paiementsPatient);
       } else {
@@ -81,7 +82,7 @@ const FacturePaiement = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Search for users"
             aria-label="Search"
           />
@@ -100,7 +101,7 @@ const FacturePaiement = () => {
 
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
               <TableCell>Patient</TableCell>
               <TableCell>Code de paiement</TableCell>
@@ -117,17 +118,17 @@ const FacturePaiement = () => {
                 <TableCell>
                   <div className="flex items-center text-sm">
                     {
-                      paiement.facture.patient ? (
+                      paiement.facture?.patient ? (
                         <div>
-                          <p className="font-semibold">{paiement.facture.patient_detail.user_detail.first_name} {paiement.facture.patient_detail.user_detail.last_name}</p>
-                          <p className="text-xs text-gray-600 dark:text-gray-400">{paiement.facture.patient_detail.user_detail.email}</p>
+                          <p className="font-semibold">{paiement.facture?.patient_detail.user_detail.first_name} {paiement.facture?.patient_detail.user_detail.last_name}</p>
+                          <p className="text-xs text-gray-600 dark:text-gray-400">{paiement.facture?.patient_detail.user_detail.email}</p>
                         </div>
                       ) 
                       :
                       (
                         <div>
-                          <p className="font-semibold">{paiement.facture.rendezVous_details.nom} {paiement.facture.rendezVous_details.prenom}</p>
-                          <p className="text-xs text-gray-600 dark:text-gray-400">{paiement.facture.rendezVous_details.email}</p>
+                          <p className="font-semibold">{paiement.facture?.rendezVous_details.nom} {paiement.facture?.rendezVous_details.prenom}</p>
+                          <p className="text-xs text-gray-600 dark:text-gray-400">{paiement.facture?.rendezVous_details.email}</p>
                         </div>
                       )
                     }
@@ -138,7 +139,7 @@ const FacturePaiement = () => {
                 </TableCell>
                 
                 <TableCell>
-                  <span className="text-sm">{paiement.facture.montant}  €</span>
+                  <span className="text-sm">{paiement.facture?.montant}  €</span>
                 </TableCell>
 
                 <TableCell>
@@ -172,14 +173,12 @@ const FacturePaiement = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChangeTable2}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChangeTable2}
+  />
+</TableFooter>
       </TableContainer>
     </>
   )

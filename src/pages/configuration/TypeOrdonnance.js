@@ -18,6 +18,7 @@ import { fetchTypeOrdonnances } from '../../Api/features/ordonnance/typeOrdonnan
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
+import TableWithPagination from '../../utils/TableWithPagination';
 
 const TypeOrdonnance = () => {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ const TypeOrdonnance = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Rechercher un type d'ordonnance"
             aria-label="Search"
           />
@@ -86,7 +87,7 @@ const TypeOrdonnance = () => {
       {/* Table pour afficher les types d'ordonnances */}
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
               <TableCell>Type Ordonnance ID</TableCell>
               <TableCell>Nom du type d'ordonnance</TableCell>
@@ -125,14 +126,12 @@ const TypeOrdonnance = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChangeTable}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChangeTable}
+  />
+</TableFooter>
       </TableContainer>
     </>
   );

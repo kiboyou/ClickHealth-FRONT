@@ -18,6 +18,7 @@ import { fetchGroups } from '../../Api/features/groupe/groupeThunks'
 import PageTitle from '../../components/Typography/PageTitle'
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons'
 import Loading from '../../utils/Loading'
+import TableWithPagination from '../../utils/TableWithPagination'
 
 const Groupe = () => {
   const dispatch = useDispatch()
@@ -59,7 +60,7 @@ const Groupe = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Search for users"
             aria-label="Search"
           />
@@ -84,7 +85,7 @@ const Groupe = () => {
 
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
               <TableCell>groupe ID</TableCell>
               <TableCell>Nom du groupe</TableCell>
@@ -121,14 +122,12 @@ const Groupe = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChangeTable2}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChangeTable2}
+  />
+</TableFooter>
       </TableContainer>
     </>
   )

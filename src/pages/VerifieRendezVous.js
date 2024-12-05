@@ -53,14 +53,14 @@ function VerifieRendezVous() {
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-2xl font-semibold text-center text-gray-700 dark:text-gray-200">
+                <h1 className="mb-10 text-2xl font-semibold text-center text-gray-200">
                   Vérification du rendez-vous
                 </h1>
 
                 <Label>
-                  <span>Entrer le code du rendez-vous</span>
+                  <span className="text-gray-200">Entrer le code du rendez-vous</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     type="text"
                     placeholder="OUATT-12989"
                     onChange={(e) => setCodeRDV(e.target.value)}
@@ -69,7 +69,7 @@ function VerifieRendezVous() {
                 </Label>
 
                 {error && (
-                  <div className="mt-4 text-center text-red-500">Le code n'exist pas ...</div>
+                  <div className="mt-4 text-center text-white-500">Le code n'exist pas ...</div>
                 )}
 
                 <button

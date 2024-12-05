@@ -67,15 +67,15 @@
 //           <main className="flex items-center justify-center p-6 sm:p-12 ">
 //             <div className="w-full">
 //               <form onSubmit={handleSubmit}>
-//                 <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+//                 <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
 //                   Ajouter un planning
 //                 </h1>
 
 //                 <Label className="mt-4">
-//                   <span>Date</span>
+//                   <span className='text-gray-200'>Date</span>
 //                   <Input
 //                     type="date"
-//                     className="px-4 py-3 mt-1"
+//                     className="px-4 py-3 mt-1 border-0 focus:ring-0"
 //                     onChange={(e) => {
 //                       setDate(e.target.value);
 //                       setJour(calculerJour(e.target.value)); // Met à jour le jour automatiquement
@@ -84,9 +84,9 @@
 //                 </Label>
 
 //                 <Label className="mt-4">
-//                   <span>Jour</span>
+//                   <span className='text-gray-200'>Jour</span>
 //                   <Input
-//                     className="px-4 py-3 mt-1"
+//                     className="px-4 py-3 mt-1 border-0 focus:ring-0"
 //                     placeholder="Jour automatique"
 //                     value={jour}
 //                     readOnly
@@ -94,19 +94,19 @@
 //                 </Label>
 
 //                 <Label className="mt-4">
-//                   <span>Heure de début</span>
+//                   <span className='text-gray-200'>Heure de début</span>
 //                   <Input
 //                     type="time"
-//                     className="px-4 py-3 mt-1"
+//                     className="px-4 py-3 mt-1 border-0 focus:ring-0"
 //                     onChange={(e) => setHeureDebut(e.target.value)}
 //                   />
 //                 </Label>
 
 //                 <Label className="mt-4">
-//                   <span>Heure de fin</span>
+//                   <span className='text-gray-200'>Heure de fin</span>
 //                   <Input
 //                     type="time"
-//                     className="px-4 py-3 mt-1"
+//                     className="px-4 py-3 mt-1 border-0 focus:ring-0"
 //                     onChange={(e) => setHeureFin(e.target.value)}
 //                   />
 //                 </Label>
@@ -167,14 +167,20 @@ const AjoutPlanning = () => {
     dispatch(fetchMedecins());
   }, [dispatch, medecins.length]);
 
-  // Fonction pour gérer la sélection d'un créneau horaire
+//   // Gestion de la sélection des créneaux horaires
   const handleSelectSlot = ({ start, end }) => {
-    const selectedDay = moment(start).format('dddd'); // Récupérer le jour de la semaine
+    const now = new Date(); // Date actuelle
+    if (moment(start).isBefore(now, "day")) {
+      alert("Vous ne pouvez pas sélectionner une date passée !");
+      return;
+    }
+
+    const selectedDay = moment(start).format("dddd");
     const selectedDateTime = {
-      date: moment(start).format('YYYY-MM-DD'), // Date
-      jour: selectedDay, // Jour de la semaine
-      heureDebut: moment(start).format('HH:mm'), // Heure de début
-      heureFin: moment(end).format('HH:mm'), // Heure de fin
+      date: moment(start).format("YYYY-MM-DD"),
+      jour: selectedDay,
+      heureDebut: moment(start).format("HH:mm"),
+      heureFin: moment(end).format("HH:mm"),
     };
 
     // Vérifier si un événement existe déjà pour cette plage horaire
@@ -243,7 +249,7 @@ const AjoutPlanning = () => {
   }, [dispatch, navigate, success]);
 
   return (
-    <div className="px-4 py-3 mt-10 mb-8 rounded-lg shadow-xl">
+    <div className="px-4 py-3 mt-10 mb-8 rounded-lg ">
       {/* <h1 className="text-3xl font-semibold text-center">Ajouter un planning</h1> */}
       {loading && <Loading />}
 
@@ -254,28 +260,9 @@ const AjoutPlanning = () => {
         Ajouter mes plannings
       </button>
 
-      {/* Affichage du calendrier */}
-      <div className="my-6 text-white focus:outline-none">
-        <Calendar
-          localizer={localizer}
-          events={events} // Affichage des événements
-          startAccessor="start"
-          endAccessor="end"
-          selectable
-          onSelectSlot={handleSelectSlot} // Permet la sélection d'un créneau horaire
-          eventPropGetter={eventStyleGetter} // Applique un style personnalisé à l'événement
-          style={{ height: 500, width: '100%' }}
-          culture="fr" // Utiliser la culture française pour le calendrier
-          views={{ week: true, day: true }} // Définit uniquement les vues autorisées
-          defaultView={Views.WEEK}
-
-
-        />
-      </div>
-
       {/* Affichage des plannings existants */}
       <div className="mt-6">
-        <h2 className="text-xl font-semibold">Plannings existants :</h2>
+        <h2 className="text-xl font-semibold text-gray-300">Plannings existants :</h2>
         <table className="w-full mt-4 border border-gray-200 table-auto">
           <thead>
             <tr style={{ backgroundColor: '#003d3bc9', color: '#a1e455' }}>
@@ -315,6 +302,34 @@ const AjoutPlanning = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Affichage du calendrier */}
+      <div className="my-6 mt-10 focus:outline-none">
+        <Calendar
+          localizer={localizer}
+          events={events} // Affichage des événements
+          startAccessor="start"
+          endAccessor="end"
+          selectable
+          onSelectSlot={handleSelectSlot} // Permet la sélection d'un créneau horaire
+          eventPropGetter={eventStyleGetter} // Applique un style personnalisé à l'événement
+          style={{ height: 500, width: '100%' }}
+          culture="fr" // Utiliser la culture française pour le calendrier
+          views={{ week: true, day: true }} // Définit uniquement les vues autorisées
+          defaultView={Views.WEEK}
+          popup={true} // Affiche les événements en pop-up lors de la sélection
+          min={new Date()} // Empêche la sélection avant aujourd'hui
+          messages={{
+            today: "Aujourd'hui",
+            previous: "Précédent",
+            next: "Suivant",
+            month: "Mois",
+            week: "Semaine",
+            day: "Jour",
+          }} // Traduction en français
+
+        />
+      </div>
     </div>
   );
 };
@@ -322,3 +337,83 @@ const AjoutPlanning = () => {
 export default AjoutPlanning;
 
 
+// import React, { useState } from "react";
+// import { Calendar, momentLocalizer } from "react-big-calendar";
+// import moment from "moment";
+// import "react-big-calendar/lib/css/react-big-calendar.css";
+
+// const PlanningCalendar = () => {
+//   const localizer = momentLocalizer(moment); // Configuration du localisateur Moment.js
+//   const [events, setEvents] = useState([]); // État des événements
+//   const [selectedDate, setSelectedDate] = useState(null); // État de la date sélectionnée
+
+//   // Gestion de la sélection des créneaux horaires
+//   const handleSelectSlot = ({ start, end }) => {
+//     const now = new Date(); // Date actuelle
+//     if (moment(start).isBefore(now, "day")) {
+//       alert("Vous ne pouvez pas sélectionner une date passée !");
+//       return;
+//     }
+
+//     const selectedDay = moment(start).format("dddd");
+//     const selectedDateTime = {
+//       date: moment(start).format("YYYY-MM-DD"),
+//       jour: selectedDay,
+//       heureDebut: moment(start).format("HH:mm"),
+//       heureFin: moment(end).format("HH:mm"),
+//     };
+
+//     const existingEventIndex = events.findIndex(
+//       (event) =>
+//         moment(event.start).isSame(moment(start), "minute") &&
+//         moment(event.end).isSame(moment(end), "minute")
+//     );
+
+//     if (existingEventIndex !== -1) {
+//       const updatedEvents = events.filter((_, index) => index !== existingEventIndex);
+//       setEvents(updatedEvents);
+//       setSelectedDate(null);
+//     } else {
+//       const newEvent = {
+//         title: `Planning: ${selectedDateTime.date} - ${selectedDateTime.heureDebut} à ${selectedDateTime.heureFin}`,
+//         start: moment(selectedDateTime.date + " " + selectedDateTime.heureDebut).toDate(),
+//         end: moment(selectedDateTime.date + " " + selectedDateTime.heureFin).toDate(),
+//       };
+
+//       setEvents([...events, newEvent]);
+//       setSelectedDate(selectedDateTime);
+//     }
+//   };
+
+//   // Style des événements
+//   const eventStyleGetter = () => {
+//     const style = {
+//       backgroundColor: "#3174ad",
+//       color: "white",
+//       borderRadius: "5px",
+//       border: "none",
+//       display: "block",
+//     };
+//     return { style };
+//   };
+
+//   return (
+//     <div>
+//       <h1>Planning des rendez-vous</h1>
+//       <Calendar
+//         localizer={localizer}
+//         events={events}
+//         startAccessor="start"
+//         endAccessor="end"
+//         selectable
+//         onSelectSlot={handleSelectSlot}
+//         eventPropGetter={eventStyleGetter}
+//         style={{ height: 500 }}
+//         min={new Date()} // Empêche la sélection avant aujourd'hui
+//         views={["month", "week", "day"]} // Limite les vues possibles
+//       />
+//     </div>
+//   );
+// };
+
+// export default PlanningCalendar;

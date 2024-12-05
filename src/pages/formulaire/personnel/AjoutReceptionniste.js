@@ -85,15 +85,15 @@ const AjoutReceptionniste = () => {
         <main className="flex items-center justify-center p-6 sm:p-12">
           <div className="w-full">
             <form onSubmit={handleSubmit}>
-              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                 Ajouter un Réceptionniste
               </h1>
 
               {/* Email */}
               <Label className="mt-4">
-                <span>Email</span>
+                <span className='text-gray-200'>Email</span>
                 <Input
-                  className="mt-2"
+                  className="mt-2 border-0 focus:ring-0"
                   type="email"
                   placeholder="email@example.com"
                   value={email}
@@ -103,9 +103,9 @@ const AjoutReceptionniste = () => {
 
               {/* Nom */}
               <Label className="mt-4">
-                <span>Nom</span>
+                <span className='text-gray-200'>Nom</span>
                 <Input
-                  className="mt-2"
+                  className="mt-2 border-0 focus:ring-0"
                   type="text"
                   placeholder="Nom"
                   value={first_name}
@@ -115,9 +115,9 @@ const AjoutReceptionniste = () => {
 
               {/* Prénom */}
               <Label className="mt-4">
-                <span>Prénom</span>
+                <span className='text-gray-200'>Prénom</span>
                 <Input
-                  className="mt-2"
+                  className="mt-2 border-0 focus:ring-0"
                   type="text"
                   placeholder="Prénom"
                   value={last_name}
@@ -127,7 +127,7 @@ const AjoutReceptionniste = () => {
 
               {/* Caisse */}
               <Label className="mt-4">
-                <span>Caisse</span>
+                <span className='text-gray-200'>Caisse</span>
                 <Select
                   className="mt-2"
                   value={caisse}

@@ -100,13 +100,13 @@ const AjoutRDV = () => {
         <main className="flex items-center justify-center p-6 sm:p-12">
           <div className="w-full">
             <form onSubmit={handleSubmit}>
-              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                 Ajouter un rendez-vous
               </h1>
 
               {/* Sélection de la spécialité */}
               <Label className="mt-4">
-                  <span>Type de consultation</span>
+                  <span className='text-gray-200'>Type de consultation</span>
                   <Select
                     className="mt-1"
                     value={specialite}
@@ -123,9 +123,9 @@ const AjoutRDV = () => {
                 
             {/* Message pour le spécialiste */}
               <Label className="mt-4">
-                <span>Message</span>
+                <span className='text-gray-200'>Message</span>
                 <Input
-                  className="px-4 py-3 mt-1"
+                  className="px-4 py-3 mt-1 border-0 focus:ring-0"
                   placeholder="Message pour le spécialiste"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
@@ -134,7 +134,7 @@ const AjoutRDV = () => {
 
               {/* Sélection du planning
               <Label className="mt-4">
-                <span>Planning</span>
+                <span className='text-gray-200'>Planning</span>
                 <Select
                   className="mt-1"
                   value={planning}
@@ -151,7 +151,7 @@ const AjoutRDV = () => {
 
               {/* Sélection du planning */}
               <Label className="mt-4">
-                  <span>Sélection du planning</span>
+                  <span className='text-gray-200'>Sélection du planning</span>
                 </Label>
                 <div className="mt-4 planning-container">
 

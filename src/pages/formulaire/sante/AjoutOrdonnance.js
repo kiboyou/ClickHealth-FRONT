@@ -64,13 +64,13 @@ const AjoutOrdonnance = () => {
         <main className="flex items-center justify-center p-6 sm:p-12">
           <div className="w-full">
             <form onSubmit={handleSubmit}>
-              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                 Ajouter une Ordonnance
               </h1>
 
               {/* Patient */}
               <Label className="mt-4">
-                <span>Patient</span>
+                <span className='text-gray-200'>Patient</span>
                 <Select
                   className="mt-2"
                   value={patient}
@@ -88,7 +88,7 @@ const AjoutOrdonnance = () => {
 
               {/* Type d'Ordonnance */}
               <Label className="mt-4">
-                <span>Type d'Ordonnance</span>
+                <span className='text-gray-200'>Type d'Ordonnance</span>
                 <Select
                   className="mt-2"
                   value={typeOrdonnance}
@@ -106,9 +106,9 @@ const AjoutOrdonnance = () => {
 
               {/* Date de l'Ordonnance */}
               <Label className="mt-4">
-                <span>Date de l'Ordonnance</span>
+                <span className='text-gray-200'>Date de l'Ordonnance</span>
                 <Input
-                  className="mt-2"
+                  className="mt-2 border-0 focus:ring-0"
                   type="date"
                   value={dateOrdonnance}
                   onChange={(e) => setDateOrdonnance(e.target.value)}

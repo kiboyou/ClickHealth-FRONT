@@ -18,6 +18,7 @@ import { fetchCaisses } from '../../Api/features/receptionnistes/caisseThunk'
 import PageTitle from '../../components/Typography/PageTitle'
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons'
 import Loading from '../../utils/Loading' 
+import TableWithPagination from '../../utils/TableWithPagination'
 
 const Caisse = () => {
   const dispatch = useDispatch()
@@ -60,7 +61,7 @@ const Caisse = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Rechercher une caisse"
             aria-label="Search"
           />
@@ -86,7 +87,7 @@ const Caisse = () => {
       {/* Table pour afficher les caisses */}
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
               <TableCell>Caisse ID</TableCell>
               <TableCell>Nom de la caisse</TableCell>
@@ -127,14 +128,12 @@ const Caisse = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChangeTable}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChangeTable}
+  />
+</TableFooter>
       </TableContainer>
     </>
   )

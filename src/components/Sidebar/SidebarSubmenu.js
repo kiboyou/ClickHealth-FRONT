@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import { DropdownIcon } from '../../icons'
 import * as Icons from '../../icons'
 import { Transition } from '@windmill/react-ui'
+import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
 
 function Icon({ icon, ...props }) {
   const Icon = Icons[icon]
@@ -19,7 +19,7 @@ function SidebarSubmenu({ route }) {
   return (
     <li className="relative px-6 py-3" key={route.name}>
       <button
-        className="inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 focus:outline-none focus:border-none hover:text-gray-800 dark:hover:text-gray-200"
+        className="inline-flex items-center justify-between w-full text-sm font-semibold text-gray-200 transition-colors duration-150 focus:outline-none focus:border-none"
         onClick={handleDropdownMenuClick}
         aria-haspopup="true"
       >
@@ -47,9 +47,9 @@ function SidebarSubmenu({ route }) {
               className="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
               key={r.name}
             >
-              <Link className="w-full" to={r.path}>
+              <NavLink className="w-full" to={r.path} activeClassName="bg-color-trait2">
                 {r.name}
-              </Link>
+              </NavLink>
             </li>
           ))}
         </ul>

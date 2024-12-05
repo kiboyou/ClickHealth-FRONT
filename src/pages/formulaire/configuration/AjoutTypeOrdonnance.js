@@ -38,15 +38,15 @@ const AjoutTypeOrdonnance = () => {
           <main className="flex items-center justify-center p-6 sm:p-12 ">
             <div className="w-full">
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                   Ajouter un Type d'Ordonnance
                 </h1>
                 
                 {/* Champ pour nom du type d'ordonnance */}
                 <Label className="mt-4">
-                  <span>Nom du type d'ordonnance</span>
+                  <span className='text-gray-200'>Nom du type d'ordonnance</span>
                   <Input 
-                    className="px-4 py-3 mt-1" 
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0" 
                     placeholder="Ex : Ordonnance médicale" 
                     value={nomTypeOrdonnance}
                     onChange={(e) => setNomTypeOrdonnance(e.target.value)} 

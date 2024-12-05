@@ -67,27 +67,27 @@ const  AjoutUser = () => {
           <main className="flex items-center justify-center p-6 sm:p-12 ">
             <div className="w-full">
             <form onSubmit={handleSubmit}>
-              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                 Ajouter un administrateur
               </h1>
               
               <Label className="mt-4">
-                <span>Email</span>
-                <Input className="px-4 py-3 mt-1" type="email" placeholder="kiboyou@gmail.com" onChange={(e) => setEmail(e.target.value)} />
+                <span className='text-gray-200'>Email</span>
+                <Input className="px-4 py-3 mt-1 border-0 focus:ring-0" type="email" placeholder="kiboyou@gmail.com" onChange={(e) => setEmail(e.target.value)} />
               </Label>
               
               <Label className="mt-4">
-                <span>Nom</span>
-                <Input className="px-4 py-3 mt-1" placeholder="OUATTARA" onChange={(e) => setFirst_name(e.target.value)}/>
+                <span className='text-gray-200'>Nom</span>
+                <Input className="px-4 py-3 mt-1 border-0 focus:ring-0" placeholder="OUATTARA" onChange={(e) => setFirst_name(e.target.value)}/>
               </Label>
 
               <Label className="mt-4">
-                <span>Prenoms</span>
-                <Input className="px-4 py-3 mt-1" placeholder="Kiboyou Mohamed" onChange={(e) => setLast_name(e.target.value)}/>
+                <span className='text-gray-200'>Prenoms</span>
+                <Input className="px-4 py-3 mt-1 border-0 focus:ring-0" placeholder="Kiboyou Mohamed" onChange={(e) => setLast_name(e.target.value)}/>
               </Label>
 
               <Label className="mt-4">
-                <span>Groupe</span>
+                <span className='text-gray-200'>Groupe</span>
                 <Select className="mt-1" onChange={(e) => setGroups([e.target.value])}>
                   <option></option>
                   {
@@ -100,12 +100,12 @@ const  AjoutUser = () => {
               </Label>
               
               {/* <Label className="mt-4">
-                <span>Password</span>
-                <Input className="px-4 py-3 mt-1" placeholder="***************" type="password" />
+                <span className='text-gray-200'>Password</span>
+                <Input className="px-4 py-3 mt-1 border-0 focus:ring-0" placeholder="***************" type="password" />
               </Label>
               <Label className="mt-4">
-                <span>Confirm password</span>
-                <Input className="px-4 py-3 mt-1" placeholder="***************" type="password" />
+                <span className='text-gray-200'>Confirm password</span>
+                <Input className="px-4 py-3 mt-1 border-0 focus:ring-0" placeholder="***************" type="password" />
               </Label> */}
 
                 <button type='submit' className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">

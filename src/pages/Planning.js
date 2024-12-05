@@ -23,6 +23,7 @@ import PageTitle from '../components/Typography/PageTitle';
 import { EditIcon, TrashIcon } from '../icons';
 import groupeUser from "../utils/GrourpeUser";
 import Loading from '../utils/Loading';
+import TableWithPagination from '../utils/TableWithPagination';
 
 moment.locale("fr");
 const localizer = momentLocalizer(moment);
@@ -99,7 +100,7 @@ const Planning = () => {
   });
 
   return (
-    <div className="px-4 py-3 mt-10 mb-8 rounded-lg shadow-xl">
+    <div className="px-4 py-3 mt-10 mb-8 rounded-lg ">
       {loading && <Loading />}
       <div className="flex justify-end space-x-4">
        <button
@@ -122,25 +123,10 @@ const Planning = () => {
         <p className="text-center text-gray-600">Chargement des plannings...</p>
       ) : (
         <>
-          {/* Calendrier interactif */}
-          <div className="my-6 text-white focus:outline-none">
-            <Calendar
-              localizer={localizer}
-              events={events}
-              startAccessor="start"
-              endAccessor="end"
-              eventPropGetter={eventStyleGetter}
-              style={{ height: 500, width: "100%" }}
-              culture="fr"
-              defaultView={Views.WEEK}
-              views={{ week: true, day: true }} // Définit uniquement les vues autorisées
-            />
-          </div>
-
         <PageTitle>Liste des plannings</PageTitle>
         <TableContainer className="mb-8">
            <Table>
-             <TableHeader>
+             <TableHeader className="text-gray-900">
                <tr>
                  {user && user.groups[0].name == groupeUser.medecin ?  <TableCell>ID</TableCell> : <TableCell>Medecin</TableCell>}
                  <TableCell>Date de disponibilité</TableCell>
@@ -190,20 +176,32 @@ const Planning = () => {
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center space-x-4">
-                    <Button layout="link" size="icon" aria-label="Edit">
-                      <EditIcon
-                        className="w-5 h-5 focus:outline-none focus:border-none"
-                        aria-hidden="true"
-                      />
-                    </Button>
-                    <Button
-                      layout="link"
-                      size="icon"
-                      aria-label="Delete"
-                      className="focus:outline-none focus:border-none"
-                    >
-                      <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
+                  {
+                    user && user.groups[0].name === groupeUser.medecin ? (
+                      <>
+                        <Button
+                          layout="link"
+                          size="icon"
+                          aria-label="Edit"
+                        >
+                          <EditIcon
+                            className="w-5 h-5 focus:outline-none focus:border-none"
+                            aria-hidden="true"
+                          />
+                        </Button>
+                        <Button
+                          layout="link"
+                          size="icon"
+                          aria-label="Delete"
+                          className="focus:outline-none focus:border-none"
+                        >
+                          <TrashIcon className="w-5 h-5" aria-hidden="true" />
+                        </Button>
+                      </>
+                    ) : (
+                      "-"
+                    )
+                  }
                   </div>
                 </TableCell>
               </TableRow>
@@ -211,15 +209,37 @@ const Planning = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChangeTable2}
-            label="Table navigation"
-            className="mt-4 "
+          <TableWithPagination 
+          totalResults={totalResults}
+          resultsPerPage={resultsPerPage}
+          onPageChange={onPageChangeTable2}
           />
         </TableFooter>
       </TableContainer>
+
+      {/* Calendrier interactif */}
+        <div className="my-6 focus:outline-none">
+            <Calendar
+              localizer={localizer}
+              events={events}
+              startAccessor="start"
+              endAccessor="end"
+              eventPropGetter={eventStyleGetter}
+              style={{ height: 500, width: "100%" }}
+              culture="fr"
+              defaultView={Views.WEEK}
+              views={{ week: true, day: true }} // Définit uniquement les vues autorisées
+              messages={{
+                today: "Aujourd'hui",
+                previous: "Précédent",
+                next: "Suivant",
+                month: "Mois",
+                week: "Semaine",
+                day: "Jour",
+              }} // Traduction en français
+            />
+          </div>
+          
       </>
       )}
     </div>

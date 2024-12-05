@@ -20,11 +20,15 @@ import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 //import DropdownButton from '../../utils/DropdownButton';
 import Loading from '../../utils/Loading';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
+import groupeUser from '../../utils/GrourpeUser';
+import TableWithPagination from '../../utils/TableWithPagination';
 
 const Medecin = () => {
   const dispatch = useDispatch();
   const { success, medecins, loading } = useSelector((state) => state.medecins);  // Utilisation de l'état des médecins
+  const { user } = useSelector((state) => state.auth);
 
+  
   const [pageTable, setPageTable] = useState(1);
   const [resultsPerPage] = useState(10);
 
@@ -62,7 +66,7 @@ const Medecin = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Search for medecins"
             aria-label="Search"
           />
@@ -79,20 +83,19 @@ const Medecin = () => {
           
         </button>
       
-        {/* <DropdownButton />  Bouton de menu déroulant pour actions supplémentaires */}
-       <NavLink to="/app/personnel/medecin/add">
+      {user && user.groups[0].name == groupeUser.administrateur && (
+        <NavLink to="/app/personnel/medecin/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter un medecin
           </button>
-        </NavLink>
- 
-     
+        </NavLink> 
+      )}
       </div>
 
       {/* Table des médecins */}
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
               <TableCell>Nom</TableCell>
               <TableCell>Fonction</TableCell>
@@ -120,12 +123,18 @@ const Medecin = () => {
                 
                 <TableCell>
                   <div className="flex items-center space-x-4">
-                    <Button layout="link" size="icon" aria-label="Edit">
-                      <EditIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
-                    <Button layout="link" size="icon" aria-label="Delete">
-                      <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                    </Button>
+                  { (user.groups[0].name === groupeUser.patient  || user.groups[0].name === groupeUser.administrateur) ? (
+                            <>
+                              <Button layout="link" size="icon" aria-label="Edit">
+                                <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
+                              </Button>
+                              <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
+                                <TrashIcon className="w-5 h-5" aria-hidden="true" />
+                              </Button>
+                            </>
+                          ) : (
+                            "-"
+                    )}
                   </div>
                 </TableCell>
               </TableRow>
@@ -133,14 +142,12 @@ const Medecin = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChange}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChange}
+  />
+</TableFooter>
       </TableContainer>
     </>
   );

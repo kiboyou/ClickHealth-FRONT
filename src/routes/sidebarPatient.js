@@ -14,7 +14,7 @@ const routesPatient = [
       // submenu
       {
         path: '/app/reception/factures/examens',
-        name: 'Facture des Examen',
+        name: 'Facture des Examens',
       },
       {
         path: '/app/reception/factures/rdv',
@@ -22,7 +22,7 @@ const routesPatient = [
       },
       {
         path: '/app/reception/factures/paiement',
-        name: 'Reçu de paiement',
+        name: 'Reçu des paiements',
       },
     ],
   },
@@ -34,15 +34,15 @@ const routesPatient = [
       // submenu
       {
         path: '/app/consultation',
-        name: 'Mes Consultation',
+        name: 'Mes Consultations',
       },
       {
         path: '/app/consultation/ordonnance',
-        name: 'Mes Ordonnance',
+        name: 'Mes Ordonnances',
       },
       {
         path: '/app/consultation/examen',
-        name: 'Mes Examen',
+        name: 'Mes Examens',
       },
     ],
   },

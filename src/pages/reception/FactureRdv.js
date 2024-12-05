@@ -21,7 +21,7 @@ import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import groupeUser from '../../utils/GrourpeUser';
-
+import TableWithPagination from '../../utils/TableWithPagination';
 
 const FactureRdv = () => {
   const dispatch = useDispatch()
@@ -77,7 +77,7 @@ const FactureRdv = () => {
   return (
     <>
       { loading && <Loading />}
-      <PageTitle>Liste des factures</PageTitle>
+      <PageTitle>Liste des factures des rendez-vous</PageTitle>
       {/* <!-- Search input --> */}
       <div className="flex justify-center flex-1 lg:mr-32">
         <div className="relative w-full max-w-xl mr-6 bg-text">
@@ -85,7 +85,7 @@ const FactureRdv = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Search for users"
             aria-label="Search"
           />
@@ -110,8 +110,9 @@ const FactureRdv = () => {
 
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
+              <TableCell>Patient</TableCell>
               <TableCell>Code du RDV</TableCell>
               <TableCell>Num de la facture</TableCell>
               <TableCell>Montant total</TableCell>
@@ -122,6 +123,13 @@ const FactureRdv = () => {
           <TableBody>
             {displayedPatients.map((facture, i) => (
               <TableRow key={i}>
+                <TableCell>
+                <div>
+                    <p className="font-semibold">{facture.rendezVous_details.nom} {facture.rendezVous_details.prenom}</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">{facture.rendezVous_details.email}</p>
+                </div>
+                </TableCell>
+                
                 <TableCell>
                   <span className="text-sm">{facture.rendezVous_details.code_rendez_vous}</span>
                 </TableCell>
@@ -158,23 +166,12 @@ const FactureRdv = () => {
                       <button type="button"  className="px-4 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
                         onClick={() => payefacture(facture)} 
                       >
-                        Payé
+                        faire le paiement
                       </button>
                     ) : (
                       null
                     )
-                  )}
-
-                    {/* Bouton Modifier */}
-                    <button layout="link" size="icon" aria-label="Modifier" className="focus:outline-none focus:border-none">
-                      <PencilIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
-                    </button>
-
-                    {/* Bouton Supprimer */}
-                    <button layout="link" size="icon" aria-label="Supprimer" className="focus:outline-none focus:border-none">
-                      <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                    </button>
-                    
+                  )}                    
                   </div>
                 </TableCell>
               </TableRow>
@@ -182,14 +179,12 @@ const FactureRdv = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChangeTable2}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChangeTable2}
+  />
+</TableFooter>
       </TableContainer>
     </>
   )

@@ -19,10 +19,13 @@ import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import { NavLink } from 'react-router-dom';
+import groupeUser from '../../utils/GrourpeUser';
+import TableWithPagination from '../../utils/TableWithPagination';
 
 const Receptionniste = () => {
   const dispatch = useDispatch();
   const { success, receptionnistes, loading } = useSelector((state) => state.receptionnistes);  // Utilisation de l'état des réceptionnistes
+  const { user } = useSelector((state) => state.auth);
 
   const [pageTable, setPageTable] = useState(1);
   const [resultsPerPage] = useState(10);
@@ -62,7 +65,7 @@ const Receptionniste = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Rechercher un réceptionniste"
             aria-label="Search"
           />
@@ -78,17 +81,19 @@ const Receptionniste = () => {
           <ArrowPathIcon className="w-5 h-5" /> {/* Icône de rafraîchissement */}
         </button>
 
+      {user && user.groups[0].name == groupeUser.administrateur && (
         <NavLink to="/app/personnel/receptionniste/add">
           <button className="px-4 py-2 mt-10 mb-10 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
             Ajouter un réceptionniste
           </button>
         </NavLink>
+      )}
       </div>
 
       {/* Table des réceptionnistes */}
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
               <TableCell>Nom</TableCell>
               <TableCell>Caisse</TableCell>
@@ -124,14 +129,12 @@ const Receptionniste = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChange}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChange}
+  />
+</TableFooter>
       </TableContainer>
     </>
   );

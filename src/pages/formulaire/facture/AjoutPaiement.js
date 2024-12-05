@@ -61,22 +61,22 @@ const  AjoutPaiement = (props) => {
           <main className="flex items-center justify-center p-6 sm:p-12 ">
             <div className="w-full">
             <form onSubmit={handleSubmit}>
-              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                 Faire un paiement
               </h1>
               <Label className="mt-4">
-                <span>Entrez le code de la facture </span>
-                <Input className="px-4 py-3 mt-1" placeholder="Ex : FACT-18293" onChange={(e) => setCodeFacture(e.target.value)} value={facture.numfacture}/>
+                <span className='text-gray-200'>Entrez le code de la facture </span>
+                <Input className="px-4 py-3 mt-1 border-0 focus:ring-0" placeholder="Ex : FACT-18293" onChange={(e) => setCodeFacture(e.target.value)} value={facture.numfacture}/>
               </Label>
 
               <Label className="mt-4">
-                <span>Montant total </span>
-                <Input className="px-4 py-3 mt-1" placeholder="Ex : 199 " onChange={(e) => setMontantTotal(e.target.value)} value={facture.montant}/>
+                <span className='text-gray-200'>Montant total </span>
+                <Input className="px-4 py-3 mt-1 border-0 focus:ring-0" placeholder="Ex : 199 " onChange={(e) => setMontantTotal(e.target.value)} value={facture.montant}/>
               </Label>
 
               <Label className="mt-4">
-                <span>Montant reçu </span>
-                <Input className="px-4 py-3 mt-1" placeholder="10000 " onChange={(e) => setMontantRecu(e.target.value)}/>
+                <span className='text-gray-200'>Montant reçu </span>
+                <Input className="px-4 py-3 mt-1 border-0 focus:ring-0" placeholder="10000 " onChange={(e) => setMontantRecu(e.target.value)}/>
               </Label>
               
               

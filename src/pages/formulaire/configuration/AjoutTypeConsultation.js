@@ -48,15 +48,15 @@ const AjoutTypeConsultation = () => {
           <main className="flex items-center justify-center p-6 sm:p-12">
             <div className="w-full">
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                   Ajouter un Type de Consultation
                 </h1>
 
                 {/* Champ pour nom du type de consultation */}
                 <Label className="mt-4">
-                  <span>Nom du type de consultation</span>
+                  <span className='text-gray-200'>Nom du type de consultation</span>
                   <Input 
-                    className="px-4 py-3 mt-1" 
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0" 
                     placeholder="Ex : Consultation de suivi cardiaque" 
                     value={nom}
                     onChange={(e) => setNom(e.target.value)} 
@@ -65,10 +65,10 @@ const AjoutTypeConsultation = () => {
 
                 {/* Champ pour le prix */}
                 <Label className="mt-4">
-                  <span>Prix (€)</span>
+                  <span className='text-gray-200'>Prix (€)</span>
                   <Input 
                     type="number"  // Champ de type "number" pour le prix
-                    className="px-4 py-3 mt-1" 
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0" 
                     placeholder="Ex : 50" 
                     value={prix}
                     onChange={(e) => setPrix(e.target.value)} 
@@ -77,7 +77,7 @@ const AjoutTypeConsultation = () => {
 
                 {/* Sélecteur de spécialité */}
                 <Label className="mt-4">
-                  <span>Spécialité</span>
+                  <span className='text-gray-200'>Spécialité</span>
                   <Select 
                     className="px-4 py-3 mt-1"
                     value={specialite}

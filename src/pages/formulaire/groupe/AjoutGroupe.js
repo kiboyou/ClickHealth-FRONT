@@ -45,12 +45,12 @@ const  AjoutGroupe = () => {
           <main className="flex items-center justify-center p-6 sm:p-12 ">
             <div className="w-full">
             <form onSubmit={handleSubmit}>
-              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                 Ajouter un groupe
               </h1>
               <Label className="mt-4">
-                <span>Nom du groupe </span>
-                <Input className="px-4 py-3 mt-1" placeholder="Ex : administrateur" onChange={(e) => setFirst_name(e.target.value)}/>
+                <span className='text-gray-200'>Nom du groupe </span>
+                <Input className="px-4 py-3 mt-1 border-0 focus:ring-0" placeholder="Ex : administrateur" onChange={(e) => setFirst_name(e.target.value)}/>
               </Label>
                 <button type='submit' className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat" >
                   Ajouter

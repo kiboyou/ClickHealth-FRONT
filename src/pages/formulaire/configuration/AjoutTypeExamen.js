@@ -39,15 +39,15 @@ const AjoutTypeExamen = () => {
           <main className="flex items-center justify-center p-6 sm:p-12 ">
             <div className="w-full">
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                   Ajouter un Type d'Examen
                 </h1>
                 
                 {/* Champ pour nom du type d'examen */}
                 <Label className="mt-4">
-                  <span>Nom du type d'examen</span>
+                  <span className='text-gray-200'>Nom du type d'examen</span>
                   <Input 
-                    className="px-4 py-3 mt-1" 
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0" 
                     placeholder="Ex : Examen médical" 
                     value={nomTypeExamen}
                     onChange={(e) => setNomTypeExamen(e.target.value)} 
@@ -56,10 +56,10 @@ const AjoutTypeExamen = () => {
 
                 {/* Champ pour le prix */}
                 <Label className="mt-4">
-                  <span>Prix de l'examen</span>
+                  <span className='text-gray-200'>Prix de l'examen</span>
                   <Input 
                     type="number"  // Champ de type "number" pour le prix
-                    className="px-4 py-3 mt-1" 
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0" 
                     placeholder="Ex : 50" 
                     value={prix}
                     onChange={(e) => setPrix(e.target.value)} 

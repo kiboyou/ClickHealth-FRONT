@@ -20,7 +20,7 @@ ReactDOM.render(
   <Provider store={store}>
     <SidebarProvider>
       <Suspense fallback={<Loading />}>
-        <Windmill usePreferences>
+        <Windmill>
           <App />
         </Windmill>
       </Suspense>

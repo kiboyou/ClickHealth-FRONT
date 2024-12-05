@@ -66,13 +66,13 @@ const AjoutExamen = () => {
         <main className="flex items-center justify-center p-6 sm:p-12">
           <div className="w-full">
             <form onSubmit={handleSubmit}>
-              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                 Ajouter un Examen
               </h1>
 
               {/* Consultation */}
               <Label className="mt-4">
-                <span>Consultation</span>
+                <span className='text-gray-200'>Consultation</span>
                 <Select
                   className="mt-2"
                   value={consultation}
@@ -90,7 +90,7 @@ const AjoutExamen = () => {
 
               {/* Type d'Examen */}
               <Label className="mt-4">
-                <span>Type d'Examen</span>
+                <span className='text-gray-200'>Type d'Examen</span>
                 <Select
                   className="mt-2"
                   value={typeExamen}
@@ -108,9 +108,9 @@ const AjoutExamen = () => {
 
               {/* Diagnostic */}
               {/* <Label className="mt-4">
-                <span>Diagnostic</span>
+                <span className='text-gray-200'>Diagnostic</span>
                 <Input
-                  className="mt-2"
+                  className="mt-2 border-0 focus:ring-0"
                   type="text"
                   value={diagnostic}
                   onChange={(e) => setDiagnostic(e.target.value)}
@@ -120,7 +120,7 @@ const AjoutExamen = () => {
 
               {/* Statut */}
               {/* <Label className="mt-4">
-                <span>Statut</span>
+                <span className='text-gray-200'>Statut</span>
                 <Select
                   className="mt-2"
                   value={status}

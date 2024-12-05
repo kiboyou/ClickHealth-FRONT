@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
 import { Input, Label, Select } from '@windmill/react-ui';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { addUser } from '../../../Api/features/user/userThunks';
-import { createPatient } from '../../../Api/features/patient/patientThunks';
-import Loading from '../../../utils/Loading';
 import { clearSuccess } from '../../../Api/features/patient/patientSlice';
+import { createPatient } from '../../../Api/features/patient/patientThunks';
+import { resetCurrentRendezVous } from '../../../Api/features/rendezVous/rendezVousSlice';
+import { addUser } from '../../../Api/features/user/userThunks';
+import Loading from '../../../utils/Loading';
 
 const AjoutPatient = () => {
   const dispatch = useDispatch();
@@ -58,6 +59,8 @@ const AjoutPatient = () => {
       setFirst_name(currentRendezVous.prenom);
       setLast_name(currentRendezVous.nom);
       setTelephone(currentRendezVous.telephone)
+      
+      dispatch(resetCurrentRendezVous())
     }
   }, [currentRendezVous]);
 
@@ -98,15 +101,15 @@ const AjoutPatient = () => {
           <main className="flex items-center justify-center p-6 sm:p-12 ">
             <div className="w-full">
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                   Ajouter un patient
                 </h1>
                 
                 {/* Form fields */}
                 <Label className="mt-4">
-                  <span>Email</span>
+                  <span className='text-gray-200'>Email</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     type="email"
                     placeholder="kiboyou@gmail.com"
                     onChange={(e) => setEmail(e.target.value)}
@@ -115,9 +118,9 @@ const AjoutPatient = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Nom</span>
+                  <span className='text-gray-200'>Nom</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="OUATTARA"
                     onChange={(e) => setFirst_name(e.target.value)}
                     value={first_name}
@@ -125,9 +128,9 @@ const AjoutPatient = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Prénoms</span>
+                  <span className='text-gray-200'>Prénoms</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="Kiboyou Mohamed"
                     onChange={(e) => setLast_name(e.target.value)}
                     value={last_name}
@@ -135,9 +138,9 @@ const AjoutPatient = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Téléphone</span>
+                  <span className='text-gray-200'>Téléphone</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="0707073567"
                     onChange={(e) => setTelephone(e.target.value)}
                     value={telephone}
@@ -145,9 +148,9 @@ const AjoutPatient = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Date de naissance</span>
+                  <span className='text-gray-200'>Date de naissance</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     type="date"
                     onChange={(e) => setBirthdate(e.target.value)}
                     value={birthdate}
@@ -155,7 +158,7 @@ const AjoutPatient = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Sexe</span>
+                  <span className='text-gray-200'>Sexe</span>
                   <Select className="mt-1" onChange={(e) => setSexe(e.target.value)} value={sexe}>
                     <option value=""></option>
                     <option value="M">M</option>
@@ -164,9 +167,9 @@ const AjoutPatient = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Adresse</span>
+                  <span className='text-gray-200'>Adresse</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="Foyer babel"
                     onChange={(e) => setAdresse(e.target.value)}
                     value={adresse}
@@ -174,9 +177,9 @@ const AjoutPatient = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Ville</span>
+                  <span className='text-gray-200'>Ville</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="Tunis"
                     onChange={(e) => setVille(e.target.value)}
                     value={ville}
@@ -184,9 +187,9 @@ const AjoutPatient = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>Profession</span>
+                  <span className='text-gray-200'>Profession</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="Étudiant"
                     onChange={(e) => setProfession(e.target.value)}
                     value={profession}
@@ -194,7 +197,7 @@ const AjoutPatient = () => {
                 </Label>
 
                 <Label className="mt-4">
-                  <span>État civil</span>
+                  <span className='text-gray-200'>État civil</span>
                   <Select className="mt-1" onChange={(e) => setEtatCivil(e.target.value)} value={etat_civil}>
                     <option value=""></option>
                     <option value="Marié">Marié</option>

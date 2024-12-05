@@ -23,6 +23,7 @@ import Loading from '../utils/Loading';
 import { clearSuccess } from '../Api/features/rendezVous/rendezVousSlice';
 import { fetchRendezVous, fetchRendezVousByCode } from '../Api/features/rendezVous/rendezVousThunks';
 import groupeUser from '../utils/GrourpeUser';
+import TableWithPagination from '../utils/TableWithPagination';
 
 
 const RendezVous = () => {
@@ -44,11 +45,12 @@ const RendezVous = () => {
   }, [dispatch, rendezVousList.length])
 
   useEffect(() => {
+    const rdvTrue = rendezVousList.filter(rdv => rdv.is_archived === false)
     if (user && user.groups) {
       if (user.groups[0].name === groupeUser.medecin) {
         // Filtrer les rendez-vous pour le médecin connecté
         setDataTable2(
-          rendezVousList.filter(
+          rdvTrue.filter(
             (rdv) =>
               rdv.planning_detail.medecin_detail.utilisateur_info.id === user.id
           )
@@ -56,13 +58,13 @@ const RendezVous = () => {
       } else if (user.groups[0].name === groupeUser.patient) {
         // Filtrer les rendez-vous pour le patient connecté
         setDataTable2(
-          rendezVousList.filter(
+          rdvTrue.filter(
             (rdv) => rdv.patient_detail && rdv.patient_detail.user_detail.id === user.id
           )
         );
       } else {
         // Si administrateur ou autre rôle, afficher tous les rendez-vous
-        setDataTable2(rendezVousList);
+        setDataTable2(rdvTrue);
       }
     }
   }, [rendezVousList, user]);
@@ -114,7 +116,7 @@ const RendezVous = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Search for users"
             aria-label="Search"
           />
@@ -141,7 +143,7 @@ const RendezVous = () => {
 
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
               {
                 user && user.groups[0].name == groupeUser.patient ? <TableCell>Medecin</TableCell> : <TableCell>Patient</TableCell>
@@ -218,49 +220,50 @@ const RendezVous = () => {
                 </TableCell>
                 
                 <TableCell>
-                {rdv.patient ? (
-                  <div className="flex items-center space-x-4">
-                  <Button layout="link" size="icon" aria-label="Edit" >
-                    <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
-                  </Button>
-                  <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
-                    <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                  </Button>
-                </div>
-                ) : (
-                  <div className="flex items-center space-x-4">
-                    { user && (user.groups[0].name == groupeUser.receptionniste || user.groups[0].name == groupeUser.administrateur ) ? (
-                      <button type="button" onClick={() => handleSubmit(rdv.code_rendez_vous)} className="px-4 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat">
-                        ajouter le patient
-                      </button>
-                    ):(
-                      <div className="flex items-center space-x-4">
-                        <Button layout="link" size="icon" aria-label="Edit" >
-                          <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
-                        </Button>
-                        <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
-                          <TrashIcon className="w-5 h-5" aria-hidden="true" />
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                )}
-
-                
+                {
+                  rdv.patient ? (
+                    <div className="flex items-center space-x-4">
+                      {user.groups[0].name === groupeUser.patient ? (
+                            <>
+                              <Button layout="link" size="icon" aria-label="Edit">
+                                <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
+                              </Button>
+                              <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
+                                <TrashIcon className="w-5 h-5" aria-hidden="true" />
+                              </Button>
+                            </>
+                          ) : (
+                            "-"
+                        )}
+                    </div>
+                  ) : (
+                    <div className="flex items-center space-x-4">
+                      {
+                      user && (user.groups[0].name === groupeUser.receptionniste || user.groups[0].name === groupeUser.administrateur) && (
+                        <button
+                          type="button"
+                          onClick={() => handleSubmit(rdv.code_rendez_vous)}
+                          className="px-4 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
+                        >
+                          Ajouter le patient
+                        </button>
+                        )
+                      }
+                    </div>
+                  )
+                }               
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChangeTable2}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChangeTable2}
+  />
+</TableFooter>
       </TableContainer>
     </>
   )

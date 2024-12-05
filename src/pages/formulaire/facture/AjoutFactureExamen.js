@@ -77,13 +77,13 @@ const  AjoutFactureExamen = () => {
           <main className="flex items-center justify-center p-6 sm:p-12 ">
             <div className="w-full">
             <form onSubmit={handleSubmit}>
-              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+              <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                 Générer une facture d'examen
               </h1>
               
               {/* Sélection de la spécialité */}
               <Label className="mt-4">
-                  <span>Choisissez le patient</span>
+                  <span className='text-gray-200'>Choisissez le patient</span>
                   <Select
                     className="mt-1"
                     value={patient_id}

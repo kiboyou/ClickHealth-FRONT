@@ -5,7 +5,7 @@ import { Input, Label } from '@windmill/react-ui'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
-import ImageLight from '../assets/img/login-office.jpeg'
+import ImageLight from '../assets/img/login.jpg'
 import ImageDark from '../assets/img/login.jpg'
 
 
@@ -93,7 +93,7 @@ const Login = () =>{
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
             <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">Connexion</h1>
+                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">Connexion</h1>
                 
                 {error && typeof error === 'string' && <p style={{ color: 'red' }}>{error}</p>}
                 {error && typeof error === 'object' && (
@@ -102,15 +102,15 @@ const Login = () =>{
                   </p>
                 )}
                 
-                <Label>
-                  <span>Email</span>
-                  <Input className="px-4 py-3 mt-1 " type="email" placeholder="kiboyou@gmail.com" onChange={(e) => setEmail(e.target.value)} />
+                <Label >
+                  <span className="text-gray-200">Email</span>
+                  <Input className="px-4 py-3 mt-1 border-0 focus:ring-0"type="email" placeholder="kiboyou@gmail.com" onChange={(e) => setEmail(e.target.value)} />
                 </Label>
 
                 <Label className="relative mt-6 ">
-                  <span>Mot de passe</span>
+                  <span className="text-gray-200">Mot de passe</span>
                   <Input
-                    className="px-4 py-3 mt-1 outline-none active:outline-none"
+                    className="px-4 py-3 mt-1 border-0 outline-none active:outline-none focus:ring-0"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="***************"
                     onChange={(e) => setPassword(e.target.value)}

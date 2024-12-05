@@ -134,20 +134,18 @@ const routesAdmin = [
 
   //personnel routing
   {
-    icon: 'TeamIcon',
+    icon: 'DoctorIcon', // the component being exported from icons/index.js
     name: 'Personnels',
     routes: [
       // submenu
-     
       {
         path: '/app/personnel/receptionnistes',
         name: 'Receptionnistes',
       },
       {
-    path: '/app/personnel/medecin', // the url
-    icon: 'DoctorIcon', // the component being exported from icons/index.js
-    name: 'Medecins', // name that appear in Sidebar
-  }
+      path: '/app/personnel/medecin', // the url
+      name: 'Medecins', // name that appear in Sidebar
+      },
     ],
   },
 

@@ -36,11 +36,11 @@ function ForgotPassword() {
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
             <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-2xl font-semibold text-center text-gray-700 dark:text-gray-200">renitialiser le mot de passe</h1>
+                <h1 className="mb-10 text-2xl font-semibold text-center text-gray-200">renitialiser le mot de passe</h1>
                 
                 <Label>
-                  <span>Email</span>
-                  <Input className="px-4 py-3 mt-1 " type="email" placeholder="kiboyou@gmail.com" onChange={(e) => setEmail(e.target.value)} />
+                  <span className="text-gray-200">Email</span>
+                  <Input className="px-4 py-3 mt-1  border-0 focus:ring-0" type="email" placeholder="kiboyou@gmail.com" onChange={(e) => setEmail(e.target.value)} />
                 </Label>
              
                   <button type='submit' className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat" onSubmit={handleSubmit} >

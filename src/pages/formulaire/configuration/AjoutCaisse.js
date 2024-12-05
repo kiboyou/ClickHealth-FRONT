@@ -39,15 +39,15 @@ const AjoutCaisse = () => {
           <main className="flex items-center justify-center p-6 sm:p-12">
             <div className="w-full">
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">
+                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">
                   Ajouter une Caisse
                 </h1>
 
                 {/* Champ pour le nom de la caisse */}
                 <Label className="mt-4">
-                  <span>Nom de la Caisse</span>
+                  <span className='text-gray-200'>Nom de la Caisse</span>
                   <Input
-                    className="px-4 py-3 mt-1"
+                    className="px-4 py-3 mt-1 border-0 focus:ring-0"
                     placeholder="Ex : Caisse 00X"
                     value={nomCaisse}
                     onChange={(e) => setNomCaisse(e.target.value)}

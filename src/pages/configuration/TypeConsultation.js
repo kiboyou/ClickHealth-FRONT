@@ -18,6 +18,7 @@ import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import { NavLink } from 'react-router-dom';
+import TableWithPagination from '../../utils/TableWithPagination';
 
 const TypeConsultation = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const TypeConsultation = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Rechercher un type de consultation"
             aria-label="Search"
           />
@@ -85,7 +86,7 @@ const TypeConsultation = () => {
       {/* Table des types de consultations */}
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
               <TableCell>ID</TableCell>
               <TableCell>Nom du Type de Consultation</TableCell>
@@ -132,14 +133,12 @@ const TypeConsultation = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChange}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChange}
+  />
+</TableFooter>
       </TableContainer>
     </>
   );

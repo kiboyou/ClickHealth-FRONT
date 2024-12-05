@@ -54,14 +54,14 @@ function UpdatePassword() {
           <main className="flex items-center justify-center p-6 sm:p-12 md:w-1/2">
             <div className="w-full">
               <form onSubmit={handleSubmit}>
-                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-700 dark:text-gray-200">Modifer le mot de passe</h1>
+                <h1 className="mb-10 text-3xl font-semibold text-center text-gray-200">Modifer le mot de passe</h1>
                 {error && typeof error === 'string' && <p style={{ color: 'red' }}>{error}</p>}
                 {error && typeof error === 'object' && <p style={{ color: 'red' }}>{error.email || error.password || 'Une erreur est survenue.'}</p>}
 
                 <Label className="relative mt-6">
-                  <span>Ancien mot de passe</span>
+                  <span className="text-gray-200">Ancien mot de passe</span>
                   <Input
-                    className="px-4 py-3 mt-1 outline-none"
+                    className="px-4 py-3 mt-1 outline-none border-0 focus:ring-0"
                     type={showPassword ? 'text' : 'password'}
                     placeholder="***************"
                     onChange={(e) => setPassword(e.target.value)}
@@ -76,9 +76,9 @@ function UpdatePassword() {
                 </Label>
 
                 <Label className="relative mt-6">
-                  <span>Nouveau mot de passe</span>
+                  <span className="text-gray-200">Nouveau mot de passe</span>
                   <Input
-                    className="px-4 py-3 mt-1 outline-none"
+                    className="px-4 py-3 mt-1 outline-none border-0 focus:ring-0"
                     type={showNewPassword ? 'text' : 'password'}
                     placeholder="***************"
                     onChange={(e) => setNewPassword(e.target.value)}
@@ -93,9 +93,9 @@ function UpdatePassword() {
                 </Label>
 
                 <Label className="relative mt-6">
-                  <span>Confirmer le nouveau mot de passe</span>
+                  <span className="text-gray-200">Confirmer le nouveau mot de passe</span>
                   <Input
-                    className="px-4 py-3 mt-1 outline-none"
+                    className="px-4 py-3 mt-1 outline-none border-0 focus:ring-0"
                     type={showSavePassword ? 'text' : 'password'}
                     placeholder="***************"
                     onChange={(e) => setSavePassword(e.target.value)}

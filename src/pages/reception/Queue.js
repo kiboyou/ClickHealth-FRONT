@@ -19,6 +19,7 @@ import PageTitle from '../../components/Typography/PageTitle';
 import { SearchIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import groupeUser from '../../utils/GrourpeUser';
+import TableWithPagination from '../../utils/TableWithPagination';
 
 const Queue = () => {
   const dispatch = useDispatch();
@@ -76,7 +77,7 @@ const Queue = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
             placeholder="Rechercher dans la file"
             aria-label="Search"
           />
@@ -104,7 +105,7 @@ const Queue = () => {
       
       <TableContainer className="mb-8">
         <Table>
-          <TableHeader>
+          <TableHeader className="text-gray-900">
             <tr>
               <TableCell>Position</TableCell>
               <TableCell>Patient</TableCell>
@@ -157,7 +158,7 @@ const Queue = () => {
                   <TableCell>
                   <div className="flex items-center text-sm">
                     <div>
-                      <p className="font-semibold text-blue-200">{entry.status}</p>
+                      <p className="font-semibold text-blue-700">{entry.status}</p>
                     </div>
                   </div>
                   </TableCell>
@@ -190,14 +191,12 @@ const Queue = () => {
           </TableBody>
         </Table>
         <TableFooter>
-          <Pagination
-            totalResults={totalResults}
-            resultsPerPage={resultsPerPage}
-            onChange={onPageChangeTable}
-            label="Table navigation"
-            className="mt-4 bg-color-trait"
-          />
-        </TableFooter>
+  <TableWithPagination
+    totalResults={totalResults}
+    resultsPerPage={resultsPerPage}
+    onPageChange={onPageChangeTable}
+  />
+</TableFooter>
       </TableContainer>
     </>
   );

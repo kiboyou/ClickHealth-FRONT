@@ -85,9 +85,9 @@ const ModificationMedecin = () => {
       <form onSubmit={handleSubmit} className="mt-6">
         {/* Email */}
         <Label>
-          <span>Email</span>
+          <span className='text-gray-200'>Email</span>
           <Input
-            className="mt-2"
+            className="mt-2 border-0 focus:ring-0"
             type="email"
             placeholder="email@example.com"
             value={email}
@@ -98,9 +98,9 @@ const ModificationMedecin = () => {
 
         {/* Nom */}
         <Label className="mt-4">
-          <span>Nom</span>
+          <span className='text-gray-200'>Nom</span>
           <Input
-            className="mt-2"
+            className="mt-2 border-0 focus:ring-0"
             type="text"
             placeholder="Nom"
             value={first_name}
@@ -111,9 +111,9 @@ const ModificationMedecin = () => {
 
         {/* Prénom */}
         <Label className="mt-4">
-          <span>Prénom</span>
+          <span className='text-gray-200'>Prénom</span>
           <Input
-            className="mt-2"
+            className="mt-2 border-0 focus:ring-0"
             type="text"
             placeholder="Prénom"
             value={last_name}
@@ -124,7 +124,7 @@ const ModificationMedecin = () => {
 
         {/* Fonction */}
         <Label className="mt-4">
-          <span>Fonction</span>
+          <span className='text-gray-200'>Fonction</span>
           <Select
             className="mt-2"
             value={fonction}
@@ -142,7 +142,7 @@ const ModificationMedecin = () => {
 
         {/* Spécialité */}
         <Label className="mt-4">
-          <span>Spécialité</span>
+          <span className='text-gray-200'>Spécialité</span>
           <Select
             className="mt-2"
             value={specialite}
