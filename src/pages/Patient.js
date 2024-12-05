@@ -15,11 +15,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchPatients } from '../Api/features/patient/patientThunks';
 
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
+import { fetchRendezVous } from '../Api/features/rendezVous/rendezVousThunks';
 import PageTitle from '../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../icons';
-import Loading from '../utils/Loading';
-import { fetchRendezVous } from '../Api/features/rendezVous/rendezVousThunks';
 import groupeUser from '../utils/GrourpeUser';
+import Loading from '../utils/Loading';
 import TableWithPagination from '../utils/TableWithPagination';
 
 
@@ -28,6 +28,7 @@ const Patient = () => {
   const { success, patients, loading } = useSelector((state) => state.patient)
   const { rendezVousList } = useSelector((state) => state.rendezVous)
   const { user } = useSelector((state) => state.auth);
+  const [searchTerm, setSearchTerm] = useState(''); // Etat pour la recherche en temps réel
 
   const [pageTable2, setPageTable2] = useState(1)
   const [resultsPerPage] = useState(10)
@@ -66,9 +67,15 @@ const Patient = () => {
   }, [rendezVousList, patients, user]);
   
 
-  // Pagination setup
-  const totalResults = dataTable2.length
-  const displayedPatients = dataTable2.slice((pageTable2 - 1) * resultsPerPage, pageTable2 * resultsPerPage)
+  const filteredPatients = dataTable2.filter((patient) => {
+    return patient.telephone.toLowerCase().includes(searchTerm.toLowerCase()); // Recherche par téléphone
+  });
+
+  // Pagination
+  const totalResults = filteredPatients.length;
+  const displayedPatients = filteredPatients.slice((pageTable2 - 1) * resultsPerPage, pageTable2 * resultsPerPage);
+
+  
 
   // Pagination change control
   function onPageChangeTable2(p) {
@@ -87,9 +94,11 @@ const Patient = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
             placeholder="Search for users"
             aria-label="Search"
+            value={searchTerm} // Lier à l'état de la recherche
+            onChange={(e) => setSearchTerm(e.target.value)} // Mettre à jour l'état à chaque saisie
           />
         </div>
       </div>

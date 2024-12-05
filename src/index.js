@@ -1,13 +1,13 @@
+import { Windmill } from '@windmill/react-ui'
 import React, { Suspense } from 'react'
 import ReactDOM from 'react-dom'
-import './assets/css/tailwind.output.css'
+import { Provider } from 'react-redux'
+import App from './App'
 import './assets/css/main.css'
 import './assets/css/planning.css'
-import App from './App'
+import './assets/css/tailwind.output.css'
 import { SidebarProvider } from './context/SidebarContext'
-import { Windmill } from '@windmill/react-ui'
 import store from './store'; // Importation du store Redux
-import { Provider } from 'react-redux'
 import Loading from './utils/Loading'
 
 

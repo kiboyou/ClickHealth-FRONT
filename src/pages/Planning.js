@@ -239,7 +239,6 @@ const Planning = () => {
               }} // Traduction en français
             />
           </div>
-          
       </>
       )}
     </div>

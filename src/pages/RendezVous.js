@@ -31,6 +31,7 @@ const RendezVous = () => {
   const history = useHistory();
   const { success, rendezVousList, loading } = useSelector((state) => state.rendezVous)
   const { user } = useSelector((state) => state.auth);
+  const [searchTerm, setSearchTerm] = useState(''); // Etat pour la recherche en temps réel
 
 
   
@@ -68,11 +69,22 @@ const RendezVous = () => {
       }
     }
   }, [rendezVousList, user]);
+
+   // Fonction pour filtrer les rendez-vous en fonction du terme de recherche
+   const filteredRendezVous = dataTable2.filter((rdv) => {
+    const searchInCode = rdv.code_rendez_vous.toLowerCase().includes(searchTerm.toLowerCase());
+    const searchInPatientName = rdv.patient_detail ? `${rdv.patient_detail.user_detail.first_name} ${rdv.patient_detail.user_detail.last_name}`.toLowerCase().includes(searchTerm.toLowerCase()) : false;
+    const searchInMedecinName = rdv.planning_detail.medecin_detail ? `${rdv.planning_detail.medecin_detail.utilisateur_info.first_name} ${rdv.planning_detail.medecin_detail.utilisateur_info.last_name}`.toLowerCase().includes(searchTerm.toLowerCase()) : false;
+    return searchInCode || searchInPatientName || searchInMedecinName;
+  });
+
   
 
   // Pagination setup
-  const totalResults = dataTable2.length
-  const displayedRendezVous = dataTable2.slice((pageTable2 - 1) * resultsPerPage, pageTable2 * resultsPerPage)
+  const totalResults = filteredRendezVous.length;
+  const displayedRendezVous = filteredRendezVous.slice((pageTable2 - 1) * resultsPerPage, pageTable2 * resultsPerPage);
+
+
 
   // Pagination change control
   function onPageChangeTable2(p) {
@@ -116,9 +128,11 @@ const RendezVous = () => {
             <SearchIcon className="w-4 h-4" aria-hidden="true" />
           </div>
           <Input
-            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0 border-0 focus:ring-0"
+            className="px-6 py-3 pl-8 text-gray-700 bg-white border-0 rounded-lg focus:ring-0"
             placeholder="Search for users"
             aria-label="Search"
+            value={searchTerm} // Liaison à l'état de recherche
+            onChange={(e) => setSearchTerm(e.target.value)} // Mise à jour de l'état
           />
         </div>
       </div>
