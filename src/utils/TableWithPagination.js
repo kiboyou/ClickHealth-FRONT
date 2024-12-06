@@ -42,6 +42,8 @@ const Pagination = ({ totalResults, resultsPerPage, onPageChange }) => {
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
         style={buttonStyle}
+        className='focus:outline-none focus:border-none'
+
       >
         {'<-'}
       </button>
@@ -53,9 +55,10 @@ const Pagination = ({ totalResults, resultsPerPage, onPageChange }) => {
           onClick={() => handlePageChange(page)}
           style={{
             ...buttonStyle,
-            backgroundColor: page === currentPage ? '#003d3b' : '#ffffff',
-            color: page === currentPage ? 'white' : 'black',
+            backgroundColor: page === currentPage ? '#a1e455' : '#003d3bc9',
+            color: page === currentPage ? 'black' : 'white',
           }}
+          className='focus:outline-none focus:border-none'
         >
           {page}
         </button>
@@ -66,6 +69,8 @@ const Pagination = ({ totalResults, resultsPerPage, onPageChange }) => {
         onClick={() => handlePageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         style={buttonStyle}
+        className='focus:outline-none focus:border-none'
+
       >
         {'->'}
       </button>

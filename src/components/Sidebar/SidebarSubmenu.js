@@ -47,7 +47,7 @@ function SidebarSubmenu({ route }) {
               className="px-2 py-1 transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200"
               key={r.name}
             >
-              <NavLink className="w-full" to={r.path} activeClassName="bg-color-trait2">
+              <NavLink exact className="w-full" to={r.path} activeClassName="bg-color-trait2">
                 {r.name}
               </NavLink>
             </li>
