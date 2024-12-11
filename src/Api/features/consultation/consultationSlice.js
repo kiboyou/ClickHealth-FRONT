@@ -17,6 +17,9 @@ const consultationSlice = createSlice({
     clearSuccess: (state) => {
       state.success = null;
     },
+    resetCurrentConsultation: (state) => {
+      state.selectedConsultation = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -101,6 +104,6 @@ const consultationSlice = createSlice({
   },
 });
 
-export const { clearError, clearSuccess } = consultationSlice.actions;
+export const { clearError, clearSuccess, resetCurrentConsultation } = consultationSlice.actions;
 
 export default consultationSlice.reducer;

@@ -44,7 +44,9 @@ const FacturePaiement = () => {
       if (user.groups[0].name === groupeUser.patient) {
         // Filtrer les paiements associées au patient connecté
         const paiementsPatient = paiements.filter(
-          (paiement) => paiement.facture?.patient_detail?.user_detail.id === user.id
+          (paiement) => paiement.facture?.patient ? paiement.facture?.patient_detail.user === user.id 
+            : paiement.facture?.rendezVous_details.patient_detail.user === user.id
+          
         );
         setDataTable2(paiementsPatient);
       } else {
@@ -74,7 +76,7 @@ const FacturePaiement = () => {
     <>
       { loading && <Loading />}
       <PageTitle>Liste des reçus de paiement</PageTitle>
-      {console.log(dataTable2)}
+      {console.log(paiements)}
       {/* <!-- Search input --> */}
       <div className="flex justify-center flex-1 lg:mr-32">
         <div className="relative w-full max-w-xl mr-6 bg-text">

@@ -17,6 +17,9 @@ const prescriptionSlice = createSlice({
     clearSuccess: (state) => {
       state.success = null;
     },
+    resetCurrentPrescription: (state) => {
+      state.selectedPrescription = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -101,6 +104,6 @@ const prescriptionSlice = createSlice({
   },
 });
 
-export const { clearError, clearSuccess } = prescriptionSlice.actions;
+export const { clearError, clearSuccess, resetCurrentPrescription } = prescriptionSlice.actions;
 
 export default prescriptionSlice.reducer;

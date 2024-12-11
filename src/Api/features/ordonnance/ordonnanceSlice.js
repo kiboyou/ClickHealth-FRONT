@@ -17,6 +17,9 @@ const ordonnanceSlice = createSlice({
     clearSuccess: (state) => {
       state.success = null;
     },
+    resetCurrentOrdonnance: (state) => {
+      state.selectedOrdonnance = null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -101,6 +104,6 @@ const ordonnanceSlice = createSlice({
   },
 });
 
-export const { clearError, clearSuccess } = ordonnanceSlice.actions;
+export const { clearError, clearSuccess, resetCurrentOrdonnance } = ordonnanceSlice.actions;
 
 export default ordonnanceSlice.reducer;

@@ -187,7 +187,7 @@ const AjoutPlanning = () => {
           views={{ week: true, day: true }} // Définit uniquement les vues autorisées
           defaultView={Views.WEEK}
           popup={true} // Affiche les événements en pop-up lors de la sélection
-          min={new Date()} // Empêche la sélection avant aujourd'hui
+          // min={new Date()} // Empêche la sélection avant aujourd'hui
           messages={{
             today: "Aujourd'hui",
             previous: "Précédent",

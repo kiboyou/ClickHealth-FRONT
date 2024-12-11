@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { addPrescription } from '../../../Api/features/prescription/prescriptionThunks';
 import { addOrdonnance } from '../../../Api/features/ordonnance/ordonnanceThunks';
 import Loading from '../../../utils/Loading';
-import { clearSuccess } from '../../../Api/features/ordonnance/ordonnanceSlice';
+import { clearSuccess, resetCurrentOrdonnance } from '../../../Api/features/ordonnance/ordonnanceSlice';
 import { fetchConsultations } from '../../../Api/features/consultation/consultationThunks';
 import { fetchTypeOrdonnances } from '../../../Api/features/ordonnance/typeOrdonnanceThunk';
 import { fetchMedicaments } from '../../../Api/features/medicaments/medicamentThunk';  // Importation de l'action pour récupérer les médicaments
@@ -52,6 +52,7 @@ const AjoutPrescription = () => {
       };
 
       dispatch(addPrescription(prescriptionData));
+      dispatch(resetCurrentOrdonnance());
     }
   }, [selectedOrdonnance, medicament, posologie, quantite, dispatch]);
 
@@ -85,6 +86,7 @@ const AjoutPrescription = () => {
         quantite,
       };
       dispatch(addPrescription(prescriptionData));
+      dispatch(resetCurrentOrdonnance());
     } else {
       // Créer une nouvelle ordonnance avant d'ajouter la prescription
       dispatch(addOrdonnance(ordonnanceData));
