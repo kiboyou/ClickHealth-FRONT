@@ -19,7 +19,7 @@ const AjoutMedecin = () => {
   const [last_name, setLastName] = useState('');
   const [fonction, setFonction] = useState('');
   const [specialite, setSpecialite] = useState('');
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   // Sélecteurs pour obtenir l'état des actions Redux
   const { success: userSuccess, error: userError, loading: userLoading, selectedUser } = useSelector(state => state.user);
@@ -62,7 +62,7 @@ const AjoutMedecin = () => {
   // Gérer la soumission du formulaire
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
 
     // Créer un utilisateur avant de créer un médecin
     const userData = {
@@ -76,7 +76,7 @@ const AjoutMedecin = () => {
       await dispatch(addUser(userData)); // Dispatche la création de l'utilisateur
     } catch (error) {
       console.error("Erreur lors de la création de l'utilisateur", error);
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -167,7 +167,7 @@ const AjoutMedecin = () => {
               <button
                 type="submit"
                 className="w-full px-4 py-2 mt-6 text-lg font-bold bg-white rounded-lg focus:outline-none focus:border-none sm:text-xl btnprise font-montserrat"
-                disabled={loading}
+                
               >
                 Ajouter Médecin
               </button>
