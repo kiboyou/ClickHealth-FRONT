@@ -14,7 +14,7 @@ export const getCaisses = async () => {
 // Fonction pour récupérer une caisse par son ID
 export const getCaisseById = async (id) => {
   try {
-    const response = await api.get(`personnel/receptionniste/caisse/${id}`);
+    const response = await api.get(`personnel/receptionniste/caisse/${id}/`);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la récupération de la caisse avec ID ${id}:`, error);
@@ -46,7 +46,7 @@ export const createCaisse = async (caisse) => {
 // Fonction pour mettre à jour une caisse
 export const updateCaisse = async (id, caisse) => {
   try {
-    const response = await api.put(`personnel/receptionniste/caisse/${id}`, caisse);
+    const response = await api.put(`personnel/receptionniste/caisse/${id}/`, caisse);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la mise à jour de la caisse avec ID ${id}:`, error);
@@ -57,7 +57,7 @@ export const updateCaisse = async (id, caisse) => {
 // Fonction pour supprimer une caisse
 export const deleteCaisse = async (id) => {
   try {
-    await api.delete(`personnel/receptionniste/caisse/${id}`);
+    await api.delete(`personnel/receptionniste/caisse/${id}/`);
     return id;
   } catch (error) {
     console.error(`Erreur lors de la suppression de la caisse avec ID ${id}:`, error);

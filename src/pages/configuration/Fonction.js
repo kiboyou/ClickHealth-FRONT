@@ -14,15 +14,20 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { fetchFonctions } from '../../Api/features/medecins/fonctionThunk'
+import {fetchFonctions, removeFonction} from '../../Api/features/medecins/fonctionThunk'
 import PageTitle from '../../components/Typography/PageTitle'
 import { EditIcon, SearchIcon,TrashIcon } from '../../icons'
 import Loading from '../../utils/Loading' 
-import TableWithPagination from '../../utils/TableWithPagination' 
+import TableWithPagination from '../../utils/TableWithPagination'
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 const Fonction = () => {
   const dispatch = useDispatch()
   const { success, fonctions, loading } = useSelector((state) => state.fonctions)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedFonction, setSelectedFonction] = useState(null)
 
   const [pageTable, setPageTable] = useState(1)
   const [resultsPerPage] = useState(10)
@@ -47,7 +52,21 @@ const Fonction = () => {
   function onPageChangeTable(p) {
     setPageTable(p)
   }
+  const openDeleteModal = (groupe) => {
+    setSelectedFonction(groupe)
+    setIsDeleteModalOpen(true)
+  }
 
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeFonction(selectedFonction?.id))
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
+  }
   return (
     <>
       {loading && <Loading />}
@@ -116,7 +135,7 @@ const Fonction = () => {
                     </Button>
 
                     {/* Supprimer une fonction */}
-                    <Button layout="link" size="icon" aria-label="Delete">
+                    <Button onClick={() => openDeleteModal(fonction)} layout="link" size="icon" aria-label="Delete">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
@@ -126,13 +145,27 @@ const Fonction = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable}
+          />
+        </TableFooter>
       </TableContainer>
+      <DialogConfirm
+          open={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          title={"Supprimer la fonction"}
+          message={`Êtes-vous sûr de vouloir supprimer la fonction ${selectedFonction?.id} ?`}
+          onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"Fonction supprimée"}
+          message={`La fonction ${selectedFonction?.id} a été supprimée avec succès.`}
+      />
     </>
   )
 }

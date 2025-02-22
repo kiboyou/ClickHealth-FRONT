@@ -175,12 +175,12 @@ const FacturePaiement = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable2}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable2}
+          />
+        </TableFooter>
       </TableContainer>
     </>
   )

@@ -9,7 +9,7 @@ export const getFactureExamens = async () => {
 
 // Fetch a specific facture with examens by ID
 export const getFactureExamenById = async (id) => {
-  const response = await api.get(`facturation/examen/${id}`);
+  const response = await api.get(`facturation/examen/${id}/`);
   return response.data;
 };
 

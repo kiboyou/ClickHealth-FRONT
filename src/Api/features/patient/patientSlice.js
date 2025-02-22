@@ -64,6 +64,7 @@ const patientSlice = createSlice({
       .addCase(createPatient.fulfilled, (state, action) => {
         state.loading = false;
         state.patients.push(action.payload);
+        state.currentPatient = action.payload;
         state.success = 'Patient created successfully';
       })
       .addCase(createPatient.rejected, (state, action) => {

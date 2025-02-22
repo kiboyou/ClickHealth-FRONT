@@ -8,7 +8,7 @@ export const getMedecins = async () => {
 
 // Fonction pour récupérer un médecin par son ID
 export const getMedecinById = async (id) => {
-  const response = await api.get(`personnel/medecin/${id}`);
+  const response = await api.get(`personnel/medecin/${id}/`);
   return response.data;
 };
 
@@ -36,12 +36,12 @@ export const getMedecinById = async (id) => {
 
 // Fonction pour mettre à jour un médecin
 export const updateMedecin = async (id, medecin) => {
-  const response = await api.put(`personnel/medecin/${id}`, medecin);
+  const response = await api.put(`personnel/medecin/${id}/`, medecin);
   return response.data;
 };
 
 // Fonction pour supprimer un médecin
 export const deleteMedecin = async (id) => {
-  await api.delete(`personnel/medecin/${id}`);
+  await api.delete(`personnel/medecin/${id}/`);
   return id;
 };

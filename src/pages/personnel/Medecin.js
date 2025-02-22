@@ -1,4 +1,4 @@
- import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import {
   Badge,
   Button,
@@ -14,7 +14,7 @@ import {
 } from '@windmill/react-ui';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchMedecins } from '../../Api/features/medecins/medecinThunks';  // Import des thunks pour les médecins
+import {fetchMedecins, removeMedecin} from '../../Api/features/medecins/medecinThunks';  // Import des thunks pour les médecins
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 //import DropdownButton from '../../utils/DropdownButton';
@@ -22,12 +22,16 @@ import Loading from '../../utils/Loading';
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
 import groupeUser from '../../utils/GrourpeUser';
 import TableWithPagination from '../../utils/TableWithPagination';
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 const Medecin = () => {
   const dispatch = useDispatch();
   const { success, medecins, loading } = useSelector((state) => state.medecins);  // Utilisation de l'état des médecins
   const { user } = useSelector((state) => state.auth);
-
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedMedecin, setSelectedMedecin] = useState(null)
   
   const [pageTable, setPageTable] = useState(1);
   const [resultsPerPage] = useState(10);
@@ -53,7 +57,21 @@ const Medecin = () => {
   function onPageChange(p) {
     setPageTable(p);
   }
+  const openDeleteModal = (medecin) => {
+    setSelectedMedecin(medecin)
+    setIsDeleteModalOpen(true)
+  }
 
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeMedecin(selectedMedecin?.id))
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
+  }
   return (
     <>
       {loading && <Loading />}
@@ -128,7 +146,7 @@ const Medecin = () => {
                               <Button layout="link" size="icon" aria-label="Edit">
                                 <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
                               </Button>
-                              <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
+                              <Button onClick={() => openDeleteModal(medecin)} layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
                                 <TrashIcon className="w-5 h-5" aria-hidden="true" />
                               </Button>
                             </>
@@ -142,13 +160,27 @@ const Medecin = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChange}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChange}
+          />
+        </TableFooter>
       </TableContainer>
+      <DialogConfirm
+          open={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          title={"Supprimer le medecin"}
+          message={`Êtes-vous sûr de vouloir supprimer le medecin ${selectedMedecin?.id} ?`}
+          onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"Medecin supprimé"}
+          message={`Le medecin ${selectedMedecin?.id} a été supprimé avec succès.`}
+      />
     </>
   );
 };

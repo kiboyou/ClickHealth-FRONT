@@ -1,14 +1,9 @@
-#version: "3.8"
-
 services:
   react-app:
-    image: node:20.18.0 # Image de base du conteneur
-    container_name: ClickHealth-Frontend # Nom personnalisé du conteneur
-    working_dir: /usr/src/app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ClickHealth-Frontend
     ports:
-      - "9801:3000"
-    volumes:
-      - .:/usr/src/app          # Montre le projet local dans le conteneur
-      - ./node_modules:/usr/src/app/node_modules # Utilise les dépendances locales
-    command: npm start
-    restart: always # Redémarre automatiquement le conteneur en cas de problème
+      - "9801:80"  # Mappe le port 80 du conteneur au port 9801 sur l'hôte
+    restart: always

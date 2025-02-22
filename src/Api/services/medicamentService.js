@@ -8,7 +8,7 @@ export const getMedicaments = async () => {
 
 // Récupérer un médicament par son ID
 export const getMedicamentById = async (id) => {
-  const response = await api.get(`medicament/${id}`);
+  const response = await api.get(`medicament/${id}/`);
   return response.data;
 };
 
@@ -20,12 +20,12 @@ export const createMedicament = async (medicament) => {
 
 // Mettre à jour un médicament existant
 export const updateMedicament = async (id, medicament) => {
-  const response = await api.put(`medicament/${id}`, medicament);
+  const response = await api.put(`medicament/${id}/`, medicament);
   return response.data;
 };
 
 // Supprimer un médicament par son ID
 export const deleteMedicament = async (id) => {
-  await api.delete(`medicament/${id}`);
+  await api.delete(`medicament/${id}/`);
   return id;
 };

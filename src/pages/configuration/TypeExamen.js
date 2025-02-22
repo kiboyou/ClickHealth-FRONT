@@ -14,15 +14,21 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { fetchTypeExamens } from '../../Api/features/examen/typeExamenThunk'; // Assurez-vous que le thunk est bien défini
+import {fetchTypeExamens, removeTypeExamen} from '../../Api/features/examen/typeExamenThunk'; // Assurez-vous que le thunk est bien défini
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import TableWithPagination from '../../utils/TableWithPagination';
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
+import {removeTypeOrdonnance} from "../../Api/features/ordonnance/typeOrdonnanceThunk";
 
 const TypeExamen = () => {
   const dispatch = useDispatch();
   const { success, typeExamens, loading } = useSelector((state) => state.typeExamens);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedTypeO, setSelectedTypeO] = useState(null)
 
   const [pageTable, setPageTable] = useState(1);
   const [resultsPerPage] = useState(10);
@@ -47,7 +53,21 @@ const TypeExamen = () => {
   function onPageChangeTable(p) {
     setPageTable(p);
   }
+  const openDeleteModal = (groupe) => {
+    setSelectedTypeO(groupe)
+    setIsDeleteModalOpen(true)
+  }
 
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeTypeExamen(selectedTypeO?.id))
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
+  }
   return (
     <>
       {loading && <Loading />}
@@ -120,7 +140,7 @@ const TypeExamen = () => {
                     </Button>
 
                     {/* Supprimer un type d'examen */}
-                    <Button layout="link" size="icon" aria-label="Delete">
+                    <Button onClick={() => openDeleteModal(examen)} layout="link" size="icon" aria-label="Delete">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
@@ -130,13 +150,27 @@ const TypeExamen = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable}
+          />
+        </TableFooter>
       </TableContainer>
+      <DialogConfirm
+          open={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          title={"Supprimer le type d'examen"}
+          message={`Êtes-vous sûr de vouloir supprimer le type d'examen ${selectedTypeO?.id} ?`}
+          onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"Type d'examen supprimé"}
+          message={`Le type d'examen ${selectedTypeO?.id} a été supprimé avec succès.`}
+      />
     </>
   );
 };

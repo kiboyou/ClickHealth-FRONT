@@ -11,7 +11,7 @@ export const getRendezVousById = async (id) => {
 };
 
 export const getRendezVousByCode = async (codeRendezVous) => {
-    const response = await api.get(`rendez_vous/${codeRendezVous}`);
+    const response = await api.get(`rendez_vous/${codeRendezVous}/`);
     return response.data;
   };
 

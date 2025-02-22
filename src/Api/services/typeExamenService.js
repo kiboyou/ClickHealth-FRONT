@@ -14,7 +14,7 @@ export const getTypeExamens = async () => {
 // Fonction pour récupérer un type d'examen par son ID
 export const getTypeExamenById = async (id) => {
   try {
-    const response = await api.get(`examen/type_examen/${id}`);
+    const response = await api.get(`examen/type_examen/${id}/`);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la récupération du type d'examen avec ID ${id}:`, error);
@@ -46,7 +46,7 @@ export const createTypeExamen = async (typeExamen) => {
 // Fonction pour mettre à jour un type d'examen
 export const updateTypeExamen = async (id, typeExamen) => {
   try {
-    const response = await api.put(`examen/type_examen/${id}`, typeExamen);
+    const response = await api.put(`examen/type_examen/${id}/`, typeExamen);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la mise à jour du type d'examen avec ID ${id}:`, error);
@@ -57,7 +57,7 @@ export const updateTypeExamen = async (id, typeExamen) => {
 // Fonction pour supprimer un type d'examen
 export const deleteTypeExamen = async (id) => {
   try {
-    await api.delete(`examen/type_examen/${id}`);
+    await api.delete(`examen/type_examen/${id}/`);
     return id;
   } catch (error) {
     console.error(`Erreur lors de la suppression du type d'examen avec ID ${id}:`, error);

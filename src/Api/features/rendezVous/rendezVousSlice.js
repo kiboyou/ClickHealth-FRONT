@@ -90,6 +90,7 @@ const rendezVousSlice = createSlice({
       .addCase(createRendezVous.fulfilled, (state, action) => {
         state.loading = false;
         state.rendezVousList.push(action.payload);
+        state.currentRendezVous = action.payload;
         state.success = 'rdv created successfully';
 
       })

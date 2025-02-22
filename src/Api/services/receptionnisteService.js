@@ -8,7 +8,7 @@ export const getReceptionnistes = async () => {
 
 // Fonction pour récupérer un réceptionniste par son ID
 export const getReceptionnisteById = async (id) => {
-  const response = await api.get(`personnel/receptionniste/${id}`);
+  const response = await api.get(`personnel/receptionniste/${id}/`);
   return response.data;
 };
 
@@ -35,12 +35,12 @@ export const createReceptionniste = async (receptionniste) => {
 
 // Fonction pour mettre à jour un réceptionniste
 export const updateReceptionniste = async (id, receptionniste) => {
-  const response = await api.put(`personnel/receptionniste/${id}`, receptionniste);
+  const response = await api.put(`personnel/receptionniste/${id}/`, receptionniste);
   return response.data;
 };
 
 // Fonction pour supprimer un réceptionniste
 export const deleteReceptionniste = async (id) => {
-  await api.delete(`personnel/receptionniste/${id}`);
+  await api.delete(`personnel/receptionniste/${id}/`);
   return id;
 };

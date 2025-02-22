@@ -15,13 +15,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
-import { fetchPrescriptions } from '../../Api/features/prescription/prescriptionThunks';
+import {fetchPrescriptions, removePrescription} from '../../Api/features/prescription/prescriptionThunks';
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import groupeUser from '../../utils/GrourpeUser';
 import { fetchRendezVous } from '../../Api/features/rendezVous/rendezVousThunks';
 import TableWithPagination from '../../utils/TableWithPagination';
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 
 const Prescription = () => {
@@ -29,7 +31,9 @@ const Prescription = () => {
   const { success, prescriptions, loading } = useSelector((state) => state.prescription)
   const { rendezVousList } = useSelector((state) => state.rendezVous)
   const { user } = useSelector((state) => state.auth);
-
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+    const [selectedPrescription, setSelectedPrescription] = useState(null)
   
   const [pageTable2, setPageTable2] = useState(1)
   const [resultsPerPage] = useState(10)
@@ -85,7 +89,21 @@ const Prescription = () => {
   function onPageChangeTable2(p) {
     setPageTable2(p)
   }
+    const openDeleteModal = (consultation) => {
+        setSelectedPrescription(consultation)
+        setIsDeleteModalOpen(true)
+    }
 
+    const closeDeleteModal = () => {
+        setIsDeleteModalOpen(false)
+    }
+
+    const confirmDelete = () => {
+        // Suppression du groupe ici (appel API si nécessaire)
+        dispatch(removePrescription(selectedPrescription?.id))
+        setIsDeleteModalOpen(false)
+        setIsSuccessModalOpen(true)
+    }
   return (
     <>
       { loading && <Loading />}
@@ -164,7 +182,7 @@ const Prescription = () => {
                               <Button layout="link" size="icon" aria-label="Edit">
                                 <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
                               </Button>
-                              <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
+                              <Button onClick={() => openDeleteModal(prescription)} layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
                                 <TrashIcon className="w-5 h-5" aria-hidden="true" />
                               </Button>
                             </>
@@ -178,13 +196,26 @@ const Prescription = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable2}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable2}
+          />
+        </TableFooter>
       </TableContainer>
+        <DialogConfirm
+            open={isDeleteModalOpen}
+            onClose={closeDeleteModal}
+            title={"Supprimer la prescription"}
+            message={`Êtes-vous sûr de vouloir supprimer la prescription ${selectedPrescription?.id} ?`}
+            onConfirm={confirmDelete}
+        />
+        <DialogSuccess
+            open={isSuccessModalOpen}
+            onClose={() => setIsSuccessModalOpen(false)}
+            title={"Prescription supprimée"}
+            message={`La prescription ${selectedPrescription?.id} a été supprimée avec succès.`}
+        />
     </>
   )
 }

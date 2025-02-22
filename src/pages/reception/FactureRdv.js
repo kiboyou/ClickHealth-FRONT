@@ -69,7 +69,7 @@ const FactureRdv = () => {
     navigate('/app/reception/factures/rdv/detail', {facture}); // Redirection avec les données
   };
 
-      // Fonction pour gérer l'action Voir Plus
+      // Fonction pour gérer l'action Payer
   const payefacture = (facture) => {
     navigate('/app/reception/factures/paiement/add', {facture}); // Redirection avec les données
   };
@@ -179,12 +179,12 @@ const FactureRdv = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable2}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable2}
+          />
+        </TableFooter>
       </TableContainer>
     </>
   )

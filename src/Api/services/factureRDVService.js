@@ -9,7 +9,7 @@ export const getFactureRdvs = async () => {
 
 // Fetch a specific facture with rdvs by ID
 export const getFactureRdvById = async (id) => {
-  const response = await api.get(`facturation/rendezvous/${id}`);
+  const response = await api.get(`facturation/rendezvous/${id}/`);
   return response.data;
 };
 

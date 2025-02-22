@@ -5,15 +5,15 @@ import { initializeAuth } from './Api/features/userAuth/authSlice';
 import { fetchCurrentUser } from './Api/features/userAuth/authThunks';
 
 
-const Acceuil = lazy(() => import('./pages/clients/Acceuil'))
+const Acceuil = lazy(() => import('./pages/acceuil/Acceuil'))
 const Layout = lazy(() => import('./containers/Layout'))
-const Login = lazy(() => import('./pages/Login'))
+const Login = lazy(() => import('./pages/auth/Login'))
 
-const ForgotPassword = lazy(() => import('./pages/ForgotPassword'))
-const UpdatePassword = lazy(() => import('./pages/UpdatePassword'))
-const AjoutRendezVous = lazy(() => import('./pages/formulaire/rendez_vous/AjoutRendezVous'))
-const UpdateRendezVous = lazy(() => import('./pages/formulaire/rendez_vous/UpdateRendezVous'))
-const VerifieRendezVous = lazy(() => import('./pages/VerifieRendezVous'))
+const ForgotPassword = lazy(() => import('./pages/auth/ForgotPassword'))
+const UpdatePassword = lazy(() => import('./pages/auth/UpdatePassword'))
+const AjoutRendezVous = lazy(() => import('./pages/Formulaire/rendez_vous/AjoutRendezVous'))
+const UpdateRendezVous = lazy(() => import('./pages/Formulaire/rendez_vous/UpdateRendezVous'))
+const VerifieRendezVous = lazy(() => import('./pages/rendezVous/VerifieRendezVous'))
 
 
 
@@ -34,7 +34,7 @@ function App() {
       <Router>
         <Switch>
 
-          <Route path="/client" component={Acceuil} />
+          <Route path="/acceuil" component={Acceuil} />
 
           <Route path="/login" component={Login} />
           <Route path="/update-password" component={UpdatePassword} />
@@ -48,7 +48,7 @@ function App() {
           {/* Place new routes over this */}
           <Route path="/app" component={Layout} />
           {/* If you have an index page, you can remothis Redirect */}
-          <Redirect exact from="/" to="/client" />
+          <Redirect exact from="/" to="/acceuil" />
 
         </Switch>
       </Router>

@@ -6,7 +6,7 @@ export const getPaiements = async () => {
 };
 
 export const getPaiementById = async (id) => {
-  const response = await api.get(`paiement/${id}`);
+  const response = await api.get(`paiement/${id}/`);
   return response.data;
 };
 
@@ -16,11 +16,11 @@ export const createPaiement = async (paiement) => {
 };
 
 export const updatePaiement = async (id, paiement) => {
-  const response = await api.put(`paiement/${id}`, paiement);
+  const response = await api.put(`paiement/${id}/`, paiement);
   return response.data;
 };
 
 export const deletePaiement = async (id) => {
-  await api.delete(`paiement/${id}`);
+  await api.delete(`paiement/${id}/`);
   return id;
 };

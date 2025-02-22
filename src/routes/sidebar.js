@@ -92,11 +92,6 @@ const routesAdmin = [
         icon: 'TeamIcon', // the component being exported from icons/index.js
         name: 'Type ordonnance', // name that appear in Sidebar
       },
-      {
-        path: '/app/configuration/medicaments', // the url
-        icon: 'TeamIcon', // the component being exported from icons/index.js
-        name: 'Médicaments', // name that appear in Sidebar
-      },
        {
         path: '/app/configuration/fonction', // the url
         icon: 'TeamIcon', // the component being exported from icons/index.js
@@ -111,6 +106,18 @@ const routesAdmin = [
         path: '/app/configuration/caisse', // the url
         icon: 'TeamIcon', // the component being exported from icons/index.js
         name: 'Caisse', // name that appear in Sidebar
+      },
+    ],
+  },
+  {
+    icon: 'DiagnosticIcon',
+    name: 'Pharmacie',
+    routes: [
+      // submenu
+      {
+        path: '/app/pharmacie/medicaments', // the url
+        icon: 'TeamIcon', // the component being exported from icons/index.js
+        name: 'Médicaments', // name that appear in Sidebar
       },
     ],
   },

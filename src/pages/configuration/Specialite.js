@@ -14,15 +14,20 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { fetchSpecialites } from '../../Api/features/medecins/specialiteThunk' // Assure-toi d'avoir ce fichier
+import {fetchSpecialites, removeSpecialite} from '../../Api/features/medecins/specialiteThunk' // Assure-toi d'avoir ce fichier
 import PageTitle from '../../components/Typography/PageTitle'
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons'
 import Loading from '../../utils/Loading'
 import TableWithPagination from '../../utils/TableWithPagination'
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 const Specialite = () => {
   const dispatch = useDispatch()
   const { success, specialites, loading } = useSelector((state) => state.specialites)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedSpecialite, setSelectedSpecialite] = useState(null)
 
   const [pageTable, setPageTable] = useState(1)
   const [resultsPerPage] = useState(10)
@@ -47,7 +52,21 @@ const Specialite = () => {
   function onPageChangeTable(p) {
     setPageTable(p)
   }
+  const openDeleteModal = (groupe) => {
+    setSelectedSpecialite(groupe)
+    setIsDeleteModalOpen(true)
+  }
 
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeSpecialite(selectedSpecialite?.id))
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
+  }
   return (
     <>
       {loading && <Loading />}
@@ -116,7 +135,7 @@ const Specialite = () => {
                     </Button>
 
                     {/* Supprimer une spécialité */}
-                    <Button layout="link" size="icon" aria-label="Delete">
+                    <Button onClick={() => openDeleteModal(specialite)} layout="link" size="icon" aria-label="Delete">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
@@ -126,13 +145,27 @@ const Specialite = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable}
+          />
+        </TableFooter>
       </TableContainer>
+      <DialogConfirm
+          open={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          title={"Supprimer la spécialité"}
+          message={`Êtes-vous sûr de vouloir supprimer la spécialité ${selectedSpecialite?.id} ?`}
+          onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"Spécialité supprimeé"}
+          message={`Le Spécialité ${selectedSpecialite?.id} a été supprimée avec succès.`}
+      />
     </>
   )
 }

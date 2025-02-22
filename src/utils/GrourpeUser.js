@@ -3,7 +3,8 @@ const groupeUser = {
     administrateur : 'administrateur',
     medecin : 'medecin',
     receptionniste : 'receptionniste',
-    patient : 'patient'
+    patient : 'patient',
+    gestionnaire: 'gestionnaire'
 }
 
 export default groupeUser;

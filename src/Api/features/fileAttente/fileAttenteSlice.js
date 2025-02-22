@@ -66,6 +66,7 @@ const queueSlice = createSlice({
       .addCase(addPatient.fulfilled, (state, action) => {
         state.loading = false;
         state.queue.push(action.payload);
+        state.selectedPatient = action.payload;
         state.success = 'Patient added successfully';
       })
       .addCase(addPatient.rejected, (state, action) => {

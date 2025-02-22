@@ -65,6 +65,7 @@ const planningSlice = createSlice({
       .addCase(createPlanning.fulfilled, (state, action) => {
         state.loading = false;
         state.plannings.push(action.payload);
+        state.currentPlanning = action.payload;
         state.success = 'Planning created successfully';
       })
       .addCase(createPlanning.rejected, (state, action) => {

@@ -59,6 +59,7 @@ const groupSlice = createSlice({
       })
       .addCase(addGroup.fulfilled, (state, action) => {
         state.loading = false;
+        state.selectedGroup = action.payload;
         state.groups.push(action.payload);
         state.success = 'Group added successfully';
       })

@@ -13,16 +13,21 @@ import {
 } from '@windmill/react-ui';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTypeConsultations } from '../../Api/features/consultation/typeConsultationThunk'; // Assurez-vous que le thunk est bien défini
+import {fetchTypeConsultations, removeTypeConsultation} from '../../Api/features/consultation/typeConsultationThunk'; // Assurez-vous que le thunk est bien défini
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import { NavLink } from 'react-router-dom';
 import TableWithPagination from '../../utils/TableWithPagination';
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 const TypeConsultation = () => {
   const dispatch = useDispatch();
   const { success, typeConsultations, loading } = useSelector((state) => state.typeConsultations);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedTypeC, setSelectedTypeC] = useState(null)
 
   const [pageTable, setPageTable] = useState(1);
   const [resultsPerPage] = useState(10);
@@ -47,7 +52,21 @@ const TypeConsultation = () => {
   function onPageChange(p) {
     setPageTable(p);
   }
+  const openDeleteModal = (groupe) => {
+    setSelectedTypeC(groupe)
+    setIsDeleteModalOpen(true)
+  }
 
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeTypeConsultation(selectedTypeC?.id))
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
+  }
   return (
     <>
       {loading && <Loading />}
@@ -123,7 +142,7 @@ const TypeConsultation = () => {
                     </Button>
 
                     {/* Supprimer un type de consultation */}
-                    <Button layout="link" size="icon" aria-label="Delete">
+                    <Button onClick={() => openDeleteModal(consultation)} layout="link" size="icon" aria-label="Delete">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
@@ -133,13 +152,27 @@ const TypeConsultation = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChange}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChange}
+          />
+        </TableFooter>
       </TableContainer>
+      <DialogConfirm
+          open={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          title={"Supprimer le type de consultation"}
+          message={`Êtes-vous sûr de vouloir supprimer le type de consultation ${selectedTypeC?.id} ?`}
+          onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"Type de consultation supprimé"}
+          message={`Le type de consultation ${selectedTypeC?.id} a été supprimé avec succès.`}
+      />
     </>
   );
 };

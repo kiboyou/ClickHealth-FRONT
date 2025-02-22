@@ -14,7 +14,7 @@ export const getTypeOrdonnances = async () => {
 // Fonction pour récupérer un type d'ordonnance par son ID
 export const getTypeOrdonnanceById = async (id) => {
   try {
-    const response = await api.get(`ordonnance/type_ordonnance/${id}`);
+    const response = await api.get(`ordonnance/type_ordonnance/${id}/`);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la récupération du type d'ordonnance avec ID ${id}:`, error);
@@ -46,7 +46,7 @@ export const createTypeOrdonnance = async (typeOrdonnance) => {
 // Fonction pour mettre à jour un type d'ordonnance
 export const updateTypeOrdonnance = async (id, typeOrdonnance) => {
   try {
-    const response = await api.put(`ordonnance/type_ordonnance/${id}`, typeOrdonnance);
+    const response = await api.put(`ordonnance/type_ordonnance/${id}/`, typeOrdonnance);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la mise à jour du type d'ordonnance avec ID ${id}:`, error);
@@ -57,7 +57,7 @@ export const updateTypeOrdonnance = async (id, typeOrdonnance) => {
 // Fonction pour supprimer un type d'ordonnance
 export const deleteTypeOrdonnance = async (id) => {
   try {
-    await api.delete(`ordonnance/type_ordonnance/${id}`);
+    await api.delete(`ordonnance/type_ordonnance/${id}/`);
     return id;
   } catch (error) {
     console.error(`Erreur lors de la suppression du type d'ordonnance avec ID ${id}:`, error);

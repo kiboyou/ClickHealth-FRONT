@@ -14,11 +14,13 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min'
-import { fetchGroups } from '../../Api/features/groupe/groupeThunks'
+import {fetchGroups, removeGroup} from '../../Api/features/groupe/groupeThunks'
 import PageTitle from '../../components/Typography/PageTitle'
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons'
 import Loading from '../../utils/Loading'
 import TableWithPagination from '../../utils/TableWithPagination'
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
 
 const Groupe = () => {
   const dispatch = useDispatch()
@@ -26,9 +28,12 @@ const Groupe = () => {
 
   const [pageTable2, setPageTable2] = useState(1)
   const [resultsPerPage] = useState(10)
-
   // Synchronise dataTable2 avec les utilisateurs une fois récupérés
   const [dataTable2, setDataTable2] = useState([])
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedGroup, setSelectedGroup] = useState(null)
 
   useEffect(() => {
     dispatch(fetchGroups())
@@ -46,6 +51,22 @@ const Groupe = () => {
   // Pagination change control
   function onPageChangeTable2(p) {
     setPageTable2(p)
+  }
+
+  const openDeleteModal = (groupe) => {
+    setSelectedGroup(groupe)
+    setIsDeleteModalOpen(true)
+  }
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeGroup(selectedGroup?.id))
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
   }
 
   return (
@@ -112,7 +133,7 @@ const Groupe = () => {
                     <Button layout="link" size="icon" aria-label="Edit">
                       <EditIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
-                    <Button layout="link" size="icon" aria-label="Delete">
+                    <Button layout="link" size="icon" aria-label="Delete" onClick={() => openDeleteModal(groupe)}>
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
@@ -122,13 +143,28 @@ const Groupe = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable2}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable2}
+          />
+        </TableFooter>
       </TableContainer>
+
+      <DialogConfirm
+            open={isDeleteModalOpen}
+            onClose={closeDeleteModal}
+            title={"Supprimer le groupe"}
+            message={`Êtes-vous sûr de vouloir supprimer le groupe ${selectedGroup?.name} ?`}
+            onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"Groupe supprimé"}
+          message={`Le groupe ${selectedGroup?.name} a été supprimé avec succès.`}
+      />
     </>
   )
 }

@@ -14,18 +14,24 @@ import {
 } from '@windmill/react-ui';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchReceptionnistes } from '../../Api/features/receptionnistes/receptionnisteThunk';  // Import des thunks pour les réceptionnistes
+import {fetchReceptionnistes, removeReceptionniste} from '../../Api/features/receptionnistes/receptionnisteThunk';  // Import des thunks pour les réceptionnistes
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import { NavLink } from 'react-router-dom';
 import groupeUser from '../../utils/GrourpeUser';
 import TableWithPagination from '../../utils/TableWithPagination';
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
+import {removeMedecin} from "../../Api/features/medecins/medecinThunks";
 
 const Receptionniste = () => {
   const dispatch = useDispatch();
   const { success, receptionnistes, loading } = useSelector((state) => state.receptionnistes);  // Utilisation de l'état des réceptionnistes
   const { user } = useSelector((state) => state.auth);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedReceptionniste, setSelectedReceptionniste] = useState(null)
 
   const [pageTable, setPageTable] = useState(1);
   const [resultsPerPage] = useState(10);
@@ -51,7 +57,21 @@ const Receptionniste = () => {
   function onPageChange(p) {
     setPageTable(p);
   }
- 
+  const openDeleteModal = (receptionniste) => {
+    setSelectedReceptionniste(receptionniste)
+    setIsDeleteModalOpen(true)
+  }
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeReceptionniste(selectedReceptionniste?.id))
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
+  }
 
   return (
     <>
@@ -119,7 +139,7 @@ const Receptionniste = () => {
                     <Button layout="link" size="icon" aria-label="Edit">
                       <EditIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
-                    <Button layout="link" size="icon" aria-label="Delete">
+                    <Button onClick={() => openDeleteModal(receptionniste)} layout="link" size="icon" aria-label="Delete">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
@@ -129,13 +149,27 @@ const Receptionniste = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChange}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChange}
+          />
+        </TableFooter>
       </TableContainer>
+      <DialogConfirm
+          open={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          title={"Supprimer la receptionniste"}
+          message={`Êtes-vous sûr de vouloir supprimer la receptionniste ${selectedReceptionniste?.id} ?`}
+          onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"Receptionnitse supprimée"}
+          message={`La Receptionnitse ${selectedReceptionniste?.id} a été supprimée avec succès.`}
+      />
     </>
   );
 };

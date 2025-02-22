@@ -15,13 +15,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
-import { fetchExamens } from '../../Api/features/examen/examenThunks';
+import {fetchExamens, removeExamen} from '../../Api/features/examen/examenThunks';
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import groupeUser from '../../utils/GrourpeUser';
 import { fetchRendezVous } from '../../Api/features/rendezVous/rendezVousThunks';
 import TableWithPagination from '../../utils/TableWithPagination';
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 
 
@@ -30,7 +32,9 @@ const Examen = () => {
   const dispatch = useDispatch()
   const { success, examens, loading } = useSelector((state) => state.examen)
   const { rendezVousList } = useSelector((state) => state.rendezVous)
-
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+    const [selectedExamen, setSelectedExamen] = useState(null)
   const { user } = useSelector((state) => state.auth);
 
 
@@ -102,7 +106,21 @@ const Examen = () => {
   //const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
   return date.toLocaleDateString('fr-FR'  ); // Ici, 'fr-FR' pour un format français
 }
+    const openDeleteModal = (consultation) => {
+        setSelectedExamen(consultation)
+        setIsDeleteModalOpen(true)
+    }
 
+    const closeDeleteModal = () => {
+        setIsDeleteModalOpen(false)
+    }
+
+    const confirmDelete = () => {
+        // Suppression du groupe ici (appel API si nécessaire)
+        dispatch(removeExamen(selectedExamen?.id))
+        setIsDeleteModalOpen(false)
+        setIsSuccessModalOpen(true)
+    }
   return (
     <>
       { loading && <Loading />}
@@ -190,7 +208,7 @@ const Examen = () => {
                               <Button layout="link" size="icon" aria-label="Edit">
                                 <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
                               </Button>
-                              <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
+                              <Button onClick={() => openDeleteModal(examen)} layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
                                 <TrashIcon className="w-5 h-5" aria-hidden="true" />
                               </Button>
                             </>
@@ -204,13 +222,26 @@ const Examen = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable2}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable2}
+          />
+        </TableFooter>
       </TableContainer>
+        <DialogConfirm
+            open={isDeleteModalOpen}
+            onClose={closeDeleteModal}
+            title={"Supprimer l'examen"}
+            message={`Êtes-vous sûr de vouloir supprimer l'examen ${selectedExamen?.id} ?`}
+            onConfirm={confirmDelete}
+        />
+        <DialogSuccess
+            open={isSuccessModalOpen}
+            onClose={() => setIsSuccessModalOpen(false)}
+            title={"Examen supprimé"}
+            message={`L'examen ${selectedExamen?.id} a été supprimé avec succès.`}
+        />
     </>
   )
 }

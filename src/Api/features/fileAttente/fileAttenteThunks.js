@@ -29,9 +29,6 @@ export const addPatient = createAsyncThunk('queue/addPatient', async (newPatient
 export const editPatient = createAsyncThunk(
   'queue/editPatient',
   async ({ id, patient }) => {
-    console.log('====================================');
-    console.log(patient);
-    console.log('====================================');
     const response = await updatePatientInfile_attente(id, patient);
     return response;
   }

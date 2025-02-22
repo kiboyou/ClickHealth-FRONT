@@ -6,7 +6,7 @@ export const getPatients = async () => {
 };
 
 export const getPatientById = async (id) => {
-  const response = await api.get(`patient/${id}`);
+  const response = await api.get(`patient/${id}/`);
   return response.data;
 };
 
@@ -16,11 +16,11 @@ export const createPatient = async (patient) => {
 };
 
 export const updatePatient = async (id, patient) => {
-  const response = await api.put(`patient/${id}`, patient);
+  const response = await api.put(`patient/${id}/`, patient);
   return response.data;
 };
 
 export const deletePatient = async (id) => {
-  await api.delete(`patient/${id}`);
+  await api.delete(`patient/${id}/`);
   return id;
 };

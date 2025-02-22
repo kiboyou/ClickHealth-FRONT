@@ -15,13 +15,16 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { NavLink } from 'react-router-dom/cjs/react-router-dom.min';
-import { fetchConsultations } from '../../Api/features/consultation/consultationThunks';
+import {fetchConsultations, removeConsultation} from '../../Api/features/consultation/consultationThunks';
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import groupeUser from '../../utils/GrourpeUser';
 import { fetchRendezVous } from '../../Api/features/rendezVous/rendezVousThunks';
 import TableWithPagination from '../../utils/TableWithPagination';
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
+import {removePatient} from "../../Api/features/fileAttente/fileAttenteThunks";
 
 
 
@@ -30,7 +33,9 @@ const Consultation = () => {
   const dispatch = useDispatch()
   const { success, consultations, loading } = useSelector((state) => state.consultation)
   const { rendezVousList } = useSelector((state) => state.rendezVous)
-  
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+    const [selectedConsultation, setSelectedConsultation] = useState(null)
   const { user } = useSelector((state) => state.auth);
 
   const [pageTable2, setPageTable2] = useState(1)
@@ -45,10 +50,6 @@ const Consultation = () => {
 
   }, [dispatch])
 
-  // useEffect(() => {
-  //   // Met à jour les données à afficher lorsque users change
-  //   setDataTable2(consultations)
-  // }, [consultations])
 
   useEffect(() => {
     if (user && user.groups) {
@@ -97,11 +98,28 @@ const Consultation = () => {
     setPageTable2(p)
   }
 
-    const formatDate = (dateString) => {
-  const date = new Date(dateString);
-  //const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-  return date.toLocaleDateString('fr-FR'  ); // Ici, 'fr-FR' pour un format français
-}
+  const formatDate = (dateString) => {
+      const date = new Date(dateString);
+      //const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+      return date.toLocaleDateString('fr-FR'  ); // Ici, 'fr-FR' pour un format français
+  }
+
+    const openDeleteModal = (consultation) => {
+        setSelectedConsultation(consultation)
+        setIsDeleteModalOpen(true)
+    }
+
+    const closeDeleteModal = () => {
+        setIsDeleteModalOpen(false)
+    }
+
+    const confirmDelete = () => {
+        // Suppression du groupe ici (appel API si nécessaire)
+        dispatch(removeConsultation(selectedConsultation?.id))
+        setIsDeleteModalOpen(false)
+        setIsSuccessModalOpen(true)
+    }
+
   return (
     <>
       { loading && <Loading />}
@@ -188,7 +206,7 @@ const Consultation = () => {
                               <Button layout="link" size="icon" aria-label="Edit">
                                 <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
                               </Button>
-                              <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
+                              <Button onClick={() => openDeleteModal(consultation)} layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
                                 <TrashIcon className="w-5 h-5" aria-hidden="true" />
                               </Button>
                             </>
@@ -203,13 +221,26 @@ const Consultation = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable2}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable2}
+          />
+        </TableFooter>
       </TableContainer>
+        <DialogConfirm
+            open={isDeleteModalOpen}
+            onClose={closeDeleteModal}
+            title={"Supprimer la consultation"}
+            message={`Êtes-vous sûr de vouloir supprimer la consultation ${selectedConsultation?.id} ?`}
+            onConfirm={confirmDelete}
+        />
+        <DialogSuccess
+            open={isSuccessModalOpen}
+            onClose={() => setIsSuccessModalOpen(false)}
+            title={"Consultation supprimée"}
+            message={`La consultation ${selectedConsultation?.id} a été supprimée avec succès.`}
+        />
     </>
   )
 }

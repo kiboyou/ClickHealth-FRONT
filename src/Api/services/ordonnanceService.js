@@ -8,7 +8,7 @@ export const getOrdonnances = async () => {
 
 // Fetch an ordonnance by ID
 export const getOrdonnanceById = async (id) => {
-  const response = await api.get(`ordonnance/${id}`);
+  const response = await api.get(`ordonnance/${id}/`);
   return response.data;
 };
 

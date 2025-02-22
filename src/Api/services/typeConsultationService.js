@@ -14,7 +14,7 @@ export const getTypeConsultations = async () => {
 // Fonction pour récupérer un type de consultation par son ID
 export const getTypeConsultationById = async (id) => {
   try {
-    const response = await api.get(`consultation/type_consultation/${id}`);
+    const response = await api.get(`consultation/type_consultation/${id}/`);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la récupération du type de consultation avec ID ${id}:`, error);
@@ -46,7 +46,7 @@ export const createTypeConsultation = async (typeConsultation) => {
 // Fonction pour mettre à jour un type de consultation
 export const updateTypeConsultation = async (id, typeConsultation) => {
   try {
-    const response = await api.put(`consultation/type_consultation/${id}`, typeConsultation);
+    const response = await api.put(`consultation/type_consultation/${id}/`, typeConsultation);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la mise à jour du type de consultation avec ID ${id}:`, error);
@@ -57,7 +57,7 @@ export const updateTypeConsultation = async (id, typeConsultation) => {
 // Fonction pour supprimer un type de consultation
 export const deleteTypeConsultation = async (id) => {
   try {
-    await api.delete(`consultation/type_consultation/${id}`);
+    await api.delete(`consultation/type_consultation/${id}/`);
     return id;
   } catch (error) {
     console.error(`Erreur lors de la suppression du type de consultation avec ID ${id}:`, error);

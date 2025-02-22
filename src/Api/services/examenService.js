@@ -8,7 +8,7 @@ export const getExamens = async () => {
 
 // Fetch an exam by ID
 export const getExamenById = async (id) => {
-  const response = await api.get(`examen/${id}`);
+  const response = await api.get(`examen/${id}/`);
   return response.data;
 };
 

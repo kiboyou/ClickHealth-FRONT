@@ -14,7 +14,7 @@ export const getFonctions = async () => {
 // Fonction pour récupérer une fonction par son ID
 export const getFonctionById = async (id) => {
   try {
-    const response = await api.get(`personnel/medecin/fonction/${id}`);
+    const response = await api.get(`personnel/medecin/fonction/${id}/`);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la récupération de la fonction avec ID ${id}:`, error);
@@ -46,7 +46,7 @@ export const createFonction = async (fonction) => {
 // Fonction pour mettre à jour une fonction
 export const updateFonction = async (id, fonction) => {
   try {
-    const response = await api.put(`personnel/medecin/fonction/${id}`, fonction);
+    const response = await api.put(`personnel/medecin/fonction/${id}/`, fonction);
     return response.data;
   } catch (error) {
     console.error(`Erreur lors de la mise à jour de la fonction avec ID ${id}:`, error);
@@ -57,7 +57,7 @@ export const updateFonction = async (id, fonction) => {
 // Fonction pour supprimer une fonction
 export const deleteFonction = async (id) => {
   try {
-    await api.delete(`personnel/medecin/fonction/${id}`);
+    await api.delete(`personnel/medecin/fonction/${id}/`);
     return id;
   } catch (error) {
     console.error(`Erreur lors de la suppression de la fonction avec ID ${id}:`, error);

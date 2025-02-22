@@ -14,17 +14,22 @@ import {
 } from '@windmill/react-ui';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUsers } from '../../Api/features/user/userThunks';
+import {fetchUsers, removeUser} from '../../Api/features/user/userThunks';
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import DropdownButton from '../../utils/DropdownButton';
 import Loading from '../../utils/Loading';
 import TableWithPagination from '../../utils/TableWithPagination';
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 
 const User = () => {
   const dispatch = useDispatch()
   const { success, users, loading } = useSelector((state) => state.user)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedUser, setSelectedUser] = useState(null)
 
   const [pageTable2, setPageTable2] = useState(1)
   const [resultsPerPage] = useState(10)
@@ -49,7 +54,21 @@ const User = () => {
   function onPageChangeTable2(p) {
     setPageTable2(p)
   }
+  const openDeleteModal = (groupe) => {
+    setSelectedUser(groupe)
+    setIsDeleteModalOpen(true)
+  }
 
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeUser(selectedUser?.id))
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
+  }
   return (
     <>
       { loading && <Loading />}
@@ -122,7 +141,7 @@ const User = () => {
                     <Button layout="link" size="icon" aria-label="Edit">
                       <EditIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
-                    <Button layout="link" size="icon" aria-label="Delete">
+                    <Button onClick={() => openDeleteModal(user)} layout="link" size="icon" aria-label="Delete">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
@@ -132,13 +151,27 @@ const User = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable2}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable2}
+          />
+        </TableFooter>
       </TableContainer>
+      <DialogConfirm
+          open={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          title={"Supprimer l'utilisateur"}
+          message={`Êtes-vous sûr de vouloir supprimer l'utilisateur ${selectedUser?.id} ?`}
+          onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"Utilisateur supprimé"}
+          message={`L'utilisateur ${selectedUser?.id} a été supprimé avec succès.`}
+      />
     </>
   )
 }

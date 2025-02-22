@@ -51,6 +51,7 @@ const typeOrdonnanceSlice = createSlice({
       .addCase(addTypeOrdonnance.fulfilled, (state, action) => {
         state.loading = false;
         state.typeOrdonnances.push(action.payload);
+        state.selectedTypeOrdonnance = action.payload;
         state.success = 'Type d\'ordonnance ajouté avec succès';
       })
       .addCase(addTypeOrdonnance.rejected, (state, action) => {

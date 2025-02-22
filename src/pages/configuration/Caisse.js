@@ -14,15 +14,20 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { fetchCaisses } from '../../Api/features/receptionnistes/caisseThunk'
+import {fetchCaisses, removeCaisse} from '../../Api/features/receptionnistes/caisseThunk'
 import PageTitle from '../../components/Typography/PageTitle'
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons'
 import Loading from '../../utils/Loading' 
 import TableWithPagination from '../../utils/TableWithPagination'
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 const Caisse = () => {
   const dispatch = useDispatch()
   const { success, caisses, loading } = useSelector((state) => state.caisses)
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedCaisse, setSelectedCaisse] = useState(null)
 
   const [pageTable, setPageTable] = useState(1)
   const [resultsPerPage] = useState(10)
@@ -47,7 +52,21 @@ const Caisse = () => {
   function onPageChangeTable(p) {
     setPageTable(p)
   }
+  const openDeleteModal = (groupe) => {
+    setSelectedCaisse(groupe)
+    setIsDeleteModalOpen(true)
+  }
 
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeCaisse(selectedCaisse?.id))
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
+  }
   return (
     <>
       {loading && <Loading />}
@@ -118,7 +137,7 @@ const Caisse = () => {
                     </NavLink>
 
                     {/* Supprimer une caisse */}
-                    <Button layout="link" size="icon" aria-label="Delete">
+                    <Button onClick={() => openDeleteModal(caisse)} layout="link" size="icon" aria-label="Delete">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
@@ -128,13 +147,27 @@ const Caisse = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable}
+          />
+        </TableFooter>
       </TableContainer>
+      <DialogConfirm
+          open={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          title={"Supprimer la caisse"}
+          message={`Êtes-vous sûr de vouloir supprimer la caisse ${selectedCaisse?.id} ?`}
+          onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"Caisse supprimée"}
+          message={`La caisse ${selectedCaisse?.id} a été supprimée avec succès.`}
+      />
     </>
   )
 }

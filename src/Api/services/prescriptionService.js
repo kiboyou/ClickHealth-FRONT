@@ -8,7 +8,7 @@ export const getPrescriptions = async () => {
 
 // Fetch a prescription by ID
 export const getPrescriptionById = async (id) => {
-  const response = await api.get(`ordonnance/prescription/${id}`);
+  const response = await api.get(`ordonnance/prescription/${id}/`);
   return response.data;
 };
 

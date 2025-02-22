@@ -8,7 +8,7 @@ export const getConsultations = async () => {
 
 // Fetch a consultation by ID
 export const getConsultationById = async (id) => {
-  const response = await api.get(`consultation/${id}`);
+  const response = await api.get(`consultation/${id}/`);
   return response.data;
 };
 

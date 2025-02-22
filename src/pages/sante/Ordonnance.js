@@ -15,13 +15,15 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { NavLink,useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { fetchOrdonnances } from '../../Api/features/ordonnance/ordonnanceThunks';
+import {fetchOrdonnances, removeOrdonnance} from '../../Api/features/ordonnance/ordonnanceThunks';
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import groupeUser from '../../utils/GrourpeUser';
 import { fetchRendezVous } from '../../Api/features/rendezVous/rendezVousThunks';
 import TableWithPagination from '../../utils/TableWithPagination';
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 
 
@@ -30,7 +32,9 @@ const Ordonnance = () => {
   const { success, ordonnances, loading } = useSelector((state) => state.ordonnance)
   const { rendezVousList } = useSelector((state) => state.rendezVous)
   const { user } = useSelector((state) => state.auth);
-
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+    const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+    const [selectedOrdonnance, setSelectedOrdonnance] = useState(null)
     const  navigate = useHistory().push;
 
   const [pageTable2, setPageTable2] = useState(1)
@@ -96,11 +100,26 @@ const Ordonnance = () => {
     setPageTable2(p)
   }
 
-
     // Fonction pour gérer l'action Voir Plus
   const handleVoirPlus = (ordonnance) => {
     navigate('/app/consultation/ordonnance/detail', {ordonnance}); // Redirection avec les données
   };
+
+    const openDeleteModal = (consultation) => {
+        setSelectedOrdonnance(consultation)
+        setIsDeleteModalOpen(true)
+    }
+
+    const closeDeleteModal = () => {
+        setIsDeleteModalOpen(false)
+    }
+
+    const confirmDelete = () => {
+        // Suppression du groupe ici (appel API si nécessaire)
+        dispatch(removeOrdonnance(selectedOrdonnance?.id))
+        setIsDeleteModalOpen(false)
+        setIsSuccessModalOpen(true)
+    }
   return (
     <>
       { loading && <Loading />}
@@ -177,7 +196,7 @@ const Ordonnance = () => {
                               <Button layout="link" size="icon" aria-label="Edit">
                                 <EditIcon className="w-5 h-5 focus:outline-none focus:border-none" aria-hidden="true" />
                               </Button>
-                              <Button layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
+                              <Button onClick={() => openDeleteModal(ordonnance)} layout="link" size="icon" aria-label="Delete" className="focus:outline-none focus:border-none">
                                 <TrashIcon className="w-5 h-5" aria-hidden="true" />
                               </Button>
                             </>
@@ -191,13 +210,26 @@ const Ordonnance = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable2}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable2}
+          />
+        </TableFooter>
       </TableContainer>
+        <DialogConfirm
+            open={isDeleteModalOpen}
+            onClose={closeDeleteModal}
+            title={"Supprimer l'ordonnance"}
+            message={`Êtes-vous sûr de vouloir supprimer l'ordonnance ${selectedOrdonnance?.id} ?`}
+            onConfirm={confirmDelete}
+        />
+        <DialogSuccess
+            open={isSuccessModalOpen}
+            onClose={() => setIsSuccessModalOpen(false)}
+            title={"Ordonnance supprimée"}
+            message={`L'ordonnance ${selectedOrdonnance?.id} a été supprimée avec succès.`}
+        />
     </>
   )
 }

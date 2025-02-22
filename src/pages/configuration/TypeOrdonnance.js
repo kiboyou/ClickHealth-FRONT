@@ -14,15 +14,20 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-import { fetchTypeOrdonnances } from '../../Api/features/ordonnance/typeOrdonnanceThunk'; // Assurez-vous que le thunk est bien défini
+import {fetchTypeOrdonnances, removeTypeOrdonnance} from '../../Api/features/ordonnance/typeOrdonnanceThunk'; // Assurez-vous que le thunk est bien défini
 import PageTitle from '../../components/Typography/PageTitle';
 import { EditIcon, SearchIcon, TrashIcon } from '../../icons';
 import Loading from '../../utils/Loading';
 import TableWithPagination from '../../utils/TableWithPagination';
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 const TypeOrdonnance = () => {
   const dispatch = useDispatch();
   const { success, typeOrdonnances, loading } = useSelector((state) => state.typeOrdonnances);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedTypeOr, setSelectedTypeOr] = useState(null)
 
   const [pageTable, setPageTable] = useState(1);
   const [resultsPerPage] = useState(10);
@@ -47,7 +52,21 @@ const TypeOrdonnance = () => {
   function onPageChangeTable(p) {
     setPageTable(p);
   }
+  const openDeleteModal = (groupe) => {
+    setSelectedTypeOr(groupe)
+    setIsDeleteModalOpen(true)
+  }
 
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeTypeOrdonnance(selectedTypeOr?.id))
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
+  }
   return (
     <>
       {loading && <Loading />}
@@ -116,7 +135,7 @@ const TypeOrdonnance = () => {
                     </Button>
 
                     {/* Supprimer un type d'ordonnance */}
-                    <Button layout="link" size="icon" aria-label="Delete">
+                    <Button onClick={() => openDeleteModal(type)} layout="link" size="icon" aria-label="Delete">
                       <TrashIcon className="w-5 h-5" aria-hidden="true" />
                     </Button>
                   </div>
@@ -126,13 +145,27 @@ const TypeOrdonnance = () => {
           </TableBody>
         </Table>
         <TableFooter>
-  <TableWithPagination
-    totalResults={totalResults}
-    resultsPerPage={resultsPerPage}
-    onPageChange={onPageChangeTable}
-  />
-</TableFooter>
+          <TableWithPagination
+            totalResults={totalResults}
+            resultsPerPage={resultsPerPage}
+            onPageChange={onPageChangeTable}
+          />
+        </TableFooter>
       </TableContainer>
+      <DialogConfirm
+          open={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          title={"Supprimer le type d'ordonnance"}
+          message={`Êtes-vous sûr de vouloir supprimer le type d'ordonnance ${selectedTypeOr?.id} ?`}
+          onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"Type d'ordonnance supprimé"}
+          message={`Le type d'ordonnance ${selectedTypeOr?.id} a été supprimé avec succès.`}
+      />
     </>
   );
 };

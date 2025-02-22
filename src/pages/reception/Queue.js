@@ -23,6 +23,9 @@ import { SearchIcon } from "../../icons";
 import Loading from "../../utils/Loading";
 import groupeUser from "../../utils/GrourpeUser";
 import TableWithPagination from "../../utils/TableWithPagination";
+import {removeGroup} from "../../Api/features/groupe/groupeThunks";
+import DialogConfirm from "../../utils/dialog/DialogConfirm";
+import DialogSuccess from "../../utils/dialog/DialogSuccess";
 
 const Queue = () => {
   const dispatch = useDispatch();
@@ -34,6 +37,12 @@ const Queue = () => {
 
   // Synchronisation des données
   const [dataTable, setDataTable] = useState([]);
+
+  // Modals
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
+  const [selectedQueue, setSelectedQueue] = useState(null)
+
 
   // Tri les données en plaçant les "Terminé" à la fin
   const sortQueue = (queue) => {
@@ -83,13 +92,25 @@ const Queue = () => {
     });
   };
 
-  // Suppression d'un patient
-  const handleDelete = (id) => {
-    dispatch(removePatient(id));
+
+  const openDeleteModal = (queue) => {
+    setSelectedQueue(queue)
+    setIsDeleteModalOpen(true)
+  }
+
+  const closeDeleteModal = () => {
+    setIsDeleteModalOpen(false)
+  }
+
+  const confirmDelete = () => {
+    // Suppression du groupe ici (appel API si nécessaire)
+    dispatch(removeGroup(selectedQueue))
     setDataTable((prevDataTable) =>
-      prevDataTable.filter((entry) => entry.id !== id)
+        prevDataTable.filter((entry) => entry.id !== selectedQueue)
     );
-  };
+    setIsDeleteModalOpen(false)
+    setIsSuccessModalOpen(true)
+  }
 
   return (
     <>
@@ -213,7 +234,7 @@ const Queue = () => {
                           Terminé
                         </button>
                         <button
-                          onClick={() => handleDelete(entry.id)}
+                          onClick={() => openDeleteModal(entry.id)}
                           className="px-2 py-1 text-white bg-red-500 rounded hover:bg-red-700 focus:outline-none focus:border-none"
                         >
                           Supprimer
@@ -232,7 +253,7 @@ const Queue = () => {
                     )}
                     {entry.status === "Terminé" && (
                       <button
-                        onClick={() => handleDelete(entry.id)}
+                        onClick={() => openDeleteModal(entry.id)}
                         className="px-2 py-1 text-white bg-red-500 rounded hover:bg-red-700 focus:outline-none focus:border-none"
                       >
                         Supprimer
@@ -252,6 +273,21 @@ const Queue = () => {
           />
         </TableFooter>
       </TableContainer>
+
+      <DialogConfirm
+          open={isDeleteModalOpen}
+          onClose={closeDeleteModal}
+          title={"Supprimer la file d'attente"}
+          message={`Êtes-vous sûr de vouloir supprimer cette file d'attente ?`}
+          onConfirm={confirmDelete}
+      />
+
+      <DialogSuccess
+          open={isSuccessModalOpen}
+          onClose={() => setIsSuccessModalOpen(false)}
+          title={"File d'attente supprimé"}
+          message={`La file d'attente a été supprimée avec succès.`}
+      />
     </>
   );
 };

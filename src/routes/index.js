@@ -1,58 +1,58 @@
 import { lazy } from 'react'
 
 // use lazy for better code splitting, a.k.a. load faster
-const Dashboard = lazy(() => import('../pages/Dashboard'))
+const Dashboard = lazy(() => import('../pages/admin/Dashboard'))
 
 
 const User = lazy(() => import('../pages/configuration/User'))
-const ProfileUser = lazy(() => import('../pages/ProfileUser'))
-const AjoutUser = lazy(() => import('../pages/formulaire/personnel/AjoutUser'))
+const ProfileUser = lazy(() => import('../pages/user/ProfileUser'))
+const AjoutUser = lazy(() => import('../pages/Formulaire/personnel/AjoutUser'))
 
-const Planning = lazy(() => import('../pages/Planning'))
-const AjoutPlanning = lazy(() => import('../pages/formulaire/rendez_vous/AjoutPlanning'))
-
-
-const AjoutRDV = lazy(() => import('../pages/formulaire/rendez_vous/AjoutRDV'))
-const UpdateRendezVous = lazy(() => import('../pages/formulaire/rendez_vous/UpdateRendezVous'))
+const Planning = lazy(() => import('../pages/rendezVous/Planning'))
+const AjoutPlanning = lazy(() => import('../pages/Formulaire/rendez_vous/AjoutPlanning'))
 
 
-const RendezVous = lazy(() => import('../pages/RendezVous'))
-// const AjoutRendezVous = lazy(() => import('../pages/formulaire/rendez_vous/AjoutRendezVous'))
+const AjoutRDV = lazy(() => import('../pages/Formulaire/rendez_vous/AjoutRDV'))
+const UpdateRendezVous = lazy(() => import('../pages/Formulaire/rendez_vous/UpdateRendezVous'))
 
-const Patients = lazy(() => import('../pages/Patient'))
-const AjoutPatient = lazy(() => import('../pages/formulaire/patient/AjoutPatient'))
+
+const RendezVous = lazy(() => import('../pages/rendezVous/RendezVous'))
+// const AjoutRendezVous = lazy(() => import('../pages/Formulaire/rendez_vous/AjoutRendezVous'))
+
+const Patients = lazy(() => import('../pages/user/Patient'))
+const AjoutPatient = lazy(() => import('../pages/Formulaire/patient/AjoutPatient'))
 
 
 //reception
 const FacturationsExamen = lazy(() => import('../pages/reception/FactureExamen'))
-const AjoutFactureExamen = lazy(() => import('../pages/formulaire/facture/AjoutFactureExamen'))
+const AjoutFactureExamen = lazy(() => import('../pages/Formulaire/facture/AjoutFactureExamen'))
 const DetailFactureRdv = lazy(() => import('../pages/reception/detailsFactures/DetailFactureRdv'))
 const DetailFactureExamen = lazy(() => import('../pages/reception/detailsFactures/DetailFactureExamen'))
 const FacturationsRdv = lazy(() => import('../pages/reception/FactureRdv'))
 const FacturePaiement = lazy(() => import('../pages/reception/FacturePaiement'))
-const AjoutPaiement = lazy(() => import('../pages/formulaire/facture/AjoutPaiement'))
+const AjoutPaiement = lazy(() => import('../pages/Formulaire/facture/AjoutPaiement'))
 const DetailRecu = lazy(() => import('../pages/reception/detailsFactures/DetailRecu'))
 
 const Queues = lazy(() => import('../pages/reception/Queue'))
-const AjoutQueue = lazy(() => import('../pages/formulaire/queue/AjoutQueue'))
+const AjoutQueue = lazy(() => import('../pages/Formulaire/queue/AjoutQueue'))
 
 //sante
 const Consultations = lazy(() => import('../pages/sante/Consultation'))
-const AjoutConsultations = lazy(() => import('../pages/formulaire/sante/AjoutConsultation'))
+const AjoutConsultations = lazy(() => import('../pages/Formulaire/sante/AjoutConsultation'))
 
 const Ordonnances = lazy(() => import('../pages/sante/Ordonnance'))
 const DetailOrdonnances= lazy(() => import('../pages/sante/detailsOrdonnances/DetailOrdonnance'))
-const AjoutOrdonnances = lazy(() => import('../pages/formulaire/sante/AjoutOrdonnance'))
+const AjoutOrdonnances = lazy(() => import('../pages/Formulaire/sante/AjoutOrdonnance'))
 const Examens = lazy(() => import('../pages/sante/Examen'))
-const AjoutExamens = lazy(() => import('../pages/formulaire/sante/AjoutExamen'))
+const AjoutExamens = lazy(() => import('../pages/Formulaire/sante/AjoutExamen'))
 
 const Prescriptions = lazy(() => import('../pages/sante/Prescription')) 
-const AjoutPrescriptions = lazy(() => import('../pages/formulaire/sante/AjoutPrescription')) 
+const AjoutPrescriptions = lazy(() => import('../pages/Formulaire/sante/AjoutPrescription'))
 
 
 
 const Groupe = lazy(() => import('../pages/configuration/Groupe'))
-const AjoutGroupe = lazy(() => import('../pages/formulaire/groupe/AjoutGroupe'))
+const AjoutGroupe = lazy(() => import('../pages/Formulaire/groupe/AjoutGroupe'))
 
 const Fonction = lazy(() => import('../pages/configuration/Fonction'))
 const Specialite = lazy(() => import('../pages/configuration/Specialite'))
@@ -60,23 +60,23 @@ const TypeOrdonnances = lazy(() => import('../pages/configuration/TypeOrdonnance
 const TypeExamens = lazy(() => import('../pages/configuration/TypeExamen'))
 const TypeConsultations = lazy(() => import('../pages/configuration/TypeConsultation'))
 const Caisses = lazy(() => import('../pages/configuration/Caisse'))
-const Medicaments = lazy(() => import('../pages/configuration/Medicament'))
-const AjoutMedicaments = lazy(() => import('../pages/formulaire/configuration/AjoutMedicament'))
+const Medicaments = lazy(() => import('../pages/pharmacie/Medicament'))
+const AjoutMedicaments = lazy(() => import('../pages/Formulaire/pharmacie/AjoutMedicament'))
 
 
 
 
 const Receptionnistes = lazy(() => import('../pages/personnel/Receptionniste'))
-const AjoutReceptionnistes = lazy(() => import('../pages/formulaire/personnel/AjoutReceptionniste'))
+const AjoutReceptionnistes = lazy(() => import('../pages/Formulaire/personnel/AjoutReceptionniste'))
 
 const Medecins = lazy(() => import('../pages/personnel/Medecin'))
-const AjoutMedecin = lazy(() => import('../pages/formulaire/personnel/AjoutMedecin'))
-const AjoutSpecialites = lazy(() => import('../pages/formulaire/configuration/AjoutSpecialite'))
-const AjoutFonctions = lazy(() => import('../pages/formulaire/configuration/AjoutFonction'))
-const AjoutTypeOrdonnances = lazy(() => import('../pages/formulaire/configuration/AjoutTypeOrdonnance'))
-const AjoutTypeExamens = lazy(() => import('../pages/formulaire/configuration/AjoutTypeExamen'))
-const AjoutTypeConsultations = lazy(() => import('../pages/formulaire/configuration/AjoutTypeConsultation'))
-const AjoutCaisses = lazy(() => import('../pages/formulaire/configuration/AjoutCaisse'))
+const AjoutMedecin = lazy(() => import('../pages/Formulaire/personnel/AjoutMedecin'))
+const AjoutSpecialites = lazy(() => import('../pages/Formulaire/configuration/AjoutSpecialite'))
+const AjoutFonctions = lazy(() => import('../pages/Formulaire/configuration/AjoutFonction'))
+const AjoutTypeOrdonnances = lazy(() => import('../pages/Formulaire/configuration/AjoutTypeOrdonnance'))
+const AjoutTypeExamens = lazy(() => import('../pages/Formulaire/configuration/AjoutTypeExamen'))
+const AjoutTypeConsultations = lazy(() => import('../pages/Formulaire/configuration/AjoutTypeConsultation'))
+const AjoutCaisses = lazy(() => import('../pages/Formulaire/configuration/AjoutCaisse'))
 
 
 
@@ -270,18 +270,6 @@ const routes = [
     component: AjoutFonctions,
 
   },
-  {
-    path: '/configuration/medicaments',
-    component: Medicaments,
-
-  },
- {
-    path: '/configuration/medicaments/add',
-    component: AjoutMedicaments,
-
-  },
-
-
 
   {
     path: '/configuration/specialites/',
@@ -332,6 +320,19 @@ const routes = [
 
 
   //end configuration
+
+  //start pharmacie
+    {
+        path: '/pharmacie/medicaments',
+        component: Medicaments,
+
+    },
+    {
+        path: '/pharmacie/medicaments/add',
+        component: AjoutMedicaments,
+
+    },
+    //end pharmacie
 
   //start personnel path
 
